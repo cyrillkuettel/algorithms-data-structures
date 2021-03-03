@@ -7,6 +7,7 @@ import java.util.Objects;
  * @author cyrill
  */
 // Klasse, welche den Speicherbereich (egal ob frei oder belegt) eindeutig identifiziert.
+// TO DO: keep track of free blocks with linked list for example 
 public final class Allocation implements Comparable<Allocation> {
 
     private long address = 0; //
