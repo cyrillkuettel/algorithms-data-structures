@@ -35,7 +35,6 @@ public final class Allocation implements Comparable<Allocation> {
         } else {
             return 0;
         }
-
     }
 
     @Override
@@ -58,7 +57,7 @@ public final class Allocation implements Comparable<Allocation> {
     // should look like: Allocation[Address:0; Size:16]
     @Override
     public String toString() {
-        return "Allocation[Address:" + getAddress() + "; NextAddress:" + getNextAddress() + "; Size:" + getSize() + ']';
+        return "Allocation[Address:" + getAddress() + "; Size:" + getSize() + ']';
     }
 
     public long getAddress() {

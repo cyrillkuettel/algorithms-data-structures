@@ -11,6 +11,7 @@ class Stack {
 
     private int size = 1000;
     private int[] store = new int[size];
+    
     private int count = 0; // count always points to the next available
 
     private List<Integer> minList = new ArrayList<>(); // keep track of occuring Minima. 

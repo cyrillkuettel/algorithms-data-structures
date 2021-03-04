@@ -27,7 +27,7 @@ public abstract class Memory {
         // Undo the allocation, set the pointer correctly. memory is free, 
 
         // probably we need a linked list of Available free memory blocks .
-        // Idee von Andreas Gisler: anstatt Frei und Belegt attribute, da 2 Allocationen Objecte machen (
+        // Idee von Andreas Gisler: anstatt Frei und Belegt attribute, da 2 Allocationen Objecte machen
         // Idee: Allocationen nach address sortieren, um aneinanderhängende Objecte zu finden
         // Idee: Allocationen nach size sortieren, um in O(n) Zeit zu sortieren. 
         // to insert a item in a sorted linked list, requires O(1) time
