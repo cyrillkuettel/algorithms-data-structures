@@ -1,7 +1,10 @@
 package ch.hslu.ad.sw02;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -9,6 +12,7 @@ import java.util.stream.Stream;
  */
 public class Queue {
 
+    private static final Logger LOG = LogManager.getFormatterLogger(Queue.class);
     private char[] storage;
     int indexHead;
     int indexTail = 0;
@@ -18,16 +22,10 @@ public class Queue {
 
     public static void main(String[] args) {
         Queue q = new Queue(8);
+
         q.add('D');
-        q.add('D');
-        q.add('D');
-        q.add('D');
+        q.add('A');
         
-        q.add('D');
-        q.add('D');
-        q.add('D');
-        q.add('D');
-        System.out.println(q.isFull());
     }
 
     public Queue(int size) {
@@ -38,20 +36,19 @@ public class Queue {
     }
 
     public void add(char in) {
+        if (isFull()) {
+            LOG.warn("Queue is full. item will be overriten");
+        }
         if (storage[indexTail] == '\u0000') { // wenn platz noch nicht besetzt
             storage[indexTail] = in;
-            countItems++;
-
         } else {
             rotate();
             storage[indexTail] = in;
-
         }
-
+        countItems++;
     }
 
     public void rotate() {
-
         for (int i = 0; i < storage.length - 1; i++) {
             storage[i + 1] = storage[i];
         }
@@ -59,27 +56,39 @@ public class Queue {
 
     }
 
+    public char getOldie() {    // [A] [B] [C] [ ] [ ] [ ] [ ]    <---- 
+        // [0] [1] [2] [ ] [ ] 
+        //add: [ ] [A] [B] [C] [ ] [ ] [ ] 
+        char zwischenspeicher = storage[countItems - 1];
+        rotate();
+        countItems--;
+        return zwischenspeicher;
+    }
+
     public boolean isFull() {
-        int count = 0;
-        for (int i = 0; i < storage.length; i++) {
-            System.out.println("looped: " + i);
-            if (storage[indexTail] != '\u0000') {
-                count++;
-            }
-        }
-        if (count == storage.length) {
-            return true;
-        }
-        return false;
+        return (countItems == size);
+    }
+
+    public boolean isEmpty() {
+        return (countItems == 0);
     }
 
     @Override
     public String toString() {
-        String returnSTring = "";
+        String returnString = "";
+
         for (char c : storage) {
-            returnSTring += c + " ; ";
+            returnString += c + " ; ";
         }
-        return returnSTring;
+        return returnString;
+    }
+
+    public void testStream() {
+        
+        Stream<Character> cStream = IntStream.range(0, storage.length).mapToObj(i -> storage[i]);
+        
+        cStream.forEach( el -> System.out.println(el));
+            
     }
 
     public void remove(char in) {

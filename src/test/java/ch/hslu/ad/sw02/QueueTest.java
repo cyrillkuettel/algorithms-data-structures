@@ -1,57 +1,42 @@
 package ch.hslu.ad.sw02;
 
-import org.assertj.core.api.Assertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author cyrill
+ * @author Fabio
  */
 public class QueueTest {
-    
+
     public QueueTest() {
     }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
 
     @Test
-    public void testisFull() {
+    public void testMain() {
         Queue q = new Queue(8);
-        q.add('A');
-        q.add('B');
-        q.add('C');
-        q.add('D');
-        
-        q.add('E');
-        q.add('F');
-        q.add('G');
-        q.add('H');
-        
-        boolean isFull = q.isFull();
-        
-       Assertions.assertThat(isFull).isEqualTo(true);
+        q.add('a');
+        q.add('r');
+        q.add('f');
+        q.add('c');
+
+        q.add('s');
+        q.add('j');
+        q.add('q');
+        q.add('q');
+
+        assertTrue(q.isFull());
+
     }
 
-    
+    @Test
+    public void testIsEmpty() {
+        Queue q = new Queue(8);
+        assertTrue(q.isEmpty());
+    }
+
+    @Test
+    public void testRemove() {
+    }
+
 }
