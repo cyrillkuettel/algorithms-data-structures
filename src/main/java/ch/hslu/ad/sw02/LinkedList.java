@@ -2,6 +2,7 @@ package ch.hslu.ad.sw02;
 
 import ch.hslu.ad.sw01.Allocation;
 import java.util.EmptyStackException;
+import java.util.Iterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,24 +10,18 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-public class LinkedList {
+public class LinkedList implements Iterable<Node> {
+
+    private Node head;
+    private int size;
 
     private static final Logger LOG = LogManager.getFormatterLogger(LinkedList.class);
-    private Node head;
-
-    private int size;
 
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
 
         Node node1 = new Node(new Allocation(100));
         Node node2 = new Node(new Allocation(100));
-
-        list.add(node1);
-        list.add(node2);
-
-        list.exists(node2);
-
     }
 
     public LinkedList() {
@@ -35,7 +30,6 @@ public class LinkedList {
     }
 
     public void add(Node node) { // add new at top
-
         if (head.getNext() == null) { // only when empty
             head.setNext(node);
             node.setNext(null); // the last element is null
@@ -43,12 +37,10 @@ public class LinkedList {
             node.setNext(head.getNext());
             head.setNext(node);
         }
-        // die vorherige Referenz auf diese Node setzen. 
         size++;
     }
 
     public boolean exists(Node n) {
-
         Node next = head.getNext();
         while (next != null) {
             if (next.getValue().equals(n.getValue())) {
@@ -89,7 +81,6 @@ public class LinkedList {
     }
 
     public boolean removeAtIndex(int index) {
-
         if (index < 0 || index > getSize()) { // catch potential invalid index
             LOG.warn("Invalid Index: " + index);
             return false;
@@ -119,5 +110,30 @@ public class LinkedList {
 
     public int getSize() {
         return size;
+    }
+
+    @Override
+    public Iterator<Node> iterator() {
+
+        Iterator<Node> it = new Iterator<Node>() {
+            Node nextItem = head;
+            private int size = getSize();
+
+            @Override
+            public boolean hasNext() {
+                return nextItem.getNext() != null;
+            }
+
+            @Override
+            public Node next() {
+                return nextItem = nextItem.getNext();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        };
+        return it;
     }
 }
