@@ -74,7 +74,9 @@ public class LinkedListTest {
         Node node1 = new Node(new Allocation(100));
         list.add(node1);
         list.removeAtIndex(0);
-        assertThatExceptionOfType(EmptyStackException.class).isThrownBy(() -> { list.pop(); });
+        assertThatExceptionOfType(EmptyStackException.class).isThrownBy(() -> {
+            list.pop();
+        });
     }
 
     @Test
@@ -113,6 +115,28 @@ public class LinkedListTest {
         list.removeAtIndex(6);
         System.out.println(list.toString());
         assertFalse(list.exists(nodes[6])); // 
+    }
+
+    @Test
+    void testRemoveLastElement() {
+        Node[] nodes = new Node[7]; //create a couple
+        Random random = new Random();
+
+        for (int i = 6; i >= 0; i--) {
+            int AllocationValue = random.nextInt(100 - 1 + 1) + 1;
+            nodes[i] = new Node(new Allocation(AllocationValue));
+        }
+        for (int i = 6; i >= 0; i--) {
+            list.add(nodes[i]);
+        }
+        // list looks like this:
+
+        //[null] -> [0] -> [1] -> [2] -> [3] -> [4] -> [5] -> [6] -> [null] 
+        System.out.println(list.toString());
+        list.removeAtIndex(6);
+        System.out.println(list.toString());
+
+        Assertions.assertThat(list.getSize()).isEqualTo(6);
     }
 
     @Test

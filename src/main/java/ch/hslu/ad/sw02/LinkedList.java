@@ -102,8 +102,8 @@ public class LinkedList implements Iterable<Node> {
         }
 
         Node theElementAfter = new Node();
-        theElementAfter = oneElementprevious.getNext().getNext();
-        oneElementprevious.setNext(theElementAfter); // Refernez vor Element anpassen
+        theElementAfter = oneElementprevious.getNext().getNext(); // skip the element we want to delete
+        oneElementprevious.setNext(theElementAfter); // change reference. 
         size--;
         return true;
     }
