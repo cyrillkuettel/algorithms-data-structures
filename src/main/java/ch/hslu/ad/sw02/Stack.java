@@ -72,5 +72,12 @@ class Stack {
         }
         this.store = temp;
     }
+    public static void main(String[] args) {
+        Stack s = new Stack();
+        s.push(3);
+        s.push(4);
+        s.push(100);
+      
+    }
 
 }
