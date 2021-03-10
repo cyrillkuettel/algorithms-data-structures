@@ -28,14 +28,16 @@ class Binärbaum<T extends Comparable<T>> {
         inOrderTraverse
         
      */
+    protected Knoten<T> wurzel;
 
+    public Binärbaum(T value) {
+        this.wurzel = new Knoten<T>(value);
+    }
 
-    protected Knoten wurzel;
+    class Knoten<T extends Comparable<T>> {
 
-    class Knoten {
-
-        private T inhalt; // 
-        private Knoten links, rechts;
+        private T inhalt;
+        private Knoten<T> links, rechts;
 
         public Knoten(T inhalt) {
 
@@ -44,15 +46,20 @@ class Binärbaum<T extends Comparable<T>> {
 
         }
 
+        @Override
+        public String toString() {
+            return "Knoten{" + "inhalt=" + inhalt + '}';
+        }
+
     }
 
     public void inOrderTraverse() {
         if (wurzel != null) {
-            
+
         }
     }
 
-    public void suchen(Knoten knoten, T inhalt) {
+    public void suchen(Knoten<T> knoten, T inhalt) {
         // what to do if element does not exist? 
 
         if (inhalt.compareTo(knoten.inhalt) < 0) {
@@ -82,23 +89,23 @@ class Binärbaum<T extends Comparable<T>> {
 
     public void einfügen(T value) {
         if (istLeer()) {
-            wurzel = new Knoten(value); // base case r
+            wurzel = new Knoten<>(value); // base case r
         } else {
             einfügen(wurzel, value);
         }
     }
 
-    public void einfügen(Knoten knoten, T inhalt) {
+    public void einfügen(Knoten<T> knoten, T inhalt) {
 
         if (inhalt.compareTo(knoten.inhalt) < 0) {
             if (knoten.links == null) {
-                knoten.links = new Knoten(inhalt);
+                knoten.links = new Knoten<>(inhalt);
             } else {
-                einfügen(knoten.links, inhalt); // go one niveau down
+                einfügen(knoten.links, inhalt); // go one niveau down (Left side)
             }
         } else {
             if (knoten.rechts == null) {
-                knoten.rechts = new Knoten(inhalt);
+                knoten.rechts = new Knoten<>(inhalt);
             } else { //rechts > links
                 einfügen(knoten.rechts, inhalt); // go one niveau down
             }
@@ -109,9 +116,48 @@ class Binärbaum<T extends Comparable<T>> {
         return wurzel == null; // default initialization value 
     }
 
-    public static void main(String[] args) {
-        Binärbaum<String> b = new Binärbaum<>();
+    private static ch.hslu.ad.sw03.Knoten<Integer> test1() {
+        ch.hslu.ad.sw03.Knoten<Integer> root = new ch.hslu.ad.sw03.Knoten<Integer>(2);
+        ch.hslu.ad.sw03.Knoten<Integer> n11 = new ch.hslu.ad.sw03.Knoten<Integer>(7);
+        ch.hslu.ad.sw03.Knoten<Integer> n12 = new ch.hslu.ad.sw03.Knoten<Integer>(5);
+        ch.hslu.ad.sw03.Knoten<Integer> n21 = new ch.hslu.ad.sw03.Knoten<Integer>(2);
+        ch.hslu.ad.sw03.Knoten<Integer> n22 = new ch.hslu.ad.sw03.Knoten<Integer>(6);
+        ch.hslu.ad.sw03.Knoten<Integer> n23 = new ch.hslu.ad.sw03.Knoten<Integer>(9);
+        ch.hslu.ad.sw03.Knoten<Integer> n31 = new ch.hslu.ad.sw03.Knoten<Integer>(5);
+        ch.hslu.ad.sw03.Knoten<Integer> n32 = new ch.hslu.ad.sw03.Knoten<Integer>(8);
+        ch.hslu.ad.sw03.Knoten<Integer> n33 = new ch.hslu.ad.sw03.Knoten<Integer>(4);
 
+        root.links = n11;
+        root.rechts = n12;
+
+        n11.links = n21;
+        n11.rechts = n22;
+
+        n12.rechts = n23;
+        n22.links = n31;
+        n22.rechts = n32;
+
+        n23.links = n33;
+
+        return root;
+    }
+
+    public static void main(String[] args) {
+        Binärbaum<String> baum = new Binärbaum<>("B");
+
+        baum.einfügen("C");
+        baum.einfügen("D");
+        baum.einfügen("B");
+        baum.einfügen("A");
+        
+        BTreePrinter<String> printer = new BTreePrinter<>();
+        printer.printKnoten(baum.wurzel);
+
+    }
+
+    void testPrinter() {
+
+//        System.out.println(baum.wurzel);
     }
 
     void testStringComparatorForNumbers() {
