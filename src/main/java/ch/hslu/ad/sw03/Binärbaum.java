@@ -1,6 +1,7 @@
 package ch.hslu.ad.sw03;
 
-import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 interface binaryTreeInterface { // TODO: interface
 
@@ -8,6 +9,9 @@ interface binaryTreeInterface { // TODO: interface
 // helper: https://stackoverflow.com/questions/11263244/java-how-do-i-implement-a-generic-binary-search-tree;
 
 class Binärbaum<T extends Comparable<T>> {
+
+    private static final Logger LOG = LogManager.getFormatterLogger(Binärbaum.class);
+
     //Aufgabe: 10 eindeutige geordnete Elemente erstellen
 /*
      d.) Implementieren Sie auf dem Baum nun die search()-Methode.
@@ -16,8 +20,16 @@ class Binärbaum<T extends Comparable<T>> {
              zur Traversierung des Baumes in der «Inorder»-Semantik entworfen.
              Implementieren Sie nun den Algorithmus und testen Sie ihn aus!
     
-     
+    TODO: 
+        Zuerst generisch machen, dass die print methode funktioniert. 
+        schöne print methode machen
+        suchen: was wenn element nicht existiert. 
+        löschen
+        inOrderTraverse
+        
      */
+
+
     protected Knoten wurzel;
 
     class Knoten {
@@ -26,25 +38,25 @@ class Binärbaum<T extends Comparable<T>> {
         private Knoten links, rechts;
 
         public Knoten(T inhalt) {
+
             this.inhalt = inhalt;
             this.links = this.rechts = null;
+
         }
 
     }
 
-    public void einfügen(T value) {
-        if (istLeer()) {
-            wurzel = new Knoten(value); // base case
-        } else {
-            einfügen(wurzel, value);
+    public void inOrderTraverse() {
+        if (wurzel != null) {
+            
         }
     }
 
     public void suchen(Knoten knoten, T inhalt) {
         // what to do if element does not exist? 
+
         if (inhalt.compareTo(knoten.inhalt) < 0) {
             if (knoten.links.inhalt == inhalt) {
-
                 System.out.println("found links");
             } else {
                 suchen(knoten.links, inhalt);
@@ -54,7 +66,7 @@ class Binärbaum<T extends Comparable<T>> {
 
                 System.out.println("found rechts");
             } else {
-                suchen(knoten.rechts, inhalt); 
+                suchen(knoten.rechts, inhalt);
             }
         }
 
@@ -62,9 +74,17 @@ class Binärbaum<T extends Comparable<T>> {
 
     public void suchen(T inhalt) {
         if (istLeer()) {
-            // can't search a empty tree...
+            LOG.warn("Can't search a empty tree...");
         } else {
             suchen(wurzel, inhalt);
+        }
+    }
+
+    public void einfügen(T value) {
+        if (istLeer()) {
+            wurzel = new Knoten(value); // base case r
+        } else {
+            einfügen(wurzel, value);
         }
     }
 
@@ -91,12 +111,6 @@ class Binärbaum<T extends Comparable<T>> {
 
     public static void main(String[] args) {
         Binärbaum<String> b = new Binärbaum<>();
-
-        b.einfügen("3");
-        b.einfügen("1");
-
-        b.einfügen("4");
-        b.einfügen("5");
 
     }
 

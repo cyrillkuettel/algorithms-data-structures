@@ -27,7 +27,7 @@ public class BinärbaumTest {
 
         String test1 = "a";
         String test2 = "b";
-        int expectedValue = -1;
+        int expectedValue = -1; //  " b minus 1 ist a"
         Assertions.assertThat(test1.compareTo(test2)).isEqualTo(expectedValue);
     }
 

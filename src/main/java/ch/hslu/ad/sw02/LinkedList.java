@@ -17,6 +17,7 @@ public class LinkedList implements Iterable<Node> {
 
     private static final Logger LOG = LogManager.getFormatterLogger(LinkedList.class);
 
+
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
 
