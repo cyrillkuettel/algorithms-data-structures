@@ -20,15 +20,5 @@ public class Aufgabe1 {
     I.) nein, nicht optimal
     
     */
-    void test() {
-        
-    }
 
-    public Aufgabe1() {
-        test();
-    }
-    
-    public static void main(String[] args) {
-        new Aufgabe1();
-    }
 }

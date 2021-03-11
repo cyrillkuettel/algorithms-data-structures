@@ -14,7 +14,7 @@ class Binärbaum<T extends Comparable<T>> {
 
     //Aufgabe: 10 eindeutige geordnete Elemente erstellen
 /*
-     d.) Implementieren Sie auf dem Baum nun die search()-Methode.
+
     
      f.)        In der Aufgabe 3.f.) haben Sie bereits einen rekursiven Algorithmus
              zur Traversierung des Baumes in der «Inorder»-Semantik entworfen.
@@ -34,16 +34,17 @@ class Binärbaum<T extends Comparable<T>> {
         this.wurzel = new Knoten<T>(value);
     }
 
-    class Knoten<T extends Comparable<T>> {
+    public Binärbaum() {
+    }
+
+    public class Knoten<T extends Comparable<T>> {
 
         private T inhalt;
         private Knoten<T> links, rechts;
 
         public Knoten(T inhalt) {
-
             this.inhalt = inhalt;
             this.links = this.rechts = null;
-
         }
 
         @Override
@@ -52,11 +53,20 @@ class Binärbaum<T extends Comparable<T>> {
         }
 
     }
-
-    public void inOrderTraverse() {
-        if (wurzel != null) {
-
+    
+    public void printInOrder(Knoten<T> knoten) {
+        if (knoten == null) {
+            return;
         }
+        /* first print data of node */
+        printInOrder(knoten.links);
+
+        /* then print the data of node */
+        System.out.print(knoten.inhalt);
+
+        /* now recur on rechts child */
+        printInOrder(knoten.rechts);
+
     }
 
     public void suchen(Knoten<T> knoten, T inhalt) {
@@ -101,13 +111,13 @@ class Binärbaum<T extends Comparable<T>> {
             if (knoten.links == null) {
                 knoten.links = new Knoten<>(inhalt);
             } else {
-                einfügen(knoten.links, inhalt); // go one niveau down (Left side)
+                einfügen(knoten.links, inhalt); // descend one niveau (Left side)
             }
         } else {
             if (knoten.rechts == null) {
                 knoten.rechts = new Knoten<>(inhalt);
             } else { //rechts > links
-                einfügen(knoten.rechts, inhalt); // go one niveau down
+                einfügen(knoten.rechts, inhalt); // descend niveau right 
             }
         }
     }
@@ -116,16 +126,30 @@ class Binärbaum<T extends Comparable<T>> {
         return wurzel == null; // default initialization value 
     }
 
-    private static ch.hslu.ad.sw03.Knoten<Integer> test1() {
-        ch.hslu.ad.sw03.Knoten<Integer> root = new ch.hslu.ad.sw03.Knoten<Integer>(2);
-        ch.hslu.ad.sw03.Knoten<Integer> n11 = new ch.hslu.ad.sw03.Knoten<Integer>(7);
-        ch.hslu.ad.sw03.Knoten<Integer> n12 = new ch.hslu.ad.sw03.Knoten<Integer>(5);
-        ch.hslu.ad.sw03.Knoten<Integer> n21 = new ch.hslu.ad.sw03.Knoten<Integer>(2);
-        ch.hslu.ad.sw03.Knoten<Integer> n22 = new ch.hslu.ad.sw03.Knoten<Integer>(6);
-        ch.hslu.ad.sw03.Knoten<Integer> n23 = new ch.hslu.ad.sw03.Knoten<Integer>(9);
-        ch.hslu.ad.sw03.Knoten<Integer> n31 = new ch.hslu.ad.sw03.Knoten<Integer>(5);
-        ch.hslu.ad.sw03.Knoten<Integer> n32 = new ch.hslu.ad.sw03.Knoten<Integer>(8);
-        ch.hslu.ad.sw03.Knoten<Integer> n33 = new ch.hslu.ad.sw03.Knoten<Integer>(4);
+    public static void main(String[] args) {
+        Binärbaum<String> baum = new Binärbaum<>("B");
+
+        baum.einfügen("C");
+        baum.einfügen("D");
+        baum.einfügen("Z");
+        baum.einfügen("A");
+        
+        baum.printInOrder(baum.wurzel);
+        BTreePrinter<String> printer = new BTreePrinter<>();
+
+//        printer.printKnoten(test2());
+    }
+
+    private Knoten<String> test2() {
+        Knoten<String> root = new Knoten<String>("E");
+        Knoten<String> n11 = new Knoten<String>("A");
+        Knoten<String> n12 = new Knoten<String>("B");
+        Knoten<String> n21 = new Knoten<String>("C");
+        Knoten<String> n22 = new Knoten<String>("F");
+        Knoten<String> n23 = new Knoten<String>("H");
+        Knoten<String> n31 = new Knoten<String>("G");
+        Knoten<String> n32 = new Knoten<String>("I");
+        Knoten<String> n33 = new Knoten<String>("Z");
 
         root.links = n11;
         root.rechts = n12;
@@ -141,33 +165,6 @@ class Binärbaum<T extends Comparable<T>> {
 
         return root;
     }
-
-    public static void main(String[] args) {
-        Binärbaum<String> baum = new Binärbaum<>("B");
-
-        baum.einfügen("C");
-        baum.einfügen("D");
-        baum.einfügen("B");
-        baum.einfügen("A");
-        
-        BTreePrinter<String> printer = new BTreePrinter<>();
-        printer.printKnoten(baum.wurzel);
-
-    }
-
-    void testPrinter() {
-
-//        System.out.println(baum.wurzel);
-    }
-
-    void testStringComparatorForNumbers() {
-        String testEins = "1";
-        String testZwei = "2";
-
-        int result = testEins.compareTo(testZwei);
-        System.out.println(result); // -1
-    }
-
 }
 
 // Element mit 2 Kindern entfernen (idee) . 
