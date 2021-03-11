@@ -7,9 +7,8 @@ package ch.hslu.ad.sw03.SimpleTree;
 public class NewClass {
 
     public static void main(String[] args) {
-        node n = new node();
-        n.value = null;
-        System.out.println(n.value);
+        String line = "\\";
+        System.out.println("/");
     }
 
     /*

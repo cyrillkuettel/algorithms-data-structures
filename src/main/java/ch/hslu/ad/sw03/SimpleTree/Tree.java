@@ -42,7 +42,6 @@ public class Tree implements TreeInterface {
 
     public Tree() {
         this.root = new node();
-
     }
 
     public static void main(String[] args) {
@@ -104,7 +103,7 @@ public class Tree implements TreeInterface {
     @Override
     public void add(node node, int value) {
 
-        if (value < node.value) {
+        if (value < node.value) { //
             if (node.left == null) {
                 node.left = new node(value);
             } else {
@@ -199,10 +198,11 @@ h i j k l m n  o
         ArrayList<node> bottomList = nodeListByNiveau.get(niveau - 1);
         int middle = bottomList.size() * 2; // start in the middle
         ArrayList<node> firstList = nodeListByNiveau.get(0);
-        node root = firstList.get(0);
+        node root = firstList.get(0); // get the root element
 
         for (ArrayList<node> arrayList : nodeListByNiveau) {
-
+            int branchLen = getBranchLengthForNiveau(niveau);
+            
             for (node node : arrayList) { // one level 
                 String value;
                 if (node.isEmpty()) {
@@ -210,35 +210,27 @@ h i j k l m n  o
                 } else {
                     value = node.value.toString();
                 }
-                System.out.print(generateWhiteSpace((middle + 1) / 2) + node.value + generateWhiteSpace(middle / 2 - 1));
+                int offset = (int) Math.floor(arrayList.size() * 1.1); // 1.1 is fine tuning
+                String whiteSpaceprevious = generateWhiteSpace((middle + 1) / offset);
+                String whiteSpaceafter = generateWhiteSpace(middle / offset - 1);
+
+                System.out.print(whiteSpaceprevious + node.value + whiteSpaceafter);
 
             }
             System.out.println();
+            for (int i = 0; i < branchLen; i++) { // beschreibt, über wie viele Zeilen ein Ast gezeichent wird. 
+                for (node node : arrayList) { // jeder Knotenpunkt muss beachtet werden. Von Dort aus zeichnen. 
+                    // orientierung: whiteSpacePrevious und whitespace after. diese werte werden angepast mit jeder iteration der äusseren schliefe
+                    //für jedes node:
+                        // zeichne unterhalb einer einer nach links und einer nach rechts. (wenn != null)
+                        //mit jeder iteration der inneren schleife:
+                            // function: string replace:
+                            // kopier die vorherige zeile. Dort jeweils 2 white space adden zwischen branches und den whitespace wegnehmen. 
+                }
+                System.out.println("-----------");
+            }
+            niveau--; // kapt'n niveau! Wir sinken!
 
-//            int count = 0;
-//            for (int i = 0; i < getBranchLengthForNiveau(niveau); i++) {
-//                
-//                String line = "";
-//                for (node node : arrayList) {
-//                    line += generateWhiteSpace((middle + 1) / 2 - count);
-//
-//                    if (node.left != null) { // has left Child
-//                        line += "/";
-//                    } else {
-//                        line += " ";
-//                    }
-//                    generateWhiteSpace(middle / 2 - 1 + count); // expand abstand
-//                    if (node.right != null) { // has right Child
-//                        line += "\\";
-//                    } else {
-//                        line += " ";
-//                    }
-//                }
-//                System.out.println(line);
-//
-//            }
-//            niveau--;
-            middle /= 2;
         }
 
     }
