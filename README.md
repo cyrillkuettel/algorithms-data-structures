@@ -2,6 +2,8 @@
 
 Meine Übungen.
 
+Link zu src: ad/src/main/java/ch/hslu/ad/
+
 Dieses Projekt nutzt einen auf 
 [Apache Maven](https://maven.apache.org/) basierenden (und somit IDE-unabhaengigen) 
 Build und definiert die dafür notwendige, standardisierte Verzeichnisstruktur.
