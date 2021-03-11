@@ -2,7 +2,7 @@
 
 Meine Übungen.
 
-Link zu src: ad/src/main/java/ch/hslu/ad/
+Link zu src: [a relative link] src/main/java/ch/hslu/ad/
 
 Dieses Projekt nutzt einen auf 
 [Apache Maven](https://maven.apache.org/) basierenden (und somit IDE-unabhaengigen) 
