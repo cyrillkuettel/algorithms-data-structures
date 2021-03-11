@@ -17,14 +17,13 @@ public class node {
         left = right = null;
     }
 
-    public node(final int value, final boolean isInfactEmpty) {
-        empty = isInfactEmpty;
+    public node(final int value, final boolean isInFactEmpty) {
+        empty = isInFactEmpty;
         this.value = value;
         left = right = null;
     }
-
+    
     public node() {
-
     }
 
     @Override
@@ -35,5 +34,7 @@ public class node {
     public boolean isEmpty() {
         return empty;
     }
+    
+    
 
 }

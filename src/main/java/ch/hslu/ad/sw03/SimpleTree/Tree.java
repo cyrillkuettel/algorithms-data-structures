@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.IntStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  * @author cyrill
  */
 // is empty ,add search , prtin in order, delete of course
-interface intreeInterface {
+interface TreeInterface {
 
     boolean isEmpty();
 
@@ -29,10 +30,10 @@ interface intreeInterface {
     // preorder, postorder
 }
 
-public class Tree implements intreeInterface {
+public class Tree implements TreeInterface {
 
     private static final Logger LOG = LogManager.getFormatterLogger(Tree.class);
-    private node root;
+    protected node root;
 
     public Tree(int value) {
         this.root = new node(value);
@@ -57,7 +58,7 @@ public class Tree implements intreeInterface {
         printInOrder(node.left);
 
         /* then print the data of node */
-        System.out.print(node.value);
+        System.out.print(node.value + " ");
 
         /* now recur on right child */
         printInOrder(node.right);
@@ -67,23 +68,19 @@ public class Tree implements intreeInterface {
     @Override
     public void search(node node, int value) {
         // what to do if element does not exist? 
-
         if (value < node.value) {
             if (node.left.value == value) {
-                System.out.println("found the node: " + node.left.toString());
+                System.out.println("found left Node: " + node.left.toString());
             } else {
                 search(node.left, value);
             }
         } else {
             if (node.right.value == value) {
-
-                System.out.println("found the node: " + node.right.toString());
+                System.out.println("found right Node: " + node.right.toString());
             } else {
                 search(node.right, value);
             }
         }
-        System.out.println("Did not find element!");
-
     }
 
     @Override
@@ -111,13 +108,13 @@ public class Tree implements intreeInterface {
             if (node.left == null) {
                 node.left = new node(value);
             } else {
-                add(node.left, value); // descend one niveau (Left side)
+                add(node.left, value); // descend one niveau (Right side)
             }
-        } else {
+        } else { // ---> value is bigger or equal to node.value
             if (node.right == null) {
                 node.right = new node(value);
             } else { //right > right
-                add(node.right, value); // descend niveau right 
+                add(node.right, value); // descend one niveau (Right node)
             }
         }
     }
@@ -126,87 +123,136 @@ public class Tree implements intreeInterface {
     public boolean isEmpty() {
         return root.isEmpty();
     }
-    //https://stackoverflow.com/questions/2241513/java-printing-a-binary-tree-using-level-order-in-a-specific-format
 
-    public void printTree() {
+    public ArrayList<ArrayList<node>> getNodeListFromEachNiveau() {
+
+// Inspiration from https://stackoverflow.com/questions/2241513/java-printing-a-binary-tree-using-level-order-in-a-specific-format
+        ArrayList<ArrayList<node>> result = new ArrayList<ArrayList<node>>();
 
         Queue<node> currentLevel = new LinkedList<node>();
         Queue<node> nextLevel = new LinkedList<node>();
 
         currentLevel.add(root);
 
-        while (!currentLevel.isEmpty() && !currentLevel.stream().allMatch(i -> i.empty == true)) {
+        while (!currentLevel.isEmpty() && !allZeroesInQueue(currentLevel)) {
             Iterator<node> iter = currentLevel.iterator();
             while (iter.hasNext()) {
                 node currentNode = iter.next();
-                if (currentNode.left != null) {
-                    System.out.println("leftie: " + currentNode.left);
-                    nextLevel.add(currentNode.left);
-                }
-                if (currentNode.right != null) {
-                    nextLevel.add(currentNode.right);
-                    System.out.println("right: " + currentNode.left);
-                }
-                // add the null values as well 
-                if (currentNode.right == null || currentNode.left == null) {
-                    nextLevel.add(new node(0, true));
-                }
-                System.out.print(currentNode.value + " ");
+                prepareNextLevel(currentNode, nextLevel);
             }
-            System.out.println();
+            ArrayList<node> zwischenspeicher = new ArrayList<>(currentLevel);
+            result.add(zwischenspeicher);
+
             currentLevel = nextLevel;
             nextLevel = new LinkedList<node>();
+        }
+        return result;
+    }
 
+    public boolean allZeroesInQueue(Queue<node> currentLevel) {
+        return currentLevel.stream().allMatch(i -> i.empty == true);
+    }
+
+    public void prepareNextLevel(node currentNode, Queue<node> nextLevel) {
+        if (currentNode.left != null) {
+            nextLevel.add(currentNode.left);
+        } else {
+            nextLevel.add(new node(0, true)); // the boolean flag is necessary, to enable to store Zeroes in Tree
+        }
+
+        if (currentNode.right != null) {
+            nextLevel.add(currentNode.right);
+        } else {
+            nextLevel.add(new node(0, true));
+        }
+    }
+
+    public void drawTree() {
+        /*
+         *      1      root
+         *     / \
+         *    2   3    Niveau-1
+         *   /   / \
+         *  4   5   6  Niveau-2
+        
+        https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
+            
+       a
+      / \
+     /   \
+    /     \
+   /       \
+   b       c
+  / \     / \
+ /   \   /   \
+ d   e   f   g
+/ \ / \ / \ / \
+h i j k l m n  o
+         */
+
+        ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
+//        System.out.println(nodeListByNiveau);
+
+        int niveau = nodeListByNiveau.size();
+        int firstBranchLength = getBranchLengthForNiveau(niveau);
+
+        ArrayList<node> bottomList = nodeListByNiveau.get(niveau - 1);
+        int middle = bottomList.size() * 2; // start in the middle
+        ArrayList<node> firstList = nodeListByNiveau.get(0);
+        node root = firstList.get(0);
+
+        for (ArrayList<node> arrayList : nodeListByNiveau) {
+
+            for (node node : arrayList) { // one level 
+                String value;
+                if (node.isEmpty()) {
+                    value = " ";
+                } else {
+                    value = node.value.toString();
+                }
+                System.out.print(generateWhiteSpace((middle + 1) / 2) + node.value + generateWhiteSpace(middle / 2 - 1));
+
+            }
+            System.out.println();
+
+//            int count = 0;
+//            for (int i = 0; i < getBranchLengthForNiveau(niveau); i++) {
+//                
+//                String line = "";
+//                for (node node : arrayList) {
+//                    line += generateWhiteSpace((middle + 1) / 2 - count);
+//
+//                    if (node.left != null) { // has left Child
+//                        line += "/";
+//                    } else {
+//                        line += " ";
+//                    }
+//                    generateWhiteSpace(middle / 2 - 1 + count); // expand abstand
+//                    if (node.right != null) { // has right Child
+//                        line += "\\";
+//                    } else {
+//                        line += " ";
+//                    }
+//                }
+//                System.out.println(line);
+//
+//            }
+//            niveau--;
+            middle /= 2;
         }
 
     }
 
-    public ArrayList<ArrayList<Integer>> printlevelOrder() {
+    public int getBranchLengthForNiveau(final int niveau) {
+        return (int) Math.pow(2, niveau - 1);
+    }
 
-        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+    public void drawFixedbranch(final int branchLength, final int startingPosition) {
 
-        if (root == null) {
-            return result;
-        }
-        Queue<node> q1 = new LinkedList<>();
-        Queue<node> q2 = new LinkedList<>();
+    }
 
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        q1.add(root);
-
-        while (!q1.isEmpty() || !q2.isEmpty()) {
-
-            while (!q1.isEmpty()) {
-                node temp = q1.poll();
-                list.add(temp.value);
-                if (temp.left != null) {
-                    q2.add(temp.left);
-                }
-                if (temp.right != null) {
-                    q2.add(temp.right);
-                }
-
-            }
-            if (list.size() > 0) {
-                result.add(new ArrayList<Integer>(list));
-            }
-            list.clear();
-            while (!q2.isEmpty()) {
-                node temp = q2.poll();
-                list.add(temp.value);
-                if (temp.left != null) {
-                    q1.add(temp.left);
-                }
-                if (temp.right != null) {
-                    q1.add(temp.right);
-                }
-            }
-            if (list.size() > 0) {
-                result.add(new ArrayList<Integer>(list));
-            }
-            list.clear();
-        }
-        return result;
+    public String generateWhiteSpace(final int len) {
+        return " ".repeat(len);
     }
 
 }

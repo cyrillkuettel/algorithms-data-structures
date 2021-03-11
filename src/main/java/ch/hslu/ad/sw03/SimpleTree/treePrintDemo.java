@@ -9,16 +9,20 @@ public class treePrintDemo {
     
     
     public static void main(String[] args) {
-        Tree t = new Tree();
-        t.add(3);
-        t.add(1);
-        t.add(2);
-        t.add(4);
-        t.add(8);
-        t.add(10);
-        t.add(11);
-
-        t.printTree();
+        Tree tree = new Tree();
+        tree.add(3);
+        tree.add(1);
+        tree.add(2);
+        tree.add(4);
+        tree.add(8);
+        tree.add(10);
+        tree.add(11);
+        
+        tree.printInOrder(tree.root);
+        System.out.println();
+        System.out.println();
+        
+        tree.drawTree();
     }
 
 }
