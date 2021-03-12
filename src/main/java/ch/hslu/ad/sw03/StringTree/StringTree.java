@@ -1,5 +1,6 @@
-package ch.hslu.ad.sw03.SimpleTree;
+package ch.hslu.ad.sw03.StringTree;
 
+import ch.hslu.ad.sw03.SimpleTree.*;
 import ch.hslu.ad.sw02.Node;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,33 +21,33 @@ interface TreeInterface {
 
     boolean isEmpty();
 
-    public void add(node node, int value);
+    public void add(node node, String value);
 
-    public void add(int value);
+    public void add(String value);
 
-    void search(node node, int value);
+    void search(node node, String value);
 
-    void search(int value);
+    void search(String value);
 
     void printInOrder(node node);
 
 }
 
-public class Tree implements TreeInterface {
+public class StringTree implements TreeInterface {
 
-    private static final Logger LOG = LogManager.getFormatterLogger(Tree.class);
+    private static final Logger LOG = LogManager.getFormatterLogger(StringTree.class);
     protected node root;
 
-    public Tree(int value) {
+    public StringTree(String value) {
         this.root = new node(value);
     }
 
-    public Tree() {
+    public StringTree() {
         this.root = new node();
     }
 
     public static void main(String[] args) {
-        new Tree();
+        new StringTree();
     }
 
     @Override
@@ -66,17 +67,17 @@ public class Tree implements TreeInterface {
 
 
     @Override
-    public void search(node node, int value) {
+    public void search(node node, String value) {
         // what to do if element does not exist? 
-        if (value < node.value) {
+        if (value.compareTo(node.value) < 0) {
             if (node.left.value == value) {
-                System.out.println("found left Node: " + node.left.toString());
+                System.out.println("found left Node: " + node.left);
             } else {
                 search(node.left, value);
             }
         } else {
             if (node.right.value == value) {
-                System.out.println("found right Node: " + node.right.toString());
+                System.out.println("found right Node: " + node.right);
             } else {
                 search(node.right, value);
             }
@@ -84,7 +85,7 @@ public class Tree implements TreeInterface {
     }
 
     @Override
-    public void search(int value) {
+    public void search(String value) {
         if (isEmpty()) {
             LOG.warn("Can't search a empty tree...");
         } else {
@@ -93,7 +94,7 @@ public class Tree implements TreeInterface {
     }
 
     @Override
-    public void add(int value) {
+    public void add(String value) {
         if (isEmpty()) {
             root = new node(value); // base case r
         } else {
@@ -102,9 +103,9 @@ public class Tree implements TreeInterface {
     }
 
     @Override
-    public void add(node node, int value) {
+    public void add(node node, String value) {
 
-        if (value < node.value) { //
+        if (value.compareTo(node.value) < 0) { //
             if (node.left == null) {
                 node.left = new node(value);
             } else {
@@ -157,13 +158,13 @@ public class Tree implements TreeInterface {
         if (currentNode.left != null) {
             nextLevel.add(currentNode.left);
         } else {
-            nextLevel.add(new node(0, true)); // the boolean flag signals the node, that this Zero is in fact empty
+            nextLevel.add(new node("0", true)); // the boolean flag signals the node, that this Zero is in fact empty
         }
 
         if (currentNode.right != null) {
             nextLevel.add(currentNode.right);
         } else {
-            nextLevel.add(new node(0, true));
+            nextLevel.add(new node("0", true));
         }
     }
 
@@ -203,9 +204,8 @@ h i j k l m n  o
 
         for (ArrayList<node> arrayList : nodeListByNiveau) {
             int branchLen = getBranchLengthForNiveau(niveau);
-            String line = "";
-            
-            for (node node : arrayList) { // per Niveau, do this on this Niveau
+
+            for (node node : arrayList) { // one level 
                 String value;
                 if (node.isEmpty()) {
                     value = " ";
@@ -215,14 +215,22 @@ h i j k l m n  o
                 int offset = (int) Math.floor(arrayList.size() * 1.1); // 1.1 is fine tuning
                 String whiteSpaceprevious = generateWhiteSpace((middle + 1) / offset);
                 String whiteSpaceafter = generateWhiteSpace(middle / offset - 1);
-                
-                line += whiteSpaceprevious + node.value + whiteSpaceafter;
+
                 System.out.print(whiteSpaceprevious + node.value + whiteSpaceafter);
 
             }
-            System.out.println(); // necessary?? 
-            // here branch grower
-            
+            System.out.println();
+            for (int i = 0; i < branchLen; i++) { // beschreibt, über wie viele Zeilen ein Ast gezeichent wird. 
+                for (node node : arrayList) { // jeder Knotenpunkt muss beachtet werden. Von Dort aus zeichnen. 
+                    // orientierung: whiteSpacePrevious und whitespace after. diese werte werden angepast mit jeder iteration der äusseren schliefe
+                    //für jedes node:
+                    // zeichne unterhalb einer einer nach links und einer nach rechts. (wenn != null)
+                    //mit jeder iteration der inneren schleife:
+                    // function: string replace:
+                    // kopier die vorherige zeile. Dort jeweils 2 white space adden zwischen branches und den whitespace wegnehmen. 
+                }
+                System.out.println();
+            }
             niveau--; // kapt'n niveau! Wir sinken!
 
         }

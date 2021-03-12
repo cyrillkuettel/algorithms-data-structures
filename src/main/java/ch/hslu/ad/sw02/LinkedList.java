@@ -40,6 +40,9 @@ public class LinkedList implements Iterable<Node> {
         }
         size++;
     }
+    boolean hasNext(Node node) {
+        return node.getNext() != null;
+    }
 
     public boolean exists(Node n) {
         Node next = head.getNext();
