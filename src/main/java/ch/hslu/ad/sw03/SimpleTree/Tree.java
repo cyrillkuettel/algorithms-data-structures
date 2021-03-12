@@ -217,22 +217,24 @@ h i j k l m n  o
 
                 // them most important Part.
                 // in the end WHEN It works, change into value;
-                line += whiteSpaceprevious + node.value + whiteSpaceafter; // important variable
-                
-                
-                System.out.print(whiteSpaceprevious + node.value + whiteSpaceafter);
+                String s = whiteSpaceprevious + node.value + whiteSpaceafter;
+                System.out.print(s);
+                line += s; // important variable
+
+               
 
             }
             System.out.println(); // necessary?? 
 
-            BranchGrower bg1 = new BranchGrower(arrayList, line); 
-            
-//            bg1.drawSingleBranch();
+            BranchGrower bg1 = new BranchGrower(arrayList, line);
 
-//            int branchLen = getBranchLengthForNiveau(niveau);
-//            String growingBranch = line;
-//            BranchGrower bg = new BranchGrower(growingBranch, 1);
-//            bg.growBranchNtimes(growingBranch, branchLen);
+            line = bg1.drawSingleBranch();
+
+            int branchLen = getBranchLengthForNiveau(niveau)-1;
+            
+            String growingBranch = line;
+            BranchGrower bg = new BranchGrower(growingBranch, 1);
+            bg.growBranchNtimes(growingBranch, branchLen);
             niveau--; // kapt'n niveau! Wir sinken!
 
         }
