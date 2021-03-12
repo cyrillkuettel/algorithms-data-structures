@@ -45,10 +45,6 @@ public class Tree implements TreeInterface {
         this.root = new node();
     }
 
-    public static void main(String[] args) {
-        new Tree();
-    }
-
     @Override
     public void printInOrder(node node) {
         if (node == null) {
@@ -190,20 +186,18 @@ h i j k l m n  o
          */
 
         ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
-//        System.out.println(nodeListByNiveau);
-
-        int niveau = nodeListByNiveau.size();
+        int niveau = nodeListByNiveau.size() - 1;
         int firstBranchLength = getBranchLengthForNiveau(niveau);
-
         ArrayList<node> bottomList = nodeListByNiveau.get(niveau - 1);
+        ArrayList<node> zweitUndersteList = nodeListByNiveau.get(niveau - 2);
+
         int middle = bottomList.size() * 2; // start in the middle
-        ArrayList<node> firstList = nodeListByNiveau.get(0);
-        node root = firstList.get(0); // get the root element
 
         for (ArrayList<node> arrayList : nodeListByNiveau) {
-
+            
             String line = "";
 
+            int count = 0;
             for (node node : arrayList) { // per Niveau, do this on this Niveau
                 String value;
                 if (node.isEmpty()) {
@@ -211,32 +205,31 @@ h i j k l m n  o
                 } else {
                     value = node.value.toString();
                 }
-                int offset = (int) Math.floor(arrayList.size() * 1.1); // 1.1 is fine tuning
-                String whiteSpaceprevious = generateWhiteSpace((middle + 1) / offset);
-                String whiteSpaceafter = generateWhiteSpace(middle / offset - 1);
 
-                // them most important Part.
+                int divisor = arrayList.size();
+                int offset = offsetOnlyEverySecondIteration(count);
+
+                String whiteSpaceprevious = generateWhiteSpace((middle + 1) / divisor);
+                String whiteSpaceafter = generateWhiteSpace((middle / divisor));
+
                 // in the end WHEN It works, change into value;
                 String s = whiteSpaceprevious + node.value + whiteSpaceafter;
                 System.out.print(s);
                 line += s; // important variable
-
-               
-
+                count++;
             }
-            System.out.println(); // necessary?? 
-
-            BranchGrower bg1 = new BranchGrower(arrayList, line);
-
-            line = bg1.drawSingleBranch();
-
-            int branchLen = getBranchLengthForNiveau(niveau)-1;
+            System.out.println(); // dont remove!!
+         
+                BranchGrower bg1 = new BranchGrower(arrayList, line);
+                line = bg1.drawSingleBranch();
             
+
+            int branchLen = getBranchLengthForNiveau(niveau) - 1;
+
             String growingBranch = line;
             BranchGrower bg = new BranchGrower(growingBranch, 1);
             bg.growBranchNtimes(growingBranch, branchLen);
             niveau--; // kapt'n niveau! Wir sinken!
-
         }
 
     }
@@ -247,6 +240,13 @@ h i j k l m n  o
 
     public String generateWhiteSpace(final int len) {
         return " ".repeat(len);
+    }
+
+    private int offsetOnlyEverySecondIteration(int count) {
+        if (count % 2 != 0) {
+            return 1;
+        }
+        return 0;
     }
 
 }
