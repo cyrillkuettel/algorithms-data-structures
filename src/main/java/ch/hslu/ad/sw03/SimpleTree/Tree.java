@@ -37,7 +37,6 @@ public class Tree implements TreeInterface {
 
     public Tree(int value) {
         this.root = new node(value);
-
     }
 
     public Tree() {
@@ -61,7 +60,6 @@ public class Tree implements TreeInterface {
 
         /* now recur on right child */
         printInOrder(node.right);
-
     }
 
     @Override
@@ -156,7 +154,7 @@ public class Tree implements TreeInterface {
         if (currentNode.left != null) {
             nextLevel.add(currentNode.left);
         } else {
-            nextLevel.add(new node(0, true)); // the boolean flag is necessary, to enable to store Zeroes in Tree
+            nextLevel.add(new node(0, true)); // the boolean flag signals the node, that this Zero is in fact empty
         }
 
         if (currentNode.right != null) {
@@ -227,7 +225,7 @@ h i j k l m n  o
                             // function: string replace:
                             // kopier die vorherige zeile. Dort jeweils 2 white space adden zwischen branches und den whitespace wegnehmen. 
                 }
-                System.out.println("-----------");
+                System.out.println();
             }
             niveau--; // kapt'n niveau! Wir sinken!
 
@@ -237,10 +235,6 @@ h i j k l m n  o
 
     public int getBranchLengthForNiveau(final int niveau) {
         return (int) Math.pow(2, niveau - 1);
-    }
-
-    public void drawFixedbranch(final int branchLength, final int startingPosition) {
-
     }
 
     public String generateWhiteSpace(final int len) {
