@@ -64,7 +64,6 @@ public class Tree implements TreeInterface {
         printInOrder(node.right);
     }
 
-
     @Override
     public void search(node node, int value) {
         // what to do if element does not exist? 
@@ -202,9 +201,9 @@ h i j k l m n  o
         node root = firstList.get(0); // get the root element
 
         for (ArrayList<node> arrayList : nodeListByNiveau) {
-            int branchLen = getBranchLengthForNiveau(niveau);
+
             String line = "";
-            
+
             for (node node : arrayList) { // per Niveau, do this on this Niveau
                 String value;
                 if (node.isEmpty()) {
@@ -215,14 +214,25 @@ h i j k l m n  o
                 int offset = (int) Math.floor(arrayList.size() * 1.1); // 1.1 is fine tuning
                 String whiteSpaceprevious = generateWhiteSpace((middle + 1) / offset);
                 String whiteSpaceafter = generateWhiteSpace(middle / offset - 1);
+
+                // them most important Part.
+                // in the end WHEN It works, change into value;
+                line += whiteSpaceprevious + node.value + whiteSpaceafter; // important variable
                 
-                line += whiteSpaceprevious + node.value + whiteSpaceafter;
+                
                 System.out.print(whiteSpaceprevious + node.value + whiteSpaceafter);
 
             }
             System.out.println(); // necessary?? 
-            // here branch grower
+
+            BranchGrower bg1 = new BranchGrower(arrayList, line); 
             
+//            bg1.drawSingleBranch();
+
+//            int branchLen = getBranchLengthForNiveau(niveau);
+//            String growingBranch = line;
+//            BranchGrower bg = new BranchGrower(growingBranch, 1);
+//            bg.growBranchNtimes(growingBranch, branchLen);
             niveau--; // kapt'n niveau! Wir sinken!
 
         }

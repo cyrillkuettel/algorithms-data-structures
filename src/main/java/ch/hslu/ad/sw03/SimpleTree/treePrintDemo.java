@@ -10,6 +10,8 @@ public class treePrintDemo {
     public static void main(String[] args) {
         Tree tree = createTree();
         tree.drawTree();
+        
+        
 
     }
 
