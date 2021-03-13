@@ -68,7 +68,7 @@ public class BranchGrower {
         this.arrayList = arrayList;
     }
 
-    public String drawSingleBranch() { // TODO make not void but String return value
+    public String drawSingleBranch() { 
 
         // aufpassen wegen node.value.length > 1 -> TODO special case. Hier mit regex abfangen, dann etwa mittig zum regex den "/" printen, und zu i die length des gemachten regex elements addieren. 
         // write the first line , pass in arrayList and line. From line then is derrrived the rest Of the branch. so pass this then into growBranchNtimes.
@@ -84,7 +84,7 @@ public class BranchGrower {
 
         for (int j = 1; j < str.length - 1; j++) {
 
-            if (isNumeric(str[j])) { // for strings, this has to be expanded.
+            if (isNumeric(str[j])) { // for strings, this has to be generalized. A functin to detect the node.values.
 //                log.info("isNumeric");
                 str[j - 1] = "/";
                 str[j] = " ";

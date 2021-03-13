@@ -12,25 +12,25 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author cyrill
  */
-public class StackTest {
+ class StackTest {
     
-    public StackTest() {
+     StackTest() {
     }
     
     @BeforeAll
-    public static void setUpClass() {
+     static void setUpClass() {
     }
     
     @AfterAll
-    public static void tearDownClass() {
+     static void tearDownClass() {
     }
     
     @BeforeEach
-    public void setUp() {
+     void setUp() {
     }
     
     @AfterEach
-    public void tearDown() {
+     void tearDown() {
     }
 
     /**
@@ -38,9 +38,13 @@ public class StackTest {
      */
     
     @Test
-    public void testPush() {
+     void testPush() {
 
        
+    }
+    @Test 
+    void testEnsureCapacity() {
+        
     }
 
 

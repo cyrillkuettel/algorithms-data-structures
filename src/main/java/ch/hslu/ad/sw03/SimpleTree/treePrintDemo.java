@@ -9,7 +9,7 @@ public class treePrintDemo {
 
     public static void main(String[] args) {
         Tree tree = createTree();
-        tree.drawTree();
+        tree.drawTree(false);
 
     }
 
@@ -22,9 +22,6 @@ public class treePrintDemo {
         tree.add(5);
         tree.add(6);
         tree.add(1);
-
-
-
         return tree;
     }
 

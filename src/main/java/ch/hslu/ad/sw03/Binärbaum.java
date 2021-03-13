@@ -37,9 +37,9 @@ class Binärbaum<T extends Comparable<T>> {
     public Binärbaum() {
     }
 
-    public class Knoten<T extends Comparable<T>> {
+    public  class Knoten<T extends Comparable<T>> {
 
-        private T inhalt;
+        private final T inhalt;
         private Knoten<T> links, rechts;
 
         public Knoten(T inhalt) {
@@ -53,7 +53,7 @@ class Binärbaum<T extends Comparable<T>> {
         }
 
     }
-    
+
     public void printInOrder(Knoten<T> knoten) {
         if (knoten == null) {
             return;
@@ -124,20 +124,6 @@ class Binärbaum<T extends Comparable<T>> {
 
     public boolean istLeer() {
         return wurzel == null; // default initialization value 
-    }
-
-    public static void main(String[] args) {
-        Binärbaum<String> baum = new Binärbaum<>("B");
-
-        baum.einfügen("C");
-        baum.einfügen("D");
-        baum.einfügen("Z");
-        baum.einfügen("A");
-        
-        baum.printInOrder(baum.wurzel);
-        BTreePrinter<String> printer = new BTreePrinter<>();
-
-//        printer.printKnoten(test2());
     }
 
     private Knoten<String> test2() {

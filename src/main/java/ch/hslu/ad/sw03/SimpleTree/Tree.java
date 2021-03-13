@@ -163,6 +163,10 @@ public class Tree implements TreeInterface {
     }
 
     public void drawTree() {
+        drawTree(true);
+    }
+
+    public void drawTree(boolean printEmptyNodes) {
         /*
          *      1      root
          *     / \
@@ -172,17 +176,12 @@ public class Tree implements TreeInterface {
         
         https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
             
-       a
-      / \
-     /   \
-    /     \
-   /       \
-   b       c
-  / \     / \
- /   \   /   \
- d   e   f   g
-/ \ / \ / \ / \
-h i j k l m n  o
+        
+        
+        TODO: 
+            manchmal nicht ganz bündig, vor allem bei grösseren Bäumen. (offset könnte helfen?)
+            feature: kein branch, wenn nächster null ist.
+            special case: node.values.length() > 1  ( Wenn die Elemente länger sind muss man mit der breite multiplizieren)
          */
 
         ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
@@ -194,17 +193,11 @@ h i j k l m n  o
         int middle = bottomList.size() * 2; // start in the middle
 
         for (ArrayList<node> arrayList : nodeListByNiveau) {
-            
+
             String line = "";
 
             int count = 0;
             for (node node : arrayList) { // per Niveau, do this on this Niveau
-                String value;
-                if (node.isEmpty()) {
-                    value = " ";
-                } else {
-                    value = node.value.toString();
-                }
 
                 int divisor = arrayList.size();
                 int offset = offsetOnlyEverySecondIteration(count);
@@ -213,16 +206,27 @@ h i j k l m n  o
                 String whiteSpaceafter = generateWhiteSpace((middle / divisor));
 
                 // in the end WHEN It works, change into value;
-                String s = whiteSpaceprevious + node.value + whiteSpaceafter;
+                String s;
+                if (printEmptyNodes) {
+                    s = whiteSpaceprevious + node.value + whiteSpaceafter;
+                } else {
+                    String value;
+                    if (node.isEmpty()) {
+                        value = " ";
+                    } else {
+                        value = node.value.toString();
+                    }
+                    s = whiteSpaceprevious + value + whiteSpaceafter;
+                }
+
                 System.out.print(s);
                 line += s; // important variable
                 count++;
             }
             System.out.println(); // dont remove!!
-         
-                BranchGrower bg1 = new BranchGrower(arrayList, line);
-                line = bg1.drawSingleBranch();
-            
+
+            BranchGrower bg1 = new BranchGrower(arrayList, line);
+            line = bg1.drawSingleBranch();
 
             int branchLen = getBranchLengthForNiveau(niveau) - 1;
 
