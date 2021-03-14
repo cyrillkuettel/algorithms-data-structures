@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-// is empty ,add search , prtin in order, delete of course
 interface TreeInterface {
 
     boolean isEmpty();
@@ -38,6 +37,7 @@ public class Tree implements TreeInterface {
 
     private static final Logger log = LogManager.getFormatterLogger(Tree.class);
     protected node root;
+    
 
     public Tree(int value) {
         this.root = new node(value);
@@ -84,12 +84,22 @@ public class Tree implements TreeInterface {
     public void remove(int value) {
         // the simply cases (2):
         if (root != null) {
-
+            remove(root, value);
+        } else {
+            log.warn("Nothing to delete. Tree is Empty");
         }
     }
 
     public void remove(node node, int value) {
+        int childrenCount = node.getNumberChildren();
 
+        if (childrenCount == 0) {
+
+        }
+        // 0 Children
+
+        // 1 Child
+        // 2 Child
     }
 
     @Override
@@ -183,11 +193,11 @@ public class Tree implements TreeInterface {
         }
     }
 
-    public void drawTree() {
+    public void drawTree() throws InterruptedException {
         drawTree(true);
     }
 
-    public void drawTree(boolean printEmptyNodes) {
+    public void drawTree(boolean printEmptyNodes) throws InterruptedException {
         /*
          *      1      root
          *     / \
@@ -206,7 +216,9 @@ public class Tree implements TreeInterface {
         
             TreeDiagramm Class would need nodeListByNiveau, every function which drawTree uses.
          */
-
+        
+         final int sleepTime = 0;
+        
         ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
         int niveau = nodeListByNiveau.size(); // with this you can modify the branch length
         int firstBranchLength = getBranchLengthForNiveau(niveau);
@@ -256,16 +268,18 @@ public class Tree implements TreeInterface {
                 count++;
             }
             System.out.println(); // dont remove!!
-            
+
             if (arrayList != bottomList) {
                 BranchGrower bg1 = new BranchGrower(arrayList, line);
                 String growingBranch = bg1.drawSingleBranch();
+                 Thread.sleep(sleepTime);
                 BranchGrower bg = new BranchGrower(growingBranch);
                 int branchLen = getBranchLengthForNiveau(niveau) - 1;
                 bg.growBranchNtimes(growingBranch, branchLen);
             }
 
             niveau--; // kapt'n niveau! Wir sinken!
+            Thread.sleep(sleepTime);
         }
 
     }
@@ -278,27 +292,27 @@ public class Tree implements TreeInterface {
         return " ".repeat(len);
     }
 
-    private int offsetOnlyEvery_Nth_Iteration(final int count, 
-        final ArrayList< ArrayList< node>> nodeListByNiveau, 
-        final ArrayList<node> currentArrayList ) {
-        
-        int currentIteration = nodeListByNiveau.indexOf(currentArrayList)+1;
-        int diff = nodeListByNiveau.size()- currentIteration;
-        
+    private int offsetOnlyEvery_Nth_Iteration(final int count,
+        final ArrayList< ArrayList< node>> nodeListByNiveau,
+        final ArrayList<node> currentArrayList) {
+
+        int currentIteration = nodeListByNiveau.indexOf(currentArrayList) + 1;
+        int diff = nodeListByNiveau.size() - currentIteration;
+
         if (diff == 0) {
             if (count % 4 == 0 && count % 6 == 0) { //  arbitrary Values. This tries to be a frequency. 
                 return -2; // künstlich verkürzen
             }
-         
+
         }
-        if ( diff == 1) {
+        if (diff == 1) {
             // zweitletzte Line
-            
+
         }
         if (count % 2 != 0) { // die ungeraden
             return -1;
         }
-        
+
         return 0;
     }
 

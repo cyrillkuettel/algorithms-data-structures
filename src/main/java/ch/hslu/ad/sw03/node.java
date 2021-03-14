@@ -35,16 +35,28 @@ public class node {
         return empty;
     }
 
-    
-    
-    public boolean hasChildren() {
-        return this.left != null || this.right != null;
-    }
-
     public boolean allChildrenAreLeaves() {
+        boolean hasChildren = this.left != null || this.right != null;
+
+        if (hasChildren == false) {
+            return false;
+        }
+
         boolean leftSide = this.left.right == null && this.left.left == null;
         boolean rightSide = this.right.right == null && this.right.left == null;
-        return leftSide && rightSide;
+        
+        return (leftSide && rightSide);
+    }
+
+    public int getNumberChildren() {
+         int count = 0;
+        if (this.left != null) {
+            count++;
+        }
+        if (this.right != null) {
+            count++;
+        }
+        return count;
     }
 
 }
