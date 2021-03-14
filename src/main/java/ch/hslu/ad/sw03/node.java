@@ -1,6 +1,4 @@
-package ch.hslu.ad.sw03.StringTree;
-
-import ch.hslu.ad.sw03.SimpleTree.*;
+package ch.hslu.ad.sw03;
 
 /**
  *
@@ -8,23 +6,23 @@ import ch.hslu.ad.sw03.SimpleTree.*;
  */
 public class node {
 
-    String value;
+    Integer value;
     boolean empty = true;
     node left;
     node right;
 
-    public node(final String value) {
+    public node(final int value) {
         empty = false;
         this.value = value;
         left = right = null;
     }
 
-    public node(final String value, final boolean isInFactEmpty) {
+    public node(final int value, final boolean isInFactEmpty) {
         empty = isInFactEmpty;
         this.value = value;
         left = right = null;
     }
-    
+
     public node() {
     }
 
@@ -36,7 +34,17 @@ public class node {
     public boolean isEmpty() {
         return empty;
     }
+
     
     
+    public boolean hasChildren() {
+        return this.left != null || this.right != null;
+    }
+
+    public boolean allChildrenAreLeaves() {
+        boolean leftSide = this.left.right == null && this.left.left == null;
+        boolean rightSide = this.right.right == null && this.right.left == null;
+        return leftSide && rightSide;
+    }
 
 }

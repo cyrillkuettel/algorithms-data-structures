@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw03.SimpleTree;
+package ch.hslu.ad.sw03;
 
 /**
  *
@@ -9,7 +9,7 @@ public class treePrintDemo {
 
     public static void main(String[] args) {
         Tree tree = createTree();
-        tree.drawTree(false);
+        tree.drawTree();
 
     }
 
@@ -22,6 +22,10 @@ public class treePrintDemo {
         tree.add(5);
         tree.add(6);
         tree.add(1);
+        tree.add(5);
+        tree.add(6);
+
+
         return tree;
     }
 

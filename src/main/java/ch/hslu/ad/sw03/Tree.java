@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw03.SimpleTree;
+package ch.hslu.ad.sw03;
 
 import ch.hslu.ad.sw02.Node;
 import java.util.ArrayList;
@@ -30,11 +30,13 @@ interface TreeInterface {
 
     void printInOrder(node node);
 
+    void remove(int value);
+
 }
 
 public class Tree implements TreeInterface {
 
-    private static final Logger LOG = LogManager.getFormatterLogger(Tree.class);
+    private static final Logger log = LogManager.getFormatterLogger(Tree.class);
     protected node root;
 
     public Tree(int value) {
@@ -79,9 +81,21 @@ public class Tree implements TreeInterface {
     }
 
     @Override
+    public void remove(int value) {
+        // the simply cases (2):
+        if (root != null) {
+
+        }
+    }
+
+    public void remove(node node, int value) {
+
+    }
+
+    @Override
     public void search(int value) {
         if (isEmpty()) {
-            LOG.warn("Can't search a empty tree...");
+            log.warn("Can't search a empty tree...");
         } else {
             search(root, value);
         }
@@ -119,6 +133,12 @@ public class Tree implements TreeInterface {
         return root.isEmpty();
     }
 
+    /**
+     *
+     * Simply loops over each Niveau,
+     *
+     * @return nested ArrayList, each Niveau representing a ArrayList itself.
+     */
     public ArrayList<ArrayList<node>> getNodeListFromEachNiveau() {
 
 // Inspiration from https://stackoverflow.com/questions/2241513/java-printing-a-binary-tree-using-level-order-in-a-specific-format
@@ -133,7 +153,7 @@ public class Tree implements TreeInterface {
             Iterator<node> iter = currentLevel.iterator();
             while (iter.hasNext()) {
                 node currentNode = iter.next();
-                prepareNextLevel(currentNode, nextLevel);
+                prepareNextLevelForQueue(currentNode, nextLevel);
             }
             ArrayList<node> zwischenspeicher = new ArrayList<>(currentLevel);
             result.add(zwischenspeicher);
@@ -148,11 +168,12 @@ public class Tree implements TreeInterface {
         return currentLevel.stream().allMatch(i -> i.empty == true);
     }
 
-    public void prepareNextLevel(node currentNode, Queue<node> nextLevel) {
+    public void prepareNextLevelForQueue(node currentNode, Queue<node> nextLevel) {
         if (currentNode.left != null) {
             nextLevel.add(currentNode.left);
         } else {
-            nextLevel.add(new node(0, true)); // the boolean flag signals the node, that this Zero is in fact empty
+            // the boolean flag signals the node, that this Zero is in fact empty
+            nextLevel.add(new node(0, true));
         }
 
         if (currentNode.right != null) {
@@ -182,6 +203,8 @@ public class Tree implements TreeInterface {
             manchmal nicht ganz bündig, vor allem bei grösseren Bäumen. (offset könnte helfen?)
             feature: kein branch, wenn nächster null ist.
             special case: node.values.length() > 1  ( Wenn die Elemente länger sind muss man mit der breite multiplizieren)
+        
+            TreeDiagramm Class would need nodeListByNiveau, every function which drawTree uses.
          */
 
         ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
@@ -194,16 +217,18 @@ public class Tree implements TreeInterface {
 
         for (ArrayList<node> arrayList : nodeListByNiveau) {
 
-            String line = "";
+            String line = ""; //represents one Line (of Text) 
 
             int count = 0;
             for (node node : arrayList) { // per Niveau, do this on this Niveau
 
                 int divisor = arrayList.size();
                 int offset = offsetOnlyEverySecondIteration(count);
-
+                // whitespace Generation: how far are the elements apart
                 String whiteSpaceprevious = generateWhiteSpace((middle + 1) / divisor);
                 String whiteSpaceafter = generateWhiteSpace((middle / divisor));
+                log.info("whiteSpaceprevious Length is " + whiteSpaceprevious.length());
+                log.info("whiteSpaceafter Length is " + whiteSpaceafter.length());
 
                 // in the end WHEN It works, change into value;
                 String s;
@@ -226,12 +251,9 @@ public class Tree implements TreeInterface {
             System.out.println(); // dont remove!!
 
             BranchGrower bg1 = new BranchGrower(arrayList, line);
-            line = bg1.drawSingleBranch();
-
+            String growingBranch = bg1.drawSingleBranch();
+            BranchGrower bg = new BranchGrower(growingBranch);
             int branchLen = getBranchLengthForNiveau(niveau) - 1;
-
-            String growingBranch = line;
-            BranchGrower bg = new BranchGrower(growingBranch, 1);
             bg.growBranchNtimes(growingBranch, branchLen);
             niveau--; // kapt'n niveau! Wir sinken!
         }
@@ -246,7 +268,7 @@ public class Tree implements TreeInterface {
         return " ".repeat(len);
     }
 
-    private int offsetOnlyEverySecondIteration(int count) {
+    private int offsetOnlyEverySecondIteration(final int count) {
         if (count % 2 != 0) {
             return 1;
         }

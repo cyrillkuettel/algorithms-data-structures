@@ -1,29 +1,31 @@
-package ch.hslu.ad.sw03.SimpleTree;
+package ch.hslu.ad.sw03;
+
+
 
 /**
  *
  * @author cyrill
  */
-public class node {
+public class Snode {
 
-    Integer value;
+    String value;
     boolean empty = true;
-    node left;
-    node right;
+    Snode left;
+    Snode right;
 
-    public node(final int value) {
+    public Snode(final String value) {
         empty = false;
         this.value = value;
         left = right = null;
     }
 
-    public node(final int value, final boolean isInFactEmpty) {
+    public Snode(final String value, final boolean isInFactEmpty) {
         empty = isInFactEmpty;
         this.value = value;
         left = right = null;
     }
     
-    public node() {
+    public Snode() {
     }
 
     @Override

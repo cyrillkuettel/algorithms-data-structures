@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw03.SimpleTree;
+package ch.hslu.ad.sw03;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,10 +26,10 @@ public class BranchGrower {
      *
      *
      * @param growingBranch // example: branch[" / \\ / \\ "];
-     * @param abstand
+     * @param abstand Der Abstand zwischen den auseinandergehenden Branches. Initial = 1
      */
-    public BranchGrower(String growingBranch, int abstand) {
-        this.abstand = abstand;
+    public BranchGrower(String growingBranch) {
+        this.abstand = 1;
         this.branch = growingBranch; // the branch from where to grow
     }
 
@@ -97,6 +97,7 @@ public class BranchGrower {
         try {
             returnString = String.join("", str);
         } catch (Exception e) {
+            log.info("String.join failed.", e);
         }
 
         System.out.println(returnString);
@@ -118,7 +119,7 @@ public class BranchGrower {
 
     public static void main(String[] args) {
         String branch = "       / \\              / \\       ";
-        new BranchGrower(branch, 1);
+        new BranchGrower(branch);
 
     }
 
