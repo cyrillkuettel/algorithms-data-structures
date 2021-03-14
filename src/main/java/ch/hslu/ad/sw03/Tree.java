@@ -208,7 +208,7 @@ public class Tree implements TreeInterface {
          */
 
         ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
-        int niveau = nodeListByNiveau.size() - 1;
+        int niveau = nodeListByNiveau.size(); // with this you can modify the branch length
         int firstBranchLength = getBranchLengthForNiveau(niveau);
         ArrayList<node> bottomList = nodeListByNiveau.get(niveau - 1);
         ArrayList<node> zweitUndersteList = nodeListByNiveau.get(niveau - 2);
@@ -223,12 +223,19 @@ public class Tree implements TreeInterface {
             for (node node : arrayList) { // per Niveau, do this on this Niveau
 
                 int divisor = arrayList.size();
-                int offset = offsetOnlyEverySecondIteration(count);
+                int offset = offsetOnlyEvery_Nth_Iteration(count, nodeListByNiveau, arrayList);
                 // whitespace Generation: how far are the elements apart
-                String whiteSpaceprevious = generateWhiteSpace((middle + 1) / divisor);
-                String whiteSpaceafter = generateWhiteSpace((middle / divisor));
-                log.info("whiteSpaceprevious Length is " + whiteSpaceprevious.length());
-                log.info("whiteSpaceafter Length is " + whiteSpaceafter.length());
+                // experiment with this
+                int calculateWhiteSpaceAfter = (middle / divisor) + offset;
+//                 int calculateWhiteSpaceAfter = (middle / divisor);
+                int calculateWhiteSpaceprevious = (middle + 1) / divisor;
+
+                if (calculateWhiteSpaceAfter < 0) {
+                    calculateWhiteSpaceAfter = 0;
+                }
+                String whiteSpaceprevious = generateWhiteSpace(calculateWhiteSpaceprevious);
+                String whiteSpaceafter = generateWhiteSpace(calculateWhiteSpaceAfter);
+                int diff = whiteSpaceprevious.length() - whiteSpaceafter.length();
 
                 // in the end WHEN It works, change into value;
                 String s;
@@ -249,12 +256,15 @@ public class Tree implements TreeInterface {
                 count++;
             }
             System.out.println(); // dont remove!!
+            
+            if (arrayList != bottomList) {
+                BranchGrower bg1 = new BranchGrower(arrayList, line);
+                String growingBranch = bg1.drawSingleBranch();
+                BranchGrower bg = new BranchGrower(growingBranch);
+                int branchLen = getBranchLengthForNiveau(niveau) - 1;
+                bg.growBranchNtimes(growingBranch, branchLen);
+            }
 
-            BranchGrower bg1 = new BranchGrower(arrayList, line);
-            String growingBranch = bg1.drawSingleBranch();
-            BranchGrower bg = new BranchGrower(growingBranch);
-            int branchLen = getBranchLengthForNiveau(niveau) - 1;
-            bg.growBranchNtimes(growingBranch, branchLen);
             niveau--; // kapt'n niveau! Wir sinken!
         }
 
@@ -268,10 +278,27 @@ public class Tree implements TreeInterface {
         return " ".repeat(len);
     }
 
-    private int offsetOnlyEverySecondIteration(final int count) {
-        if (count % 2 != 0) {
-            return 1;
+    private int offsetOnlyEvery_Nth_Iteration(final int count, 
+        final ArrayList< ArrayList< node>> nodeListByNiveau, 
+        final ArrayList<node> currentArrayList ) {
+        
+        int currentIteration = nodeListByNiveau.indexOf(currentArrayList)+1;
+        int diff = nodeListByNiveau.size()- currentIteration;
+        
+        if (diff == 0) {
+            if (count % 4 == 0 && count % 6 == 0) { //  arbitrary Values. This tries to be a frequency. 
+                return -2; // künstlich verkürzen
+            }
+         
         }
+        if ( diff == 1) {
+            // zweitletzte Line
+            
+        }
+        if (count % 2 != 0) { // die ungeraden
+            return -1;
+        }
+        
         return 0;
     }
 
