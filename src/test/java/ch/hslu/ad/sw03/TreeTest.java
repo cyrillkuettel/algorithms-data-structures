@@ -15,9 +15,9 @@ public class TreeTest {
      
     @Test
     public void testSomething() {
-        int a = 100;
-        int b = 100;
-        assertEquals(a, b);
+//        int a = 100;
+//        int b = 100;
+//        assertEquals(a, b);
     }
 
     @Test
