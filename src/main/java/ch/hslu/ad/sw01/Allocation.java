@@ -39,7 +39,7 @@ public final class Allocation implements Comparable<Allocation> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, size);
+        return Objects.hash(address);
     }
 
     @Override
@@ -51,7 +51,7 @@ public final class Allocation implements Comparable<Allocation> {
             return false;
         }
         final Allocation other = (Allocation) object;
-        return (other.address == this.address && other.size == this.size);
+        return (other.address == this.address);
     }
 
     // should look like: Allocation[Address:0; Size:16]
