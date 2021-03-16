@@ -7,12 +7,13 @@ package ch.hslu.ad.sw03;
 public class treePrintDemo {
     // https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
 
-    public treePrintDemo() throws InterruptedException {
+    public treePrintDemo()  {
+
         Tree tree = createTree();
         tree.drawTree(false);
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args)  {
         new treePrintDemo();
     }
 

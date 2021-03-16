@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 public class BranchGrower  {
 
     private static final Logger log = LogManager.getFormatterLogger(BranchGrower.class);
-    private static final int SLEEPTIME = 0;
     
     int abstand; // IS abstand constant?? yes I  think it is
     String branch;
@@ -35,7 +34,7 @@ public class BranchGrower  {
         this.branch = growingBranch; // the branch from where to grow
     }
 
-    public void growBranchNtimes(String inp, int lines) throws InterruptedException {
+    public void growBranchNtimes(String inp, int lines)  {
         // loop lines times; TODO
 
 //        System.out.println(inp);
@@ -45,7 +44,6 @@ public class BranchGrower  {
         }
 
         for (int n = 0; n < lines; n++) { // how many lines to print
-             Thread.sleep(SLEEPTIME);
             String[] str = inp.split("");
             for (int i = 1; i < str.length - 1; i++) {
 
