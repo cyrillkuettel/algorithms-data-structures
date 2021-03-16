@@ -37,7 +37,6 @@ public class Tree implements TreeInterface {
 
     private static final Logger log = LogManager.getFormatterLogger(Tree.class);
     protected node root;
-    
 
     public Tree(int value) {
         this.root = new node(value);
@@ -142,16 +141,16 @@ public class Tree implements TreeInterface {
     public boolean isEmpty() {
         return root.isEmpty();
     }
-
+    //                      tree Printing starting here 
+    // -------------------------------------------------------------------------
     /**
      *
-     * Simply loops over each Niveau,
+     * Simply loops over each Niveau of the tree. Then adds the elements in a hierarchical structure. 
      *
-     * @return nested ArrayList, each Niveau representing a ArrayList itself.
+     * @return nested ArrayList, each Niveau representing an ArrayList itself.
      */
     public ArrayList<ArrayList<node>> getNodeListFromEachNiveau() {
 
-// Inspiration from https://stackoverflow.com/questions/2241513/java-printing-a-binary-tree-using-level-order-in-a-specific-format
         ArrayList<ArrayList<node>> result = new ArrayList<ArrayList<node>>();
 
         Queue<node> currentLevel = new LinkedList<node>();
@@ -206,50 +205,44 @@ public class Tree implements TreeInterface {
          *  4   5   6  Niveau-2
         
         https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
-            
-        
-        
+
         TODO: 
-            manchmal nicht ganz bündig, vor allem bei grösseren Bäumen. (offset könnte helfen?)
-            feature: kein branch, wenn nächster null ist.
-            special case: node.values.length() > 1  ( Wenn die Elemente länger sind muss man mit der breite multiplizieren)
-        
-            TreeDiagramm Class would need nodeListByNiveau, every function which drawTree uses.
+
+           - kein branch, wenn nächster null ist.
+           - special case: (if node.values.length() > 1 ) --> Wenn die Node Values länger sind, muss man mit der Breite multiplizieren)
+                                                         --> Das brauch wahrscheinlich Regex, um die Items zu erkennen im BranchGrower.
+                                                         
+            - Split this part into another class.
+                TreeDiagramm Class would need nodeListByNiveau, plus every function which drawTree uses.
          */
-        
-         final int sleepTime = 0;
-        
+
+        final int sleepTime = 0; // If you want a delay Thread.sleep(...)
+
         ArrayList< ArrayList< node>> nodeListByNiveau = getNodeListFromEachNiveau();
-        int niveau = nodeListByNiveau.size(); // with this you can modify the branch length
+        int niveau = nodeListByNiveau.size(); // with this you can modify the branch length (-1 to cut in half)
         int firstBranchLength = getBranchLengthForNiveau(niveau);
         ArrayList<node> bottomList = nodeListByNiveau.get(niveau - 1);
         ArrayList<node> zweitUndersteList = nodeListByNiveau.get(niveau - 2);
 
         int middle = bottomList.size() * 2; // start in the middle
 
-        for (ArrayList<node> arrayList : nodeListByNiveau) {
+        for (ArrayList<node> arrayList : nodeListByNiveau) { // starting a big giant for Loop. Niveau by Nivea. 
 
-            String line = ""; //represents one Line (of Text) 
+            String line = ""; // represents one Line (of Text) 
 
             int count = 0;
             for (node node : arrayList) { // per Niveau, do this on this Niveau
-
                 int divisor = arrayList.size();
                 int offset = offsetOnlyEvery_Nth_Iteration(count, nodeListByNiveau, arrayList);
-                // whitespace Generation: how far are the elements apart
-                // experiment with this
-                int calculateWhiteSpaceAfter = (middle / divisor) + offset;
+                int calculateWhiteSpaceAfter = (middle / divisor) + offset; // whitespace Generation: how far are the elements apart
 //                 int calculateWhiteSpaceAfter = (middle / divisor);
                 int calculateWhiteSpaceprevious = (middle + 1) / divisor;
-
-                if (calculateWhiteSpaceAfter < 0) {
+                if (calculateWhiteSpaceAfter < 0) { // the whitespace should at no point be negative
                     calculateWhiteSpaceAfter = 0;
                 }
                 String whiteSpaceprevious = generateWhiteSpace(calculateWhiteSpaceprevious);
                 String whiteSpaceafter = generateWhiteSpace(calculateWhiteSpaceAfter);
                 int diff = whiteSpaceprevious.length() - whiteSpaceafter.length();
-
-                // in the end WHEN It works, change into value;
                 String s;
                 if (printEmptyNodes) {
                     s = whiteSpaceprevious + node.value + whiteSpaceafter;
@@ -272,7 +265,7 @@ public class Tree implements TreeInterface {
             if (arrayList != bottomList) {
                 BranchGrower bg1 = new BranchGrower(arrayList, line);
                 String growingBranch = bg1.drawSingleBranch();
-                 Thread.sleep(sleepTime);
+                Thread.sleep(sleepTime);
                 BranchGrower bg = new BranchGrower(growingBranch);
                 int branchLen = getBranchLengthForNiveau(niveau) - 1;
                 bg.growBranchNtimes(growingBranch, branchLen);
@@ -291,7 +284,14 @@ public class Tree implements TreeInterface {
     public String generateWhiteSpace(final int len) {
         return " ".repeat(len);
     }
-
+/**
+ * Slightly modifies the space between elements on one Line in the Tree. 
+ * Is based on the current Iteration
+ * @param count number of iterations in For-Loop nodeListByNiveau.
+ * @param nodeListByNiveau // nesteed ArrayList, each element represents one Horizonal Niveau
+ * @param currentArrayList // the current Line which is being modified. 
+ * @return 
+ */
     private int offsetOnlyEvery_Nth_Iteration(final int count,
         final ArrayList< ArrayList< node>> nodeListByNiveau,
         final ArrayList<node> currentArrayList) {
