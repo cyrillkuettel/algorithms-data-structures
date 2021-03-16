@@ -6,14 +6,14 @@ package ch.hslu.ad.sw01;
  */
 public abstract class Memory {
 
-    private long Belegt = 0;
-    private long Frei;
+    private int Belegt = 0;
+    private int Frei;
 
-    public Memory(final long initialValue) {
+    public Memory(final int initialValue) {
         this.Frei = initialValue;
     }
 
-    public Allocation malloc(final long allocatedMem) {    //allocate memory
+    public Allocation malloc(final int allocatedMem) {    //allocate memory
         this.Belegt += allocatedMem;
         this.Frei -= allocatedMem;
         Allocation allocation = new Allocation(allocatedMem);
@@ -21,7 +21,7 @@ public abstract class Memory {
     }
 
     public void free(final Allocation block) {
-        final long allocatedMem = block.getSize();
+        final int allocatedMem = block.getSize();
         this.Frei += allocatedMem;
         this.Belegt -= allocatedMem;
         // Undo the allocation, set the pointer correctly. memory is free, 
@@ -35,11 +35,11 @@ public abstract class Memory {
         Allocation.setNextAddress(Allocation.getNextAddress() - allocatedMem);
     }
 
-    public long getBelegt() {
+    public int getBelegt() {
         return Belegt;
     }
 
-    public long getFrei() {
+    public int getFrei() {
         return Frei;
     }
 }

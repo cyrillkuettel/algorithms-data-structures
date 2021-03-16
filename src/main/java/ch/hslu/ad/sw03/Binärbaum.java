@@ -3,10 +3,9 @@ package ch.hslu.ad.sw03;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-interface binaryTreeInterface { // TODO: interface
-
-}
 // helper: https://stackoverflow.com/questions/11263244/java-how-do-i-implement-a-generic-binary-search-tree;
+// man kann nicht Object o objekte in Generische Collectins einfügen 
+
 
 class Binärbaum<T extends Comparable<T>> {
 

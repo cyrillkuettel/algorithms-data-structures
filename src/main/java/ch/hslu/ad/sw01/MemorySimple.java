@@ -6,7 +6,7 @@ package ch.hslu.ad.sw01;
  */
 public class MemorySimple extends Memory {
 
-    public MemorySimple(final long initialValue) {
+    public MemorySimple(final int initialValue) {
         super(initialValue);
     }
 

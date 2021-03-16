@@ -6,44 +6,36 @@ import java.util.Objects;
  *
  * @author cyrill
  */
-// Klasse, welche den Speicherbereich (egal ob frei oder belegt) eindeutig identifiziert.
-// TO DO: keep track of free blocks with linked list for example 
+
+
 public final class Allocation implements Comparable<Allocation> {
 
-    private long address = 0; //
-    private long size; //TODO:  Max value should not exceed 1GB (1024^3 byte)
-    static long nextAddress = 0; // // the address of the next allocation
+    private final int address; //
+    
+    private int size; //TODO:  Max value should not exceed 1GB (1024^3 byte)
+    static int nextAddress = 0; // // the address of the next allocation
 
-    public Allocation(final long size) {
-        if (nextAddress == 0) { // only the first time
+    public Allocation(final int size) {
             this.size = size;
-            nextAddress += size; 
-        } else {
-            this.size = size;
-            this.address = nextAddress; 
+            this.address = nextAddress;
             nextAddress += size; // nextAddress is defined as the added sum of all allocated Allocations.size
-        }
+        
     }
 
     @Override
     public int compareTo(final Allocation other) {
-        if (other.address > this.address) {
-            return 1;
-        }
-        if (other.address < this.address) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return (this.address - other.address);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(address);
+    public final int hashCode() {
+        
+        return Integer.hashCode(address);
+        
     }
 
     @Override
-    public boolean equals(final Object object) {
+    public final boolean equals(final Object object) {
         if (object == this) {
             return true;
         }
@@ -60,21 +52,20 @@ public final class Allocation implements Comparable<Allocation> {
         return "Allocation[Address:" + getAddress() + "; Size:" + getSize() + ']';
     }
 
-    public long getAddress() {
+    public int getAddress() {
         return address;
     }
 
-    public long getSize() {
+    public static void setNextAddress(int nextAddress) {
+        Allocation.nextAddress = nextAddress;
+    }
+
+    public int getSize() {
         return size;
     }
 
-    public static long getNextAddress() {
+    public static int getNextAddress() {
         return nextAddress;
     }
-
-    public static void setNextAddress(long nextAddress) {
-        Allocation.nextAddress = nextAddress;
-    }
-    
 
 }

@@ -27,7 +27,6 @@ public class BranchGrower  {
      *
      *
      * @param growingBranch // example: branch[" / \\ / \\ "];
-     * @param abstand Der Abstand zwischen den auseinandergehenden Branches. Initial = 1
      */
     public BranchGrower(String growingBranch) {
         this.abstand = 1;

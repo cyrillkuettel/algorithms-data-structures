@@ -43,7 +43,7 @@ public class AllokationTest {
 
     @Test
     public void equalsContract() {
-        EqualsVerifier.forClass(Allocation.class).suppress(Warning.NONFINAL_FIELDS).verify();
+        EqualsVerifier.forClass(Allocation.class).suppress(Warning.NONFINAL_FIELDS).suppress(Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
     }
 
 }
