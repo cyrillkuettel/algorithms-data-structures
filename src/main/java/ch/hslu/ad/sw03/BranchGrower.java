@@ -34,9 +34,6 @@ public class BranchGrower  {
     }
 
     public void growBranchNtimes(String inp, int lines)  {
-        // loop lines times; TODO
-
-//        System.out.println(inp);
         if (inp == null) {
             log.error("Error in growBranchNtimes(). inp is null! ");
             return;
@@ -72,18 +69,17 @@ public class BranchGrower  {
         // aufpassen wegen node.value.length > 1 -> TODO special case. Hier mit regex abfangen, dann etwa mittig zum regex den "/" printen, und zu i die length des gemachten regex elements addieren. 
         // write the first line , pass in arrayList and line. From line then is derrrived the rest Of the branch. so pass this then into growBranchNtimes.
         // regex match word / letter /number whatever
+        
 //        char[] str = new char[line.length() - 1];
 //
 //        for (int k = 0; k < line.length()-1; k++) {
 //            str[k] = line.charAt(k);
 //        }
-//        log.info(Arrays.toString(str));
         String[] str = line.split("");
-//        log.info(Arrays.toString(str));
 
         for (int j = 1; j < str.length - 1; j++) {
 
-            if (isNumeric(str[j])) { // for strings, this has to be generalized. A functin to detect the node.values.
+            if (isNumeric(str[j])) { // for strings, this has to be generalized. A function to detect node.values
 //                log.info("isNumeric");
                 str[j - 1] = "/";
                 str[j] = " ";

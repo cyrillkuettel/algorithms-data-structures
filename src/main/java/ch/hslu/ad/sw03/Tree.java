@@ -48,6 +48,8 @@ public class Tree implements TreeInterface {
     @Override
     public void search(node node, int value) {
         // what to do if element does not exist? 
+        // check for null.
+        
         if (value < node.value) {
             if (node.left.value == value) {
                 System.out.println("found left Node: " + node.left.toString());
@@ -82,6 +84,7 @@ public class Tree implements TreeInterface {
         // 0 Children
 
         // 1 Child
+        
         // 2 Child
     }
 
@@ -105,7 +108,7 @@ public class Tree implements TreeInterface {
 
     @Override
     public void add(node node, int value) {
-
+        
         if (value < node.value) { //
             if (node.left == null) {
                 node.left = new node(value);
@@ -127,11 +130,12 @@ public class Tree implements TreeInterface {
     }
 
     public void drawTree()  {
-        TreeGrower treeDiagram = new TreeGrower(false, root); // default: don't draw empty Nodes (Zeroes)
-        treeDiagram.start();
+        TreeGrower treeGrower = new TreeGrower(false, root); // default: don't draw empty Nodes (Zeroes)
+        treeGrower.start();
     }
 
-    public void drawTree(boolean drawEmptyNodes)  {
+    
+ public void drawTree(boolean drawEmptyNodes)  {
         TreeGrower treeDiagram = new TreeGrower(drawEmptyNodes, root);
         treeDiagram.start();
     }

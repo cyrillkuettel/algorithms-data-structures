@@ -21,6 +21,7 @@ public class node {
         empty = isInFactEmpty;
         this.value = value;
         left = right = null;
+        
     }
 
     public node() {

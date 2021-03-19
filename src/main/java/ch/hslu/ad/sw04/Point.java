@@ -1,9 +1,5 @@
 package ch.hslu.ad.sw04;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  *
  * @author cyrill

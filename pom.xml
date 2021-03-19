@@ -547,6 +547,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <!---   Updated Because surefire-plugin fired error in tests.  -->
+                    <useModulePath>false</useModulePath>
                     <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
