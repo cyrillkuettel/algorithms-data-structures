@@ -11,13 +11,19 @@ public class HashTableDemo {
     public static void main(String[] args) {
 
         HashTable table = new HashTable();
+        
         Allocation a = new Allocation(2);
-        table.add(a);
-        for (int i = 0; i < table.getSize(); i++) {
+        Allocation b = new Allocation(3);
+        Allocation c = new Allocation(67);
+        
+        
+        
+        
+        table.put(0, a);
 
-            Allocation allocation = new Allocation(i);
-            table.add(allocation);
-        }
+        
+        System.out.println(table.toString());
+        
     }
 
 }

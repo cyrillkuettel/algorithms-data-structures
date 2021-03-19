@@ -12,8 +12,9 @@ public class JavaNativeDatenstrukturen {
    public void test() {
 
         Map<Integer, String> map = new HashMap<>();
-
         Map<Integer, String> hashTable = new HashMap<>();
+        
+        
    
     }
 
