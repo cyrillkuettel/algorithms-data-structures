@@ -12,9 +12,9 @@ public interface TreeInterface {
 
     public void add(int value);
 
-    void search(node node, int value);
+    public node searchNode(node node, int value);
 
-    void search(int value);
+    public node search(int value);
 
     void printInOrder(node node);
 

@@ -49,7 +49,7 @@ public class node {
         return (leftSide && rightSide);
     }
 
-    public int getNumberChildren() {
+    public int getNumberOfSubnodes() { // get Number of Children != null
          int count = 0;
         if (this.left != null) {
             count++;

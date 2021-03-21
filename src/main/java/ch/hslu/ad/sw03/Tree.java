@@ -1,13 +1,5 @@
 package ch.hslu.ad.sw03;
 
-import ch.hslu.ad.sw02.Node;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
-import java.util.stream.IntStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,8 +7,6 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-
-
 public class Tree implements TreeInterface {
 
     private static final Logger log = LogManager.getFormatterLogger(Tree.class);
@@ -46,28 +36,7 @@ public class Tree implements TreeInterface {
     }
 
     @Override
-    public void search(node node, int value) {
-        // what to do if element does not exist? 
-        // check for null.
-        
-        if (value < node.value) {
-            if (node.left.value == value) {
-                System.out.println("found left Node: " + node.left.toString());
-            } else {
-                search(node.left, value);
-            }
-        } else {
-            if (node.right.value == value) {
-                System.out.println("found right Node: " + node.right.toString());
-            } else {
-                search(node.right, value);
-            }
-        }
-    }
-
-    @Override
     public void remove(int value) {
-        // the simply cases (2):
         if (root != null) {
             remove(root, value);
         } else {
@@ -76,25 +45,48 @@ public class Tree implements TreeInterface {
     }
 
     public void remove(node node, int value) {
-        int childrenCount = node.getNumberChildren();
 
-        if (childrenCount == 0) {
-
+        node removeThisNode = search(value);
+        boolean valueWasNotFound = removeThisNode.empty;
+        if (valueWasNotFound) { // if emptty node is retured, value was not found
+            log.warn("Not finding value " + value + " in the tree. Stopping removing process. . .");
+            return;
         }
-        // 0 Children
 
-        // 1 Child
+        int count = node.getNumberOfSubnodes();
         
-        // 2 Child
+        if (count == 0) {
+            
+        }
+
     }
 
     @Override
-    public void search(int value) {
+    public node search(int value) {
         if (isEmpty()) {
             log.warn("Can't search a empty tree...");
         } else {
-            search(root, value);
+            return searchNode(root, value);
         }
+        return new node(0, true);
+    }
+
+    public node searchNode(node node, int value) {
+
+        if (value < node.value) {
+            if (node.left.value == value) {
+                return node.left;
+            } else {
+                searchNode(node.left, value);
+            }
+        } else {
+            if (node.right.value == value) {
+                return node.right;
+            } else {
+                searchNode(node.right, value);
+            }
+        }
+        return new node(0, true); // when not found, return empty node. Could also consider returning Null
     }
 
     @Override
@@ -108,7 +100,7 @@ public class Tree implements TreeInterface {
 
     @Override
     public void add(node node, int value) {
-        
+
         if (value < node.value) { //
             if (node.left == null) {
                 node.left = new node(value);
@@ -129,13 +121,12 @@ public class Tree implements TreeInterface {
         return root.isEmpty();
     }
 
-    public void drawTree()  {
+    public void drawTree() {
         TreeGrower treeGrower = new TreeGrower(false, root); // default: don't draw empty Nodes (Zeroes)
         treeGrower.start();
     }
 
-    
- public void drawTree(boolean drawEmptyNodes)  {
+    public void drawTree(boolean drawEmptyNodes) {
         TreeGrower treeDiagram = new TreeGrower(drawEmptyNodes, root);
         treeDiagram.start();
     }

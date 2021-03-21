@@ -24,7 +24,7 @@ public class test_erste_n_natürliche_zahlen {
     }
 
     /*
-    Beschreiben Sie einen rekursiven Algorithmus, der für jeweils zweibeliebige natürliche Zahlennundmden Ausdruckn! modmberechnet
+   " Beschreiben Sie einen rekursiven Algorithmus, der für jeweils zweibeliebige natürliche Zahlen n und m den Ausdruck n! mod m berechnet"
      */
 
     static int aufgabeb(int n, int m) { // n und m berechnen: n! mod m

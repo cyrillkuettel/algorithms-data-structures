@@ -12,7 +12,7 @@ public interface TreeGrowerInterface {
     /**
      *
      * Simply loops over each Niveau of the tree. Then adds the elements in a
-     * hierarchical structure.
+     * hierarchical structure. From top to bottom.
      *
      * @return nested ArrayList, each Niveau representing an ArrayList itself.
      */
@@ -21,7 +21,8 @@ public interface TreeGrowerInterface {
     /**
      *
      * @param currentLevel
-     * @return Returns true if there are only Nodes with Zero value in the Queue
+     * @return Returns true if there are only Nodes with Zero value in the Queue.
+     * 
      */
     public boolean allZeroesInQueue(Queue<node> currentLevel);
 

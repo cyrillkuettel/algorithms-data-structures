@@ -82,16 +82,14 @@ public class TreeGrower implements TreeGrowerInterface {
          *   /   / \
          *  4   5   6  Niveau-2
         
-        https://stackoverflow.com/questions/4965335/how-to-print-binary-tree-diagram
+   
 
         TODO: 
 
            - kein branch, wenn nächster null ist.
-           - special case: (if node.values.length() > 1 ) --> Wenn die Node Values länger sind, muss man mit der Breite multiplizieren)
-                                                         --> Das brauch wahrscheinlich Regex, um die Items zu erkennen im BranchGrower.
-                                                         
-            - Split this part into another class.
-                TreeDiagramm Class would need nodeListByNiveau, plus every function which drawTree uses.
+           - special case: (if node.values.length() > 1 ):
+             If the node values are several characters long, the distance between values needs to be multiplied by a factor of the characters length
+                            --> Das braucht wahrscheinlich Regex, um die Items als solche zu erkennen im BranchGrower.
          */
 
       
@@ -104,7 +102,7 @@ public class TreeGrower implements TreeGrowerInterface {
 
         int middle = bottomList.size() * 2; // start in the middle
 
-        for (ArrayList<node> arrayList : nodeListByNiveau) { // starting a big giant for Loop. Niveau by Nivea. 
+        for (ArrayList<node> arrayList : nodeListByNiveau) { // starting a big giant for Loop. Niveau by Niveau. 
 
             String line = ""; // represents one Line (of Text) 
 
@@ -173,8 +171,8 @@ public class TreeGrower implements TreeGrowerInterface {
         int diff = nodeListByNiveau.size() - currentIteration;
 
         if (diff == 0) {
-            if (count % 4 == 0 && count % 6 == 0) { //  arbitrary Values. This tries to be a frequency. 
-                return -2; // künstlich verkürzen
+            if (count % 4 == 0 && count % 6 == 0) { //  arbitrary Values, to make it look pretty
+                return -2; // artificially shorten distance.
             }
 
         }

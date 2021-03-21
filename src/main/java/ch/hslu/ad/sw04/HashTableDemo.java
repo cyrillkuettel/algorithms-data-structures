@@ -8,22 +8,14 @@ import ch.hslu.ad.sw01.Allocation;
  */
 public class HashTableDemo {
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
         HashTable table = new HashTable();
-        
-        Allocation a = new Allocation(2);
-        Allocation b = new Allocation(3);
-        Allocation c = new Allocation(67);
-        
-        
-        
-        
-        table.put(0, a);
+        Allocation allocation = new Allocation(3);
 
-        
-        System.out.println(table.toString());
-        
+        table.put(0, allocation);
+        table.put(0, allocation);
+        table.put(0, allocation);
+
     }
 
 }
