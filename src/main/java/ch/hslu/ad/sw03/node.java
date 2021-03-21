@@ -8,6 +8,7 @@ public class node {
 
     Integer value;
     boolean empty = true;
+    node parent;
     node left;
     node right;
 
@@ -21,7 +22,7 @@ public class node {
         empty = isInFactEmpty;
         this.value = value;
         left = right = null;
-        
+
     }
 
     public node() {
@@ -36,6 +37,14 @@ public class node {
         return empty;
     }
 
+    public node getOnlyChild() {
+        if (this.left == null && this.right != null) {
+            return this.right;
+        } else {
+            return this.left;
+        }
+    }
+
     public boolean allChildrenAreLeaves() {
         boolean hasChildren = this.left != null || this.right != null;
 
@@ -45,12 +54,12 @@ public class node {
 
         boolean leftSide = this.left.right == null && this.left.left == null;
         boolean rightSide = this.right.right == null && this.right.left == null;
-        
+
         return (leftSide && rightSide);
     }
 
     public int getNumberOfSubnodes() { // get Number of Children != null
-         int count = 0;
+        int count = 0;
         if (this.left != null) {
             count++;
         }
@@ -59,5 +68,6 @@ public class node {
         }
         return count;
     }
+    
 
 }
