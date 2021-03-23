@@ -4,17 +4,15 @@ package ch.hslu.ad.sw05;
  *
  * @author cyrill
  */
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import javax.swing.Timer;
 import javax.swing.WindowConstants;
 
-//TODO:
-// set timer for (this)
-
 @SuppressWarnings("serial")
-public class ShapesTemplate extends JPanel {
+public class ShapesTemplate extends JPanel { // implements Mouse Listener
 
     private int width = 600;
     private int height = 400;
@@ -22,6 +20,7 @@ public class ShapesTemplate extends JPanel {
     private Shape[] shapes;
 
     public ShapesTemplate(Shape[] shapes) {
+
         this.shapes = shapes;
         if (shapes == null || shapes.length < 1) {
             this.shapes = new Shape[0];
@@ -35,10 +34,9 @@ public class ShapesTemplate extends JPanel {
 
         JFrame frame = new JFrame("Circle");
         frame.setLocation(750, 150);
-        
+
         frame.setMinimumSize(new Dimension(width, height));
-        
-        
+
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.getContentPane().add(this);
         frame.pack();
@@ -49,11 +47,14 @@ public class ShapesTemplate extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         // draw all in a loop
+        // x und y immer wieder anpassen hier: 
+        int px = 100;
+        int py = 100;
 
         for (Shape s : shapes) {
-            s.draw(g, 100, 110);
+            s.draw(g, px, py);
+            px += 60;
 
-            //g.fillRect(defender.getX(), defender.getY(), 64, 64);
         }
 
     }

@@ -31,7 +31,7 @@ public final class JDrawCircle extends JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Circle circle = new Circle(e);
+        // here the cirlce should be drawn
         log.info("mouse click");
     }
 
