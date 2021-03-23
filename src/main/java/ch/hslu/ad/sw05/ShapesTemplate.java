@@ -20,7 +20,8 @@ public class ShapesTemplate extends JPanel { // implements Mouse Listener
     private Shape[] shapes;
 
     public ShapesTemplate(Shape[] shapes) {
-
+        // timer should be started in the constructor class.
+        
         this.shapes = shapes;
         if (shapes == null || shapes.length < 1) {
             this.shapes = new Shape[0];
@@ -57,5 +58,8 @@ public class ShapesTemplate extends JPanel { // implements Mouse Listener
 
         }
 
+    }
+    public static void main(String[] args) {
+        
     }
 }

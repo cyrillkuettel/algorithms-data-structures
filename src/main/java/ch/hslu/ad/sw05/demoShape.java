@@ -16,7 +16,7 @@ public class demoShape {
     private static final Logger log = LogManager.getFormatterLogger(demoShape.class);
 
     public demoShape() {
-        final int CircleCount = 10;
+        final int CircleCount = 1;
         int count = 0;
         Shape[] shapes = new Circle[CircleCount];
         while (count < CircleCount) {
