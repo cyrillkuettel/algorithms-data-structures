@@ -94,8 +94,8 @@ public class Tree implements TreeInterface {
             4.) delete minimum element in the right subtree (original position)
              */
 
-            node min = findMinOfRightSubtree(nodeToBeRemoved.right);
-            int minimum = min.value;
+            node min = findMinOfRightSubtree(nodeToBeRemoved.right); 
+            int minimum = min.value; 
             remove(minimum);
             nodeToBeRemoved.value = minimum;
             

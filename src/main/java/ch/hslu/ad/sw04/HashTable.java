@@ -34,12 +34,19 @@ public class HashTable {
         Entry addEntry = new Entry(key, value);
 
         // wenn arr[index] == null, ist der slot frei, muss man nicht Sondieren. 
-        // Duplikate im key werden mit (arr[index].getKey() == key) gesucht.
-        
+        // Duplikate im hash werden mit (arr[index].getKey() == key) gesucht.
         System.out.println("got to here");
-        while (arr[index] != null && index < LEN && arr[index].getKey() == key) {
-            log.info("Sondierung läuft");
-            index++;
+        if (arr[index] == null) {
+
+        } else {
+            try {
+                while (arr[index] != null && index < LEN && arr[index].getKey() == key) {
+                    log.info("Sondierung läuft");
+                    index++;
+                }
+            } catch (Exception e) {
+                log.info(e.getMessage());
+            }
         }
 
         if (index >= LEN) {
