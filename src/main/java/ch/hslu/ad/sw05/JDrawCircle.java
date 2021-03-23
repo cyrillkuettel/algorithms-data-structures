@@ -1,56 +1,48 @@
 package ch.hslu.ad.sw05;
 
-/**
- *
- * @author cyrill
- */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Color;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("serial")
-public final class DrawCircle extends JFrame implements MouseListener {
+public final class JDrawCircle extends JFrame implements MouseListener {
 
-    private static final Logger log = LogManager.getLogger(DrawCircle.class);
+    private static final Logger log = LogManager.getLogger(JDrawCircle.class);
 
-    public DrawCircle() {
+    /*
+    BUG disappear on window.size.refresh()
+    The paintComponent method on any subclass of Component is called after the parent frame is resized. 
+    So you can use that to prevent resizeing.
+     */
+    // constructor
+    public JDrawCircle() {
         addMouseListener(this);
-        setTitle("Drawing a Circle");
-        setSize(400, 400);
+        setTitle("Circles BABy");
+        setSize(600, 400);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
 
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-        } catch (Exception ignored) {
-            log.warn(ignored);
-        }
-        new DrawCircle();
-
-    }
-
     @Override
     public void mouseClicked(MouseEvent e) {
-        Graphics g = getGraphics();
-        g.setColor(Color.BLUE);
-        g.drawOval(e.getX(), e.getY(), 100, 100);
-        g.fillOval(e.getX(), e.getY(), 100, 100);
+        Circle circle = new Circle(e);
+        log.info("mouse click");
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent0) {
-        // could generate the circles here aswell. Just while loop + delay. 
+    public void mousePressed(MouseEvent mouseEvent0) {  // could generate the circles here aswell. Just while loop + delay. 
+        log.info("mouse Pres)");
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent0) {
-        
+
     }
 
     @Override

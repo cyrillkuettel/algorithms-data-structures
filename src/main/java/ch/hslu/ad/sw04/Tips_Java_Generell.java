@@ -42,7 +42,7 @@ public class Tips_Java_Generell {
         
     }
 
-    static <T> List<T> suchen(List<T> liste, Predicate<T> eigenschaft) { // Useful when implementing stream().filter(
+    static <T> List<T> suchen(List<T> liste, Predicate<T> eigenschaft) { // Useful when implementing stream().filter()
         return liste.stream().filter(eigenschaft).collect(Collectors.toList());
     }
 
