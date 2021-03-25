@@ -9,22 +9,23 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-public class HashTable {
+public final class HashTable implements HashTableInterface {
 
     private int LEN = 2;
+    private boolean empty;
     private Entry[] arr = new Entry[LEN];
 
     private static final Logger log = LogManager.getFormatterLogger(HashTable.class);
 
     public HashTable() {
         this.arr = new Entry[LEN];
-
- //   {@link package.class#member label }
+        this.empty = true;
 
     }
 
+    @Override
     public boolean put(int key, Allocation allocationValue) throws Exception {
-
+        this.empty = false;
         Integer index = calculateHashValueByKey(key);
 
         index = Math.abs(index); // Negative int hash abfangen
@@ -65,13 +66,12 @@ public class HashTable {
         } catch (ArrayIndexOutOfBoundsException e) {
             log.warn("Array zu klein / index zu gross", e);
 
-        } 
+        }
 
         return null;
     }
 
-    public Entry get(int key) {
-
+    public Entry getEntry(int key) {
         int index = calculateHashValueByKey(key);
         while (index < LEN) {
             if (arr[index] != null) {
@@ -79,12 +79,9 @@ public class HashTable {
                     return arr[index];
                 }
             }
-
             index++;
         }
-
         return null;
-
     }
 
     int getStorageCapacity() {
@@ -96,8 +93,28 @@ public class HashTable {
         return "Storage of Entries : " + Arrays.toString(arr);
     }
 
+    @Override
+    public Allocation get(int key) {
+        return getEntry(key).getValue();
+
+    }
+
     public Entry[] getarr() {
         return arr;
+    }
+
+    public void setSize(int LEN) {
+        this.LEN = LEN;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return empty;
+    }
+
+    @Override
+    public int size() {
+        return LEN;
     }
 
 }

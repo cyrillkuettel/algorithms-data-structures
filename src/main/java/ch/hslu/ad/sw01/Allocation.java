@@ -6,11 +6,13 @@ import java.util.Objects;
  *
  * @author cyrill
  */
+
+
 public final class Allocation implements Comparable<Allocation> {
 
     private final int address;
-    private int size;
-    static int nextAddress = 0;
+    private int size; 
+    static int nextAddress = 0; 
 
     public Allocation(final int address) {
         this.address = address;
@@ -19,14 +21,14 @@ public final class Allocation implements Comparable<Allocation> {
     @Override
     public int compareTo(final Allocation other) {
         // comparing only by address. Bigger the higher
-        return (this.address - other.address);
+        return (this.address - other.address); 
     }
 
     @Override
     public final int hashCode() {
-
+        
         return Integer.hashCode(address);
-
+        
     }
 
     @Override

@@ -58,7 +58,7 @@ public final class Messung {
         System.out.println("Hat : " + ((end - start)) + " ms gebraucht, um " + CONST_OBJECTS + " Array Plätze zu füllen");
     }
 
-    void deque_ArrayDeque_Messung() {
+    public void deque_ArrayDeque_Messung() {
         Deque<Allocation> deque = new ArrayDeque<Allocation>();
 
         long start = System.currentTimeMillis();
@@ -71,7 +71,7 @@ public final class Messung {
 
     }
 
-    void deque_LinkedList_Messen() {
+    public void deque_LinkedList_Messen() {
         Deque<Allocation> deque = new LinkedList<Allocation>();
 
         long start = System.currentTimeMillis();

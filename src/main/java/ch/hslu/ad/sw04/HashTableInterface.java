@@ -8,17 +8,9 @@ import ch.hslu.ad.sw01.Allocation;
  */
 public interface HashTableInterface {
 
-    public Allocation search();
+    public boolean put(int key, Allocation allocationValue) throws Exception;
 
-    public void put();
-
-    public Allocation get();
-
-    public void remove();
-
-    public boolean containsValue();
-
-    public boolean containsKey();
+    public Allocation get(int key);
 
     public boolean isEmpty();
 

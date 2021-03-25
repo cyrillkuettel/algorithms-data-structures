@@ -23,7 +23,7 @@ public class AllokationTest {
 
     @Test 
 
-    public void testHashCode() {
+    public void testEquals() {
         Allocation a1 = new Allocation(2);
         Allocation a2 = new Allocation(2); // are they
 
@@ -31,7 +31,7 @@ public class AllokationTest {
     }
 
     @Test
-    public void testHashCodeCompareTo() {
+    public void testCompareTo() {
         Allocation a1 = new Allocation(1);
         Allocation a2 = new Allocation(2);
 
@@ -39,7 +39,7 @@ public class AllokationTest {
     }
 
     @Test
-    public void testHashCodeCompareToForEqualAllocation() {
+    public void testCompareToForEqualAllocation() {
         Allocation a1 = new Allocation(2);
         Allocation a2 = new Allocation(2);
         
@@ -51,7 +51,7 @@ public class AllokationTest {
 
     @Test
     public void equalsContract() {
-        EqualsVerifier.forClass(Allocation.class).suppress(Warning.NONFINAL_FIELDS).suppress(Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
+        EqualsVerifier.forClass(Allocation.class).suppress(Warning.ALL_FIELDS_SHOULD_BE_USED).verify();
     }
 
 }
