@@ -52,10 +52,12 @@ public class HashTableTest {
 
         table.put(0, allocation);
         table.put(1, allocation);
-        Entry[] storage = table.getarr();
-        table.put(2, allocation)
-            
-        assertEquals(storage, table.getarr());
+        Entry[] storageBefore = table.getarr();
+        table.put(2, allocation);
+        Entry[] storageAfter = table.getarr();
+        
+        // Objects should stay the same after operation.
+        assertEquals(storageBefore, storageAfter);
 
     }
 

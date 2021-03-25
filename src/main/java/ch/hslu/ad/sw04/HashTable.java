@@ -94,8 +94,8 @@ public class HashTable {
         return "Storage of Entries : " + Arrays.toString(arr);
     }
 
-    public Entry getarr() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Entry[] getarr() {
+        return arr;
     }
 
 }
