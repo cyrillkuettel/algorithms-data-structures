@@ -29,17 +29,34 @@ public class HashTableTest {
 
     }
 
+//       if Storage Array full, put() returns false
     @Test
-    public void checkCollision() throws Exception {
+    public void testNotEnoughStorage() throws Exception {
         HashTable table = new HashTable();
         Allocation allocation = new Allocation(3);
 
         table.put(0, allocation);
         table.put(1, allocation);
-        table.put(2, allocation);
-        
-        
-        
+
+        assertFalse(table.put(2, allocation));
+
+    }
+
+    /* if the Table experiences an Overfloww,
+        The stored items should not be affected, 
+     */
+    @Test
+    public void testIntegrityOfStorage() throws Exception {
+        HashTable table = new HashTable();
+        Allocation allocation = new Allocation(3);
+
+        table.put(0, allocation);
+        table.put(1, allocation);
+        Entry[] storage = table.getarr();
+        table.put(2, allocation)
+            
+        assertEquals(storage, table.getarr());
+
     }
 
 }

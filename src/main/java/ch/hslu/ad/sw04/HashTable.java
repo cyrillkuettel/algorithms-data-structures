@@ -11,64 +11,73 @@ import org.apache.logging.log4j.Logger;
  */
 public class HashTable {
 
-    private static final int LEN = 2;
-    private static final Logger log = LogManager.getFormatterLogger(HashTable.class);
-
+    private int LEN = 2;
     private Entry[] arr = new Entry[LEN];
+
+    private static final Logger log = LogManager.getFormatterLogger(HashTable.class);
 
     public HashTable() {
         this.arr = new Entry[LEN];
 
     }
 
-    public void put(int key, Allocation value) throws Exception {
+    public boolean put(int key, Allocation allocationValue) throws Exception {
 
+        Integer index = calculateHashValueByKey(key);
+
+        index = Math.abs(index); // Negative int hash abfangen
+
+        Entry addEntry = new Entry(key, allocationValue); // neuer (Object) Eintrag.
+        index = Sondieren(arr, index, key);
+
+        if (index == null) {
+            log.warn("Collision detection logic failed. Array is full. Did not find empty slots to store this key.  ");
+            return false;
+        }
+
+        arr[index] = addEntry; // element Hinzufügen
+        return true; // Everything successfull
+    }
+
+    private int calculateHashValueByKey(int key) {
         int hashValue = Integer.hashCode(key);
         int index = hashValue % LEN;
-        System.out.println(index);
-        if (index < 0) {
-            log.info("Adjusting negative Hash Index.");
-            index = Math.abs(index);
-        }
+        return index;
+    }
 
-        Entry addEntry = new Entry(key, value);
-
-        // wenn arr[index] == null, ist der slot frei, muss man nicht Sondieren. 
-        // Duplikate im hash werden mit (arr[index].getKey() == key) gesucht.
-        System.out.println("got to here");
-        if (arr[index] == null) {
-
-        } else {
-            try {
-                while (arr[index] != null && index < LEN && arr[index].getKey() == key) {
-                    log.info("Sondierung läuft");
-                    index++;
-                }
-            } catch (Exception e) {
-                log.info(e.getMessage());
-            }
-        }
-
+    private Integer Sondieren(Entry[] arr, int index, int key) {
         if (index >= LEN) {
-            log.warn("Sondierung hat nicht genug Plätze.");
-            throw new Exception();
-
-        } else {
-            arr[index] = addEntry; // element Hinzufügen
+            log.warn("Abbruch. Ungültiger index. ");
+            return null;
         }
 
+        try {
+
+            while (arr[index] != null && index < LEN) {
+                log.info("Sondierung läuft. current Index = " + index);
+                index++;
+            }
+            if (arr[index] == null) {
+                return index;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            log.warn("Array zu klein / index zu gross", e);
+
+        } 
+
+        return null;
     }
 
     public Entry get(int key) {
 
-        int hashValue = Integer.hashCode(key);
-        int index = hashValue % LEN;
-
+        int index = calculateHashValueByKey(key);
         while (index < LEN) {
-            log.info("Hash was negative! ");
-            if (arr[index].getKey() == key) {
-                return arr[index];
+            if (arr[index] != null) {
+                if (arr[index].getKey() == key) {
+                    return arr[index];
+                }
             }
+
             index++;
         }
 
@@ -76,14 +85,17 @@ public class HashTable {
 
     }
 
-    int getSize() {
+    int getStorageCapacity() {
         return LEN;
     }
 
     @Override
     public String toString() {
+        return "Storage of Entries : " + Arrays.toString(arr);
+    }
 
-        return Arrays.toString(arr);
+    public Entry getarr() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

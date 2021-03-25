@@ -14,6 +14,7 @@ public class HashTableDemo {
 
         table.put(0, allocation);
         table.put(0, allocation);
+
         table.put(0, allocation);
 
     }
