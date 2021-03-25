@@ -2,6 +2,9 @@ package ch.hslu.ad.sw04;
 
 import ch.hslu.ad.sw01.Allocation;
 import ch.hslu.ad.sw02.AllocationStack;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.LinkedList;
 
 import java.util.concurrent.ThreadLocalRandom;  // ThreadLocalRandom has a Random-
 // instance per thread and safeguards against contention. 
@@ -53,6 +56,32 @@ public final class Messung {
         Allocation[] arr = AllocationFactory(CONST_OBJECTS);;
         long end = System.currentTimeMillis();
         System.out.println("Hat : " + ((end - start)) + " ms gebraucht, um " + CONST_OBJECTS + " Array Plätze zu füllen");
+    }
+
+    void deque_ArrayDeque_Messung() {
+        Deque<Allocation> deque = new ArrayDeque<Allocation>();
+
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < CONST_OBJECTS; i++) {
+            deque.add(generateRandomAllocation());
+
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("Hat : " + ((end - start)) + " ms gebraucht, um " + CONST_OBJECTS + " Objecte Deque<Allocation> deque = new ArrayDeque<Allocation>()  zu pushen.");
+
+    }
+
+    void deque_LinkedList_Messen() {
+        Deque<Allocation> deque = new LinkedList<Allocation>();
+
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < CONST_OBJECTS; i++) {
+            deque.add(generateRandomAllocation());
+
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("Hat : " + ((end - start)) + " ms gebraucht, um " + CONST_OBJECTS + " Objecte Deque<Allocation> deque = new LinkedList<Allocation>()  zu pushen.");
+
     }
 
     public Allocation[] AllocationFactory(final int n) {
