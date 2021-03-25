@@ -55,9 +55,29 @@ public class HashTableTest {
         Entry[] storageBefore = table.getarr();
         table.put(2, allocation);
         Entry[] storageAfter = table.getarr();
-        
+
         // Objects should stay the same after operation.
         assertEquals(storageBefore, storageAfter);
+
+    }
+
+    @Test
+    public void testToString() throws Exception {
+        HashTable table = new HashTable();
+        Allocation allocation = new Allocation(3);
+
+        table.put(0, allocation);
+        table.put(1, allocation);
+
+        assertThat(table.toString()).startsWith("Storage of Entries : ").contains("Entry{" + "key=");
+
+    }
+
+    @Test
+    public void testToString2() throws Exception {
+        HashTable table = new HashTable();
+        System.out.println(table.toString());
+        assertThat(table.toString()).isNotNull();
 
     }
 

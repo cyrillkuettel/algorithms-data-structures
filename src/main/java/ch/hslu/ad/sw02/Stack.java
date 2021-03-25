@@ -10,9 +10,9 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-class Stack {
+public final class Stack {
 
-    private int size = 3;
+    private int size = 10;
     private int[] store = new int[size];
 
     private int count = 0; // count always points to the next available

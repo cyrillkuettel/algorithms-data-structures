@@ -19,6 +19,8 @@ public class HashTable {
     public HashTable() {
         this.arr = new Entry[LEN];
 
+ //   {@link package.class#member label }
+
     }
 
     public boolean put(int key, Allocation allocationValue) throws Exception {
