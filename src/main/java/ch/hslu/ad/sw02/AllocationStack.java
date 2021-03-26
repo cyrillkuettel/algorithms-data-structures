@@ -6,8 +6,7 @@ package ch.hslu.ad.sw02;
  */
 import ch.hslu.ad.sw01.Allocation;
 import java.util.Arrays;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 
 public final class AllocationStack {
 
@@ -51,13 +50,6 @@ public final class AllocationStack {
         storage = temp;
     }
 
-    public static void main(String[] args) {
-        Stack s = new Stack();
-        s.push(3);
-        s.push(4);
-        s.push(100);
-
-    }
 
     public void setSize(int size) {
         this.size = size;

@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  */
 public final class HashTable implements HashTableInterface {
 
-    private int LEN = 2;
+    private int LEN = 5;
     private boolean empty;
     private Entry[] arr = new Entry[LEN];
 
@@ -27,19 +27,38 @@ public final class HashTable implements HashTableInterface {
     public boolean put(int key, Allocation allocationValue) throws Exception {
         this.empty = false;
         Integer index = calculateHashValueByKey(key);
-
         index = Math.abs(index); // Negative int hash abfangen
-
         Entry addEntry = new Entry(key, allocationValue); // neuer (Object) Eintrag.
+
+        if (istDuplikat(allocationValue)) {
+            return false;
+        }
+
         index = Sondieren(arr, index, key);
 
         if (index == null) {
-            log.warn("Collision detection logic failed. Array is full. Did not find empty slots to store this key.  ");
+            log.warn("Collision detection logic failed. Array is full. Did not find empty slots to store this key. ");
             return false;
         }
 
         arr[index] = addEntry; // element Hinzufügen
         return true; // Everything successfull
+    }
+
+    public boolean istDuplikat(Allocation allocationValue) {
+        for (int i = 0; i < arr.length; i++) {
+            try {
+
+                if (arr[i].getValue().equals(allocationValue)) {
+                    System.out.println(arr[i]);
+                    log.warn("Duplicates are not allowed!");
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                    // 
+            }
+        }
+        return false;
     }
 
     private int calculateHashValueByKey(int key) {
@@ -53,9 +72,7 @@ public final class HashTable implements HashTableInterface {
             log.warn("Abbruch. Ungültiger index. ");
             return null;
         }
-
         try {
-
             while (arr[index] != null && index < LEN) {
                 log.info("Sondierung läuft. current Index = " + index);
                 index++;

@@ -13,7 +13,8 @@ public class HashTableTest {
 
     public HashTableTest() {
     }
-
+    
+    
     @Test
     public void testGetter() throws Exception {
         HashTable table = new HashTable();

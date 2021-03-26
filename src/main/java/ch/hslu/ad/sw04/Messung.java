@@ -27,7 +27,7 @@ public final class Messung {
 
     public void javaUtilStackMessen() {
         java.util.Stack<Allocation> stack = new java.util.Stack<>(); // java.util.Stack
-
+        stack.ensureCapacity(CONST_OBJECTS);
         long start = System.currentTimeMillis();
         for (int i = 0; i < CONST_OBJECTS; i++) {
             stack.push(generateRandomAllocation());
