@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw05;
+package ch.hslu.ad.Circle;
 
 import javax.swing.UIManager;
 import org.apache.logging.log4j.LogManager;

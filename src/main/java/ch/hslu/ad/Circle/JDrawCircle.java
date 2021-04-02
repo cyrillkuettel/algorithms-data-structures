@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw05;
+package ch.hslu.ad.Circle;
 
 import javax.swing.*;
 import java.awt.*;

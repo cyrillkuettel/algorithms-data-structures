@@ -8,7 +8,7 @@ public class treePrintDemo {
 
     public treePrintDemo() {
 
-        Tree tree = createTreeForTestingRemove();
+        Tree tree = createTree();
         tree.drawTree();
         tree.remove(12);
         System.out.println("-----------------------------------------------------------");
@@ -39,7 +39,6 @@ public class treePrintDemo {
 
     static Tree createTree() {
         Tree tree = new Tree();
-
         tree.add(3);
         tree.add(6);
         tree.add(1);

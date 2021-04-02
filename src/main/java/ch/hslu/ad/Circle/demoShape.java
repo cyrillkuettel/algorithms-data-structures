@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw05;
+package ch.hslu.ad.Circle;
 
 import ch.hslu.ad.sw04.HashTable;
 import java.util.concurrent.ThreadLocalRandom;
