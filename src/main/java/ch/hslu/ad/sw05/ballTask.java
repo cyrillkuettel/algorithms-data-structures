@@ -7,9 +7,12 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-public final class BallTask implements Runnable {
+public final class ballTask implements Runnable {
 
-    private static final Logger LOG = LogManager.getLogger(BallTask.class);
+    private static final Logger LOG = LogManager.getLogger(ballTask.class);
+
+    public ballTask() {
+    }
 
     @Override
     public void run() {
