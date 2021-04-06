@@ -81,7 +81,9 @@ public final class Canvas {
      */
     private Canvas(String title, int width, int height, Color bgColor) {
         frame = new JFrame();
+        
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // doesn't work, why?
+        
         canvas = new CanvasPane();
         frame.setContentPane(canvas);
         frame.setTitle(title);
