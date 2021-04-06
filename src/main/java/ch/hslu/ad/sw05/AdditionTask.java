@@ -24,21 +24,27 @@ public final class AdditionTask implements Runnable {
         runThread = Thread.currentThread();
         long sum = 0;
         int n = 0;
-        while (n < rangeEnd && !runThread.isInterrupted()) {
-            sum += n;
-            n++;
+
+        try {
+            while (n < rangeEnd && !runThread.isInterrupted()) {
+                sum += n;
+                n++;
+                Thread.currentThread().sleep(20);
+            }
+            isStopped = !hasFinishedCorrectly(n, rangeEnd);
+
+            if (!isStopped) {
+                LOG.info(runThread.getName() + "finished:  n = " + n + "  SUM = " + sum);
+            } else {
+                LOG.info(runThread.getName() + ": interrupted.");
+            }
+
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        } finally {
+            Thread.currentThread().interrupt();
         }
-        isStopped = hasFinishedCorrectly(n, rangeEnd);
-//        try {
-//            Thread.sleep(10); // Delay
-//        } catch (InterruptedException ex) {
-//            runThread.interrupt();
-//        }
-        if (!isStopped) {
-            LOG.info(runThread.getName() + "finished:  n = " + n + "  SUM = " + sum);
-        } else {
-            LOG.info(runThread.getName() + ": interrupted.");
-        }
+
     }
 
     public boolean hasFinishedCorrectly(final int n, final int rangeEnd) {
@@ -48,7 +54,7 @@ public final class AdditionTask implements Runnable {
         return false;
     }
 
-    public void stop() {
+    public void terminateManually() {
         this.isStopped = true;
     }
 
