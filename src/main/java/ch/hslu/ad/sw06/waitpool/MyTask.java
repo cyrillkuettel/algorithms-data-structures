@@ -41,6 +41,6 @@ public final class MyTask implements Runnable {
 }
 
 /*
-Stackoverflow
+
 The rule is that the same thread that calls wait (or notify) on an object must also hold the monitor lock on the object. 
  */
