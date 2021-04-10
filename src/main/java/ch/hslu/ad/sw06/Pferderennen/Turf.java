@@ -1,30 +1,7 @@
 package ch.hslu.ad.sw06.Pferderennen;
-
 import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-/**
- * Eine Rennbahn für das Pferderennen.
- */
-public final class Turf {
-
-    private static final Logger LOG = LogManager.getLogger(Turf.class);
-    private static final int NUMBER_OF_HORSES = 3;
-
-    /**
-     * Privater Konstruktor.
-     */
-    private Turf() {
-    }
-
-    /**
-     * Main-Demo.
-     *
-     * @param args not used.
-     */
-    
-    
     /*
        fair:  // mehr fairness mit CountDownLatch 
     ( This allows all threads to have a fair chance of starting at about the same time.")
@@ -32,8 +9,17 @@ public final class Turf {
          nicht fair, weil es nur ein latch hat. Alle Pferde müssen da durch.
          synchronious queue ist ziemlich fair, aber immer noch nicht 100%
     */
-// latch ist optimal -> Mep
+    // latch ist optimal -> Mep
     // diese aufgabe könnte in einer Form an der MEP kommen. 
+    
+public final class Turf {
+
+    private static final Logger LOG = LogManager.getLogger(Turf.class);
+    private static final int NUMBER_OF_HORSES = 3;
+
+    private Turf() {
+    }
+    
     public static void main(final String[] args) throws InterruptedException {
         final Synch startLatch = new Latch();
 

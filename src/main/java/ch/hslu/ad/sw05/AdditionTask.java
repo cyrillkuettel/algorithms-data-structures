@@ -17,7 +17,7 @@ public final class AdditionTask implements Runnable {
 
     public AdditionTask(int rangeEnd) {
         this.rangeEnd = rangeEnd;
-        
+
     }
 
     @Override

@@ -17,7 +17,6 @@ package ch.hslu.ad.sw06.BoundedBuffer;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Puffer nach dem First In First Out Prinzip mit einer begrenzten Kapazität.
@@ -25,80 +24,110 @@ import java.util.concurrent.TimeUnit;
  *
  * @param <T> Elememente des Buffers
  */
-public final class BoundedBuffer<T> {
+public final class BoundedBuffer<T> implements Buffer<T> {
 
-    private final ArrayDeque<T> queue;
-    private final Semaphore putSema; // java 
-    private final Semaphore takeSema;
+	private final ArrayDeque<T> queue;
+	private final Semaphore putSema;
+	private final Semaphore takeSema;
+	private final int maxSize;
 
-    private int maxSize;
+	/**
+	 * Erzeugt einen Puffer mit bestimmter Kapazität.
+	 *
+	 * @param n Kapazität des Puffers
+	 */
+	public BoundedBuffer(final int n) {
+		queue = new ArrayDeque<>(n);
+		putSema = new Semaphore(n);
+		takeSema = new Semaphore(0);
+		maxSize = n;
+	}
 
-    /**
-     * Erzeugt einen Puffer mit bestimmter Kapazität.
-     *
-     * @param n Kapazität des Puffers
-     */
-    public BoundedBuffer(final int n) {
-        queue = new ArrayDeque<>(n);
-        putSema = new Semaphore(n);
-        takeSema = new Semaphore(0);
-        this.maxSize = n;
+	@Override
+	public void put(final T elem) throws InterruptedException {
+		putSema.acquire();
+		synchronized (queue) {
+			queue.addFirst(elem);
+		}
+		takeSema.release();
+	}
 
-    }
+	@Override
+	public T get() throws InterruptedException {
+		takeSema.acquire();
+		T elem;
+		synchronized (queue) {
+			elem = queue.removeLast();
+		}
+		putSema.release();
+		return elem;
+	}
 
-    /**
-     * Fügt ein Element in den Puffer ein, wenn dies möglich ist, wenn nicht
-     * muss der Schreiber warten.
-     *
-     * @param elem Element zum Einfügen.
-     * @throws InterruptedException falls das Warten unterbrochen wird.
-     */
-    public void put(final T elem) throws InterruptedException {
-        putSema.acquire();
-        synchronized (queue) {
-            queue.addFirst(elem);
-        }
-        takeSema.release();
-    }
+	@Override
+	public boolean put(T elem, long millis) throws InterruptedException {
+		long milSek = System.currentTimeMillis();
+		while (System.currentTimeMillis() - milSek< millis) {
+			putSema.acquire();
+			synchronized (queue) {
+				queue.addFirst(elem);
+			}
+			takeSema.release();
+			return true;
+		}
+		return false;
+	}
 
-    public boolean put(final T elem, final long millis) throws InterruptedException {
-        if (!putSema.tryAcquire(millis, TimeUnit.MILLISECONDS)) {
-            return false;
-        }
+	@Override
+	public T get(long millis) throws InterruptedException {
+		T elem;
+		long milSek = System.currentTimeMillis();
+		while (System.currentTimeMillis() - milSek< millis) {
+		takeSema.acquire();
+		synchronized (queue) {
+			elem = queue.removeLast();
+		}
+		putSema.release();
+		return elem;
+		}
+		return null;
+	}
 
-        synchronized (queue) {
-            queue.addFirst(elem);
-        }
-        takeSema.release();
-        return true;
-    }
+	@Override
+	public T first() throws InterruptedException {
+		T ele;
+		synchronized(queue) {
+			ele = queue.getFirst();
+		} return ele;
+	}
 
-    public T get(final long millis) throws InterruptedException {
-        
-        return getFirst(millis);
-    }
+	@Override
+	public T last() throws InterruptedException {
+		T ele;
+		synchronized(queue) {
+			ele = queue.getLast();
+		} return ele;
+		
+	}
 
-    public T getFirst(final long millis) {
-        T elem;
-        elem = queue.removeFirst();
-        putSema.release(); // ein slot Frei geworden
-        return elem;
-    }
+	@Override
+	public boolean empty() {
+//		System.out.println(queue.size());
+		if (queue.size() == 0) {
+			return true;
+		} else
+			return false;
+	}
 
-    /**
-     * Liest und entfernt ein Element aus dem Puffer, wenn dies möglich ist,
-     * wenn nicht muss der Leser warten.
-     *
-     * @return gelesenes Element.
-     * @throws InterruptedException falls das Warten unterbrochen wird.
-     */
-    public T take() throws InterruptedException {
-        takeSema.acquire();
-        T elem;
-        synchronized (queue) {
-            elem = queue.removeLast();
-        }
-        putSema.release();
-        return elem;
-    }
+	@Override
+	public boolean full() {
+		if (maxSize == queue.size()) {
+			return true;
+		} else
+			return false;
+	}
+
+	@Override
+	public int size() {
+		return queue.size();
+	}
 }

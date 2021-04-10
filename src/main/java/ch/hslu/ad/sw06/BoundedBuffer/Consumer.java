@@ -15,10 +15,16 @@
  */
 package ch.hslu.ad.sw06.BoundedBuffer;
 
+import ch.hslu.ad.sw05.ballTask;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Konsument, der soviele Werte aus einer Queue liest, wie er nur kann.
  */
 public final class Consumer implements Runnable {
+
+    private static final Logger LOG = LogManager.getLogger(ballTask.class);
 
     private final BoundedBuffer<Integer> queue;
     private long sum;
@@ -38,7 +44,12 @@ public final class Consumer implements Runnable {
     public void run() {
         while (true) {
             try {
-                sum += queue.take();
+                Integer temp = queue.get(10);
+                if (temp == null) {
+                    LOG.info("Consumer get timeout");
+                    break;
+                }
+                sum += temp;
             } catch (InterruptedException ex) {
                 return;
             }
