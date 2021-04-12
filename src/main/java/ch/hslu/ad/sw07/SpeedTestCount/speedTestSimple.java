@@ -35,14 +35,12 @@ public final class speedTestSimple {
 
     public void testAnyCounter(Counter counter) {
         Duration durations[] = new Duration[TAKES];
-
         for (int i = 0; i < TAKES; i++) {
             durations[i] = measureTimeToCompletion(counter);
         }
 
-
         try {
-            double averageRuntime  = Arrays.stream(durations).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
+            double averageRuntime = calculateAverageRuntimeInMillis(durations);
             System.out.format(counter.getClass().getSimpleName() + " fertig, Laufzeit: %fms mit %d iterations.", averageRuntime, ITERATIONS);
             System.out.println();
             System.out.println();
@@ -72,6 +70,15 @@ public final class speedTestSimple {
         Duration difference = Duration.between(start, end);
         executor.shutdown();
         return difference;
+    }
+
+    public double calculateAverageRuntimeInMillis(Duration inp[]) {
+        // loop through each duration object. 
+        // Get the measured time as double
+        // convert from nano to milli
+        // return average form each object
+        return Arrays.stream(inp).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
+
     }
 
     public static void main(String[] args) {
