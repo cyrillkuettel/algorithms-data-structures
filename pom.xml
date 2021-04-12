@@ -60,6 +60,7 @@
         <tag>HEAD</tag>
     </scm>
 
+
     <issueManagement>
         <system>GitLab Repository auf ELab - HSLU I</system>
         <url>https://gitlab.enterpriselab.ch/${scm.group.name}/${project.artifactId}/issues</url>
