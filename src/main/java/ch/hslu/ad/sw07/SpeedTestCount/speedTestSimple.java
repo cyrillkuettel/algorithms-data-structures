@@ -1,15 +1,14 @@
 package ch.hslu.ad.sw07.SpeedTestCount;
 
-import ch.hslu.ad.sw07.Primes.PrimeCheckSequential;
-import ch.hslu.ad.sw07.Primes.primeFinderCallable;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.OptionalDouble;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
+import java.util.stream.DoubleStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,17 +16,11 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-/*
- TODO: 
-   -  N iTERATIONS, then take the average.
-   -use   java.time.Duration; and  java.time.Instant   instead of System.currentTimes
-
-  
-
- */
 public final class speedTestSimple {
 
     private static final Logger LOG = LogManager.getLogger(speedTestSimple.class);
+
+    private int TAKES = 10; // number of takes, then takes average from all
     private int ITERATIONS = 1000000;
 
     public speedTestSimple() {
@@ -38,11 +31,30 @@ public final class speedTestSimple {
 
         testAnyCounter(new AtomicCounter());
         testAnyCounter(new SynchronizedCounter());
-
     }
 
     public void testAnyCounter(Counter counter) {
-        long start = System.currentTimeMillis();
+        Duration durations[] = new Duration[TAKES];
+
+        for (int i = 0; i < TAKES; i++) {
+            durations[i] = measureTimeToCompletion(counter);
+        }
+
+
+        try {
+            double averageRuntime  = Arrays.stream(durations).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
+            System.out.format(counter.getClass().getSimpleName() + " fertig, Laufzeit: %fms mit %d iterations.", averageRuntime, ITERATIONS);
+            System.out.println();
+            System.out.println();
+        } catch (Exception e) {
+            LOG.warn("Average Runtime One-Liner failed", e);
+        }
+
+    }
+
+    public Duration measureTimeToCompletion(Counter counter) {
+
+        Instant start = Instant.now();
 
         final ExecutorService executor = Executors.newCachedThreadPool();
         final Callable<Integer> callable = new callableTask(counter, ITERATIONS);
@@ -52,14 +64,14 @@ public final class speedTestSimple {
             try {
                 wait(); // suspend the current thread
             } catch (Exception e) {
-                // really don't care about an exception 
+                // I really don't care 
             }
         }
 
-        long end = System.currentTimeMillis();
+        Instant end = Instant.now();
+        Duration difference = Duration.between(start, end);
         executor.shutdown();
-        System.out.format(counter.getClass().getSimpleName() + " fertig, Laufzeit: %dms mit %d iterations. \n", (end - start), ITERATIONS);
-
+        return difference;
     }
 
     public static void main(String[] args) {
