@@ -19,14 +19,13 @@ import org.apache.logging.log4j.Logger;
  */
 /*
  TODO: 
-   -  N iTERATIONS, then take the average of time. 
+   -  N iTERATIONS, then take the average.
+   -use   java.time.Duration; and  java.time.Instant   instead of System.currentTimes
 
-   -use   java.time.Duration; and  java.time.Instant;
-
-   - Multiple Tasks. 
+  
 
  */
-public class speedTestSimple {
+public final class speedTestSimple {
 
     private static final Logger LOG = LogManager.getLogger(speedTestSimple.class);
     private int ITERATIONS = 1000000;

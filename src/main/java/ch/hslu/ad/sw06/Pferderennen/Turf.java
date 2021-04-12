@@ -33,7 +33,7 @@ public final class Turf {
         TimeUnit.MILLISECONDS.sleep(10);
         for (int i = NUMBER_OF_HORSES; i >= 0; i--) {
             LOG.info(i + " ist am Laufen");
-            TimeUnit.MILLISECONDS.sleep(10);
+            TimeUnit.MILLISECONDS.sleep(30);
         }
         LOG.info("Start...");
 

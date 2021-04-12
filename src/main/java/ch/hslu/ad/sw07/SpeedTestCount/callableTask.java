@@ -13,7 +13,7 @@ import java.util.concurrent.Future;
  *
  * @author cyrill
  */
-public class callableTask implements Callable<Integer> {
+public final class callableTask implements Callable<Integer> {
 
     private Counter counter;
     private int NUMBER_OF_ITERATIONS;
