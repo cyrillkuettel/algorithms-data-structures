@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw07;
+package ch.hslu.ad.sw07.Primes;
 
 import java.math.BigInteger;
 import java.util.Random;

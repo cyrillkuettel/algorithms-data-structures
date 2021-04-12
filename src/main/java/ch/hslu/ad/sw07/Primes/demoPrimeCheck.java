@@ -1,7 +1,8 @@
-package ch.hslu.ad.sw07;
+package ch.hslu.ad.sw07.Primes;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -18,12 +19,12 @@ import org.apache.logging.log4j.Logger;
 /**
  * 100 grosse Primzahlen produzieren.
  */
-public final class PrimeCheck {
+public final class demoPrimeCheck {
 
-    private static final Logger LOG = LogManager.getLogger(PrimeCheck.class);
+    private static final Logger LOG = LogManager.getLogger(demoPrimeCheck.class);
     private static final int NUMBER_OF_PRIMES = 100;
 
-    public PrimeCheck() {
+    public demoPrimeCheck() {
     }
 
     /**
@@ -32,25 +33,40 @@ public final class PrimeCheck {
      * @param args not used.
      */
     public static void main(String[] args) {
- 
-        ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_PRIMES);
-        List<Future<BigInteger>> futures = new ArrayList<>();
-        List<BigInteger> computedResults = new ArrayList<>();
+
+        final ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_PRIMES);
+        final List<Future<BigInteger>> futures = new ArrayList<>();
+        final List<BigInteger> computedResults = new ArrayList<>();
 
         for (int i = 0; i < NUMBER_OF_PRIMES; i++) {
             final Callable<BigInteger> callable = new primeFinderCallable(i);
             final Future<BigInteger> result = executor.submit(callable);
             futures.add(result);
         }
-        
+
+//        Iterator<Future<BigInteger>> it = futures.iterator();
         for (Future<BigInteger> future : futures) {
-             try {
+            try {
                 computedResults.add(future.get());
             } catch (InterruptedException | ExecutionException ex) {
                 LOG.debug(ex);
             }
         }
-        executor.shutdown();
-        
+        if (isComplete(futures)) { // is this check necessary ??
+            executor.shutdown();
+        }
+
+        computedResults.parallelStream().forEachOrdered(System.out::println); // print the final result ( if you want) ;
+
+    }
+
+    public static boolean isComplete(List<Future<BigInteger>> futures) {
+        for (Future<BigInteger> future : futures) {
+            if (!future.isDone()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
