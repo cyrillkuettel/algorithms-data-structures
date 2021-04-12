@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
 public final class PrimeCheck {
 
     private static final Logger LOG = LogManager.getLogger(PrimeCheck.class);
-    private static final int NUMBER_OF_PRIMES = 10;
+    private static final int NUMBER_OF_PRIMES = 100;
 
     public PrimeCheck() {
     }
@@ -32,32 +32,25 @@ public final class PrimeCheck {
      * @param args not used.
      */
     public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-
-//        final ExecutorService executor = Executors.newCachedThreadPool();
+ 
         ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_PRIMES);
-
         List<Future<BigInteger>> futures = new ArrayList<>();
+        List<BigInteger> computedResults = new ArrayList<>();
 
         for (int i = 0; i < NUMBER_OF_PRIMES; i++) {
-            final Callable<BigInteger> callable = new primeFinderCallable();
+            final Callable<BigInteger> callable = new primeFinderCallable(i);
             final Future<BigInteger> result = executor.submit(callable);
             futures.add(result);
         }
         
         for (Future<BigInteger> future : futures) {
              try {
-                LOG.info(future.get());
+                computedResults.add(future.get());
             } catch (InterruptedException | ExecutionException ex) {
-                LOG.debug("failed", ex);
+                LOG.debug(ex);
             }
         }
         executor.shutdown();
         
-
-        long stop = System.currentTimeMillis();
-        System.out.println();
-        System.out.format("Laufzeit: %d ms", stop - start);
-
     }
 }

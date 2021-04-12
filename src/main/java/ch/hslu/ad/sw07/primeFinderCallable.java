@@ -13,7 +13,13 @@ import org.apache.logging.log4j.Logger;
 public final class primeFinderCallable implements Callable<BigInteger> {
 
     private static final Logger LOG = LogManager.getLogger(primeFinderCallable.class);
-    private BigInteger bi;
+    private final int zähler; // Durchnumerierung der Callable
+
+    public primeFinderCallable(final int i) {
+        this.zähler = i+1; 
+    }
+    
+    
     
     @Override
     public BigInteger call() throws Exception {
@@ -22,7 +28,7 @@ public final class primeFinderCallable implements Callable<BigInteger> {
         while (n == 0) {
             bi = new BigInteger(1024, new Random());
             if (bi.isProbablePrime(Integer.MAX_VALUE)) {
-                LOG.info(n + ": " + bi.toString().substring(0, 20) + "...");
+                LOG.info(zähler + ": " + bi.toString().substring(0, 20) + "...");
                 n++;
                 return bi;
             }
