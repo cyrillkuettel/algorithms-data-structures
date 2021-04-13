@@ -72,6 +72,17 @@ public final class speedTest {
         return difference;
     }
 
+    public void waitALot(Future<Integer> result) {
+        
+        while (!result.isDone()) {
+            try {
+                wait(); // suspend the current thread
+            } catch (Exception e) {
+                // I really don't care 
+            }
+        }
+    }
+
     public double calculateAverageRuntimeInMillis(Duration inp[]) {
         // For Each duration object:
         //      Get the measured time as double
