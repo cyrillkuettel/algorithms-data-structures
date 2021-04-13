@@ -16,14 +16,14 @@ import org.apache.logging.log4j.Logger;
  *
  * @author cyrill
  */
-public final class speedTestSimple {
+public final class speedTest {
 
-    private static final Logger LOG = LogManager.getLogger(speedTestSimple.class);
+    private static final Logger LOG = LogManager.getLogger(speedTest.class);
 
     private int TAKES = 10; // number of takes, then takes average from all
     private int ITERATIONS = 1000000;
 
-    public speedTestSimple() {
+    public speedTest() {
         testAnyCounter(new AtomicCounter());
         testAnyCounter(new SynchronizedCounter());
 
@@ -73,16 +73,16 @@ public final class speedTestSimple {
     }
 
     public double calculateAverageRuntimeInMillis(Duration inp[]) {
-        // loop through each duration object. 
-        // Get the measured time as double
-        // convert from nano to milli
+        // For Each duration object:
+        //      Get the measured time as double
+        //      convert from nano to milli
         // return average form each object
         return Arrays.stream(inp).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
 
     }
 
     public static void main(String[] args) {
-        new speedTestSimple();
+        new speedTest();
     }
 
 }

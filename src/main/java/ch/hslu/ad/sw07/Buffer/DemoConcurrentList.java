@@ -48,7 +48,6 @@ public final class DemoConcurrentList {
      * @throws java.util.concurrent.ExecutionException bei Excecution-Fehler.
      */
     public static void main(final String args[]) throws InterruptedException, ExecutionException {
-
         List<Integer> list = new LinkedList<>();
 
         list = Collections.synchronizedList(list);
@@ -59,8 +58,7 @@ public final class DemoConcurrentList {
             futures.add(executor.submit(new Producer(list, 1000)));
         }
         Iterator<Future<Long>> iterator = futures.iterator();
-        
-        
+
         long totProd = 0;
         while (iterator.hasNext()) {
             long sum = iterator.next().get();
@@ -72,4 +70,5 @@ public final class DemoConcurrentList {
         LOG.info("cons tot = " + totCons);
         executor.shutdown();
     }
+
 }
