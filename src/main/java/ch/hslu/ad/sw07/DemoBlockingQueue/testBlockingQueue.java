@@ -20,14 +20,15 @@ import org.apache.logging.log4j.Logger;
 /*
 
 
-// It is not possible to insert null into a BlockingQueue.
-
+TODO: 
+    - BlockingQueue messung funktioniert.
+    - jetzt dasselbe für ConcurrentList machen.
 
  */
 public final class testBlockingQueue {
 
     private static final Logger LOG = LogManager.getLogger(testBlockingQueue.class);
-    private static final int PASSES = 100;
+    private static final int PASSES = 3;
     private static final int NUMBER_OF_TASKS = 3;
     private static final int maxRange = 1000;
 
@@ -44,7 +45,9 @@ public final class testBlockingQueue {
         try {
             double averageRuntime = calculateAverageRuntimeInMillis(durations);
             System.out.println();
-            System.out.format("testBlockingQueue Messung fertig, Durchschnittliche Laufzeit: %fms mit %d Tasks und  %d PASSES.", averageRuntime, NUMBER_OF_TASKS, PASSES);
+            System.out.format("testBlockingQueue Messung fertig, Durchschnittliche Laufzeit: %fms mit %d Producer pro Threadpool und  %d PASSES.", averageRuntime, NUMBER_OF_TASKS, PASSES);
+            System.out.println();
+            Arrays.stream(durations).forEach(duration -> System.out.println(duration.toNanos()));
         } catch (Exception e) {
             LOG.warn("Messung failed. Something failed in Average Runtime One-Liner", e);
         }
@@ -66,11 +69,12 @@ public final class testBlockingQueue {
         while (iterator.hasNext()) {
             long sum = iterator.next().get();
             totProd += sum;
-            LOG.info("prod sum = " + sum);
         }
         LOG.info("prod tot = " + totProd);
         long totCons = executor.submit(new Consumer(queue)).get();
         LOG.info("cons tot = " + totCons);
+
+        waitForTheFuture(futures);
 
         final Instant end = Instant.now();
 
@@ -79,8 +83,7 @@ public final class testBlockingQueue {
     }
 
     public double calculateAverageRuntimeInMillis(Duration inp[]) {
-        return Arrays.stream(inp).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
-
+        return Arrays.stream(inp).map(d -> d.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
     }
 
     public synchronized void waitForTheFuture(List<Future<Long>> futures) {
