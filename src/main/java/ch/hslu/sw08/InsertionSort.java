@@ -1,4 +1,4 @@
-package ch.hslu.sw08.InsertionSort;
+package ch.hslu.sw08;
 
 import java.util.Arrays;
 
@@ -8,16 +8,17 @@ import java.util.Arrays;
  */
 public class InsertionSort {
 
-    private int[] arr = {4, 2, 6, 9, 3, 7, 1};
+    private int[] a = {4, 2, 6, 9, 3, 7, 1};
 
     public InsertionSort() {
-        System.out.println(Arrays.toString(arr));
-        insertionSort(arr);
-        System.out.println(Arrays.toString(arr));
+        RandomArrayGenerator rnd = new RandomArrayGenerator();
+        
+        a = rnd.generateUniqueRandomArray(100);
+        System.out.println(Arrays.toString(a));
+        insertionSort(a);
+        System.out.println(Arrays.toString(a));
 
     }
-
-
 
   public static void insertionSort(int array[]) {
     for (int j = 1; j < array.length; j++) {

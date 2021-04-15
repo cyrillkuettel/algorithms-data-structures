@@ -57,14 +57,9 @@ public final class speedTest {
         final ExecutorService executor = Executors.newCachedThreadPool();
         final Callable<Integer> callable = new callableTask(counter, ITERATIONS);
         Future<Integer> result = executor.submit(callable);
-
-        while (!result.isDone()) {
-            try {
-                wait(); // suspend the current thread
-            } catch (Exception e) {
-                // I really don't care 
-            }
-        }
+        
+        waitALot(result);
+        
 
         Instant end = Instant.now();
         Duration difference = Duration.between(start, end);
@@ -72,7 +67,7 @@ public final class speedTest {
         return difference;
     }
 
-    public void waitALot(Future<Integer> result) {
+    public synchronized void waitALot(Future<Integer> result) {
         
         while (!result.isDone()) {
             try {

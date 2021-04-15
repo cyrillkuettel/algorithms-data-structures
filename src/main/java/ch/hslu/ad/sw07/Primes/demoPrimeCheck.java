@@ -33,7 +33,7 @@ public final class demoPrimeCheck {
      * @param args not used.
      */
     public static void main(String[] args) {
-
+        long start = System.currentTimeMillis();
         final ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_PRIMES);
         final List<Future<BigInteger>> futures = new ArrayList<>();
         final List<BigInteger> computedResults = new ArrayList<>();
@@ -52,6 +52,11 @@ public final class demoPrimeCheck {
                 LOG.debug(ex);
             }
         }
+        long stop = System.currentTimeMillis();
+        System.out.println();
+        System.out.format("Laufzeit: %d ms", stop - start + '\n');
+        
+        
         if (isComplete(futures)) { // is this check necessary ??
             executor.shutdown();
         }
