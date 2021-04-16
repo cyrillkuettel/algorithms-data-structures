@@ -28,9 +28,9 @@ TODO:
 public final class testBlockingQueue {
 
     private static final Logger LOG = LogManager.getLogger(testBlockingQueue.class);
-    private static final int PASSES = 3;
+    private static final int PASSES = 100;
     private static final int NUMBER_OF_TASKS = 3;
-    private static final int maxRange = 1000;
+    private static final int maxRange = 100;
 
     public testBlockingQueue() throws InterruptedException, ExecutionException {
         start();
@@ -47,7 +47,8 @@ public final class testBlockingQueue {
             System.out.println();
             System.out.format("testBlockingQueue Messung fertig, Durchschnittliche Laufzeit: %fms mit %d Producer pro Threadpool und  %d PASSES.", averageRuntime, NUMBER_OF_TASKS, PASSES);
             System.out.println();
-            Arrays.stream(durations).forEach(duration -> System.out.println(duration.toNanos()));
+            
+//            Arrays.stream(durations).forEach(duration -> System.out.println(duration.toNanos()));
         } catch (Exception e) {
             LOG.warn("Messung failed. Something failed in Average Runtime One-Liner", e);
         }

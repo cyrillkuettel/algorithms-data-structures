@@ -58,6 +58,7 @@ public final class speedTest {
         final Callable<Integer> callable = new callableTask(counter, ITERATIONS);
         Future<Integer> result = executor.submit(callable);
         
+        //
         waitALot(result);
         
 

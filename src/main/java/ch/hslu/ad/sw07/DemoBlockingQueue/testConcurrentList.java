@@ -30,7 +30,7 @@ public final class testConcurrentList {
     private static final Logger LOG = LogManager.getLogger(testConcurrentList.class);
     private static final int PASSES = 3;
     private static final int NUMBER_OF_TASKS = 3;
-    private static final int maxRange = 1000;
+    private static final int maxRange = 100;
 
     public testConcurrentList() throws InterruptedException, ExecutionException {
         start();
