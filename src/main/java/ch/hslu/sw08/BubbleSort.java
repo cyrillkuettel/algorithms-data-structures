@@ -1,7 +1,7 @@
 package ch.hslu.sw08;
 
-import static ch.hslu.sw08.InsertionSort.insertionSort;
 import java.util.Arrays;
+
 
 /**
  *

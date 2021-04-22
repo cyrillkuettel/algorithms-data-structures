@@ -3,12 +3,11 @@ package ch.hslu.ad.sw07.SpeedTestCount;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
-import java.util.OptionalDouble;
+import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.stream.DoubleStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +19,7 @@ public final class speedTest {
 
     private static final Logger LOG = LogManager.getLogger(speedTest.class);
 
+    // am Besten: eine Primzahl oder eine Ungrade zahl wählen. Die jvm versucht sonst zu optimieren. 
     private int TAKES = 10; // number of takes, then takes average from all
     private int ITERATIONS = 1000000;
 
@@ -57,10 +57,9 @@ public final class speedTest {
         final ExecutorService executor = Executors.newCachedThreadPool();
         final Callable<Integer> callable = new callableTask(counter, ITERATIONS);
         Future<Integer> result = executor.submit(callable);
-        
+
         //
         waitALot(result);
-        
 
         Instant end = Instant.now();
         Duration difference = Duration.between(start, end);
@@ -69,7 +68,7 @@ public final class speedTest {
     }
 
     public synchronized void waitALot(Future<Integer> result) {
-        
+
         while (!result.isDone()) {
             try {
                 wait(); // suspend the current thread
@@ -84,8 +83,11 @@ public final class speedTest {
         //      Get the measured time as double
         //      convert from nano to milli
         // return average form each object
-        return Arrays.stream(inp).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
-
+        try {
+            return Arrays.stream(inp).map(duration -> duration.toNanos() / (double) 1000000).mapToDouble(Double::doubleValue).average().getAsDouble();
+        } catch (NoSuchElementException e) {
+            throw new RuntimeException("Mittelwert  kann  nicht  ermittelt werden");
+        }
     }
 
     public static void main(String[] args) {

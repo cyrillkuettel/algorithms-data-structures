@@ -1,27 +1,25 @@
 package ch.hslu.sw08;
 
-import static ch.hslu.sw08.InsertionSort.insertionSort;
 import java.util.Arrays;
+
 
 /**
  *
  * @author cyrill
  */
-public class SelectionSort { // "Direktes Auswählen"
+public class SelectionSort implements Sortieren{ // "Direktes Auswählen"
 
     private int[] a = {4, 2, 6, 9, 3, 7, 1};
 
     public SelectionSort() {
-        System.out.println(Arrays.toString(a));
-        insertionSort(a);
-        System.out.println(Arrays.toString(a));
     }
 
     public static void main(String[] args) {
         new SelectionSort();
     }
 
-    void direktesAuswählen(int[] arr) {
+    @Override
+    public void sort(int[] arr) {
         int currentMinimum;
 
         /// unsorted Partition, and Sorted Partition. 
@@ -42,7 +40,7 @@ public class SelectionSort { // "Direktes Auswählen"
         }
     }
 
-    void swap(int[] arr, int i, int j) {
+    private void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;

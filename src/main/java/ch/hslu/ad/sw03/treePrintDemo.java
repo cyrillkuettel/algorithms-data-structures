@@ -1,5 +1,7 @@
 package ch.hslu.ad.sw03;
 
+import  java.util.function .*;
+
 /**
  *
  * @author cyrill
