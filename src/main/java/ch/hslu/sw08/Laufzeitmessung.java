@@ -19,18 +19,21 @@ public final class Laufzeitmessung {
         int[] a = rnd.generateUniqueRandomArray(SIZE);
         log.info("Starting Sort ...");
         log.info(Arrays.toString(a));
+        
         long start = System.currentTimeMillis();
         sortierer.sort(a);
         long end = System.currentTimeMillis();
+        
         log.info(Arrays.toString(a));
         System.out.format("Finished sorting. Total time: %d ms", end - start);
         System.out.println();
     }
 
     public static void main(String[] args) {
-        new Laufzeitmessung(new InsertionSort());
         
-        new Laufzeitmessung(new SelectionSort());
+        new Laufzeitmessung(new InsertionSort());
+//        new Laufzeitmessung(new SelectionSort());
+        
     }
 
 }
