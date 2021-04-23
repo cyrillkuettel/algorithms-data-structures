@@ -1,4 +1,4 @@
-package ch.hslu.sw08;
+package ch.hslu.ad.sw08;
 
 import ch.hslu.ad.Circle.JDrawCircle;
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public final class Laufzeitmessung {
 
     public void messung(final Sortieren sortierer) {
         int[] a = this.a.clone();
-        log.info("Starting {} ...", (sortierer.getClass().getSimpleName()));
+        log.info("Starting {} ...", sortierer.getClass().getSimpleName());
         log.info(Arrays.toString(a).substring(0, 20));
 
         long start = System.currentTimeMillis();
@@ -36,6 +36,7 @@ public final class Laufzeitmessung {
 
         log.info(Arrays.toString(a).substring(0, 20));
         System.out.format("Finished sorting. Total time: %d ms", end - start);
+        System.out.println();
         System.out.println();
     }
 
@@ -46,7 +47,7 @@ public final class Laufzeitmessung {
 //        m.messung(new SelectionSort());
 //        m.messung(new BubbleSort());
 
-        Laufzeitmessung m2 = new Laufzeitmessung(200000);
+        Laufzeitmessung m2 = new Laufzeitmessung(20000);
 
         m2.messung(new InsertionSort());
         m2.messung(new SelectionSort());

@@ -1,4 +1,4 @@
-package ch.hslu.sw08;
+package ch.hslu.ad.sw08;
 
  class InsertionSort implements Sortieren{
 

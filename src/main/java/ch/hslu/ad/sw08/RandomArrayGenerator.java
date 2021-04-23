@@ -1,4 +1,4 @@
-package ch.hslu.sw08;
+package ch.hslu.ad.sw08;
 
 import java.util.ArrayList;
 import java.util.Arrays;
