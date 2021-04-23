@@ -9,15 +9,6 @@ import java.util.Arrays;
  */
 public class SelectionSort implements Sortieren{ // "Direktes Auswählen"
 
-    private int[] a = {4, 2, 6, 9, 3, 7, 1};
-
-    public SelectionSort() {
-    }
-
-    public static void main(String[] args) {
-        new SelectionSort();
-    }
-
     @Override
     public void sort(int[] arr) {
         int currentMinimum;
@@ -28,14 +19,14 @@ public class SelectionSort implements Sortieren{ // "Direktes Auswählen"
             /* assume the min is the first element */
 
             for (int j = i + 1; j < arr.length; j++) {  // progress the lenght of the array, looking for smaller number
-                if (a[j] < a[currentMinimum]) {
+                if (arr[j] < arr[currentMinimum]) {
                     currentMinimum = j;
                     /* found new minimum; remember its index */
                 }
             }
             
             if (currentMinimum != i) {
-                swap(a, i, currentMinimum);
+                swap(arr, i, currentMinimum);
             }
         }
     }
