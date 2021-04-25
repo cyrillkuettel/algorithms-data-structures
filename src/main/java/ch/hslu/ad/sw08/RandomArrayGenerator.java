@@ -13,13 +13,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandomArrayGenerator {
 
     private final int MIN = 0;
-    private final int MAX = 100;
+    private int MAX;
 
     public RandomArrayGenerator() {
 
     }
 
     public int[] generateArray(final int size) {
+        this.MAX = size;
         int[] a = new int[size];
         for (int i = 0; i < size; i++) {
             int randomNum = ThreadLocalRandom.current().nextInt(MIN, MAX + 1);
@@ -29,16 +30,18 @@ public class RandomArrayGenerator {
         return a;
     }
 
+    /*
+        Jede Zahl kommt nur einmal vor. 
+     */
     public int[] generateUniqueRandomArray(final int size) {
-       
-         
+
         List<Integer> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             list.add(i);
         }
         Collections.shuffle(list);
-        int[] array = list.stream().mapToInt(i->i).toArray();
-            
+        int[] array = list.stream().mapToInt(i -> i).toArray();
+
         return array;
     }
 

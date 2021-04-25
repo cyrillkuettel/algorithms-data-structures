@@ -21,7 +21,7 @@ public final class Laufzeitmessung {
         log.info("Generating Random Sequence");
         RandomArrayGenerator rnd = new RandomArrayGenerator();
 
-        this.a = rnd.generateUniqueRandomArray(SIZE);
+        this.a = rnd.generateArray(SIZE);
 
     }
 
@@ -41,11 +41,9 @@ public final class Laufzeitmessung {
     }
 
     public static void main(String[] args) {
-        Laufzeitmessung m = new Laufzeitmessung(900_000);
+        Laufzeitmessung m = new Laufzeitmessung(60_000_000);
 
-            m.messen(new QuickSort());
-
-
+        m.messen(new QuickSort());
 
     }
 
