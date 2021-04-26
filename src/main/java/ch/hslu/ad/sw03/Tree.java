@@ -138,6 +138,16 @@ public class Tree implements TreeInterface {
             }
         }
     }
+    
+    public boolean existsInTree(node root, node node) { // If this works, this is a piece of art. 
+        if ( root == null) {
+            return false;
+        }  else {
+            boolean inLeft = existsInTree(node.left, node);
+            boolean inRight = existsInTree(node.right, node);
+            return (root.value == node.value || inLeft || inRight);
+        }
+    }
 
     @Override
     public void add(int value) {

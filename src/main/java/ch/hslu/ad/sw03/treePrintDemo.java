@@ -1,6 +1,6 @@
 package ch.hslu.ad.sw03;
 
-import  java.util.function .*;
+import java.util.function.*;
 
 /**
  *
@@ -11,8 +11,9 @@ public class treePrintDemo {
     public treePrintDemo() {
 
         Tree tree = createTree();
-        tree.drawTree();
-
+//        tree.drawTree();
+        node searchNode = new node(4); // should be in the tree
+        System.out.println(tree.existsInTree(tree.root, searchNode));
     }
 
     public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class treePrintDemo {
         tree.add(12);
         tree.add(4);
         tree.add(3);
-        tree.add(9); 
+        tree.add(9);
         tree.add(21);
         tree.add(19);
         tree.add(25);
@@ -46,7 +47,6 @@ public class treePrintDemo {
         tree.add(6);
         tree.add(1);
         tree.add(4);
- 
 
         return tree;
     }
