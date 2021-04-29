@@ -52,6 +52,7 @@ public interface TreeGrowerInterface {
      * @param currentArrayList // the current Line which is being modified.
      * @return retuns -1 or -2, to have a slight deviation of whitespace
      */
-    public int offsetOnlyEvery_Nth_Iteration(final int count, final ArrayList< ArrayList< node>> nodeListByNiveau, final ArrayList<node> currentArrayList);
+    public int offsetOnlyEvery_Nth_Iteration(final int count,
+        final ArrayList< ArrayList< node>> nodeListByNiveau, final ArrayList<node> currentArrayList);
 
 }

@@ -13,7 +13,8 @@ public class treePrintDemo {
         Tree tree = createTree();
 //        tree.drawTree();
         node searchNode = new node(4); // should be in the tree
-        System.out.println(tree.existsInTree(tree.root, searchNode));
+        tree.existsInTree(tree.root, searchNode);
+        tree.drawTree();
     }
 
     public static void main(String[] args) {

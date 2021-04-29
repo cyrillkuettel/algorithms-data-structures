@@ -88,7 +88,8 @@ public class TreeGrower implements TreeGrowerInterface {
 
            - kein branch, wenn nächster null ist.
            - special case: (if node.values.length() > 1 ):
-             If the node values are several characters long, the distance between values needs to be multiplied by a factor of the characters length
+        
+             If the node values themselves are several characters long, the distance between values needs to be multiplied by a factor of the characters length
                             --> Das braucht wahrscheinlich Regex, um die Items als solche zu erkennen im BranchGrower.
          */
 
@@ -163,7 +164,7 @@ public class TreeGrower implements TreeGrowerInterface {
 
 
     @Override
-    public int offsetOnlyEvery_Nth_Iteration(final int count,
+    public int offsetOnlyEvery_Nth_Iteration(final int count, 
         final ArrayList< ArrayList< node>> nodeListByNiveau,
         final ArrayList<node> currentArrayList) {
 

@@ -1,11 +1,6 @@
 package ch.hslu.ad.sw03;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -66,9 +61,10 @@ public class BranchGrower  {
 
     public String drawSingleBranch() { 
 
-        // aufpassen wegen node.value.length > 1 -> TODO special case. Hier mit regex abfangen, dann etwa mittig zum regex den "/" printen, und zu i die length des gemachten regex elements addieren. 
-        // write the first line , pass in arrayList and line. From line then is derrrived the rest Of the branch. so pass this then into growBranchNtimes.
+        // aufpassen wegen node.value.length > 1 -> TODO special case. Hier mit regex abfangen, 
+        // dann etwa mittig zum regex den "/" printen, und zu i die length des gemachten regex elements addieren. 
         // regex match word / letter /number whatever
+        // write the first line , pass in arrayList and line. From line then is derrrived the rest Of the branch. so pass this then into growBranchNtimes.
         
 //        char[] str = new char[line.length() - 1];
 //
