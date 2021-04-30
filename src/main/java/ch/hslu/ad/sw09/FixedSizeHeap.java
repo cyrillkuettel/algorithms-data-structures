@@ -21,13 +21,12 @@ public class FixedSizeHeap implements IntegerHeap {
 
     public static void main(String[] args) {
         FixedSizeHeap heap = new FixedSizeHeap(30);
-        
+
         heap.insert(9);
         heap.insert(4);
         heap.insert(7);
-        
-//        heap.printArray();
 
+//        heap.printArray();
         heap.getMax();
         heap.printArray();
 
@@ -37,32 +36,31 @@ public class FixedSizeHeap implements IntegerHeap {
     public void insert(int element) {
         heap[size] = element;
         size++;
-
         int currentIndex = size - 1;
         while (heap[currentIndex] > heap[parent(currentIndex)]) { // reorganzie up
             swap(currentIndex, parent(currentIndex));
             currentIndex = parent(currentIndex);
         }
+    }
 
+    @Override
+    public void remove(int inp) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public void printArray() {
         System.out.println(Arrays.toString(heap));
     }
 
-    public int[] getHeap() {
-        return heap;
-    }
-
     // after the Max element is popped out, it may be neccessary to rearrange the structure
     public void reArrangeTopDown(int index) {
 
         if (noChildrenBigger(index)) {
-            return; 
+            return;
         } else {
             int BiggerChildIndex = getBiggerChild(index);
             swap(BiggerChildIndex, index);
-            reArrangeTopDown(BiggerChildIndex); 
+            reArrangeTopDown(BiggerChildIndex);
         }
 
     }
@@ -74,7 +72,6 @@ public class FixedSizeHeap implements IntegerHeap {
     }
 
     private int getBiggerChild(int parent) {
-
         if (leftChild(parent) >= rightChild(parent)) {
             return leftChild(parent);
         } else {
@@ -114,11 +111,6 @@ public class FixedSizeHeap implements IntegerHeap {
     }
 
     @Override
-    public void remove(int inp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public boolean isEmpty() {
         return size == 0;
     }
@@ -132,6 +124,10 @@ public class FixedSizeHeap implements IntegerHeap {
         int temp = heap[i];
         heap[i] = heap[j];
         heap[j] = temp;
+    }
+
+    public int[] getHeap() {
+        return heap;
     }
 
 }
