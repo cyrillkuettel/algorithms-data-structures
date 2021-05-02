@@ -23,7 +23,7 @@ public class QuickSort implements Sortieren {
             while (a[up] < t) {
                 up++;
             }
-            while ((a[down] >= t) && (down > up)) {
+            while ((a[down] > t) && (down > up)) {
                 down--;
             }
             if (down > up) {
@@ -42,7 +42,6 @@ public class QuickSort implements Sortieren {
         if ((up + 1) < right) {
             quickSort(a, (up + 1), right);
         }
-
     }
 
     private void swap(int[] arr, int i, int j) {
