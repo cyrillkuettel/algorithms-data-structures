@@ -9,6 +9,8 @@ import java.util.Queue;
  */
 public interface TreeGrowerInterface {
 
+
+       
     /**
      *
      * Simply loops over each Niveau of the tree. Then adds the elements in a
