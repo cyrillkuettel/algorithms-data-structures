@@ -31,7 +31,7 @@ public final class FindFileTask extends CountedCompleter<Optional<File>> {
 
     private FindFileTask(final CountedCompleter<?> parent, final String regex, final File dir,
         final AtomicReference<File> result) {
-
+        // der 1. Parameter parent ist die Referenz auf den Erzeuger Task
         super(parent);
         this.dir = dir;
         this.regex = regex;

@@ -24,14 +24,26 @@ public final class DemoFindFile {
      * @param args not used.
      */
     public static void main(String[] args) {
-        final String search = "test.properties";
+        final String search = "AnsiEscape.java";
         final File rootDir = new File(System.getProperty("user.home"));
-        LOG.info("Start searching '{}' recurive in '{}'", search, rootDir);
-        FindFile.findFile(search, rootDir);
-        LOG.info("Found in {} msec.", '?');
+        
+//        LOG.info("Start searching '{}' recursive in '{}'", search, rootDir);
+//        FindFile.findFile(search, rootDir);
+//        LOG.info("Found in {} msec.", '?');
+        
+        
+        
+        
         LOG.info("Find '{}' concurrent in '{}'", search, rootDir);
+        
+        long start = System.currentTimeMillis();
         final FindFileTask root = new FindFileTask(search, rootDir);
-        LOG.info(root.invoke());
-        LOG.info("Found in {} msec.", '?');
+        long end = System.currentTimeMillis();
+        
+        root.invoke();
+        root.join().ifPresent(System.out::println);
+      
+        
+        LOG.info("Found in {} msec.", end - start);
     }
 }
