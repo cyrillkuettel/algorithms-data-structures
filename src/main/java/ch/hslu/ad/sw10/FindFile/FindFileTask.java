@@ -50,7 +50,7 @@ public final class FindFileTask extends CountedCompleter<Optional<File>> {
                 }
 
                 if (file.isDirectory()) {
-                    addToPendingCount(1); // ein neuer Task wird abgezeigt. Dies dem wird dem Framework hier mitgeteilt. 
+                    addToPendingCount(1); // ein neuer Task wird abgezeigt. Dies wird  dem Framework hier mitgeteilt. 
                     FindFileTask task = new FindFileTask(this, this.regex, file, result);
                     task.fork();
 

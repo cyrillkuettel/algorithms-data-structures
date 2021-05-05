@@ -31,31 +31,42 @@ public final class DemoMergesort {
         final int[] array = new int[size];
         final ForkJoinPool pool = new ForkJoinPool();
         
-        
+        // random array Initialisierung. (concurrent as well) 
         RandomInitTask initTask = new RandomInitTask(array, 100);
         pool.invoke(initTask);
         
-        
+        // simply sums all up.
         SumTask sumTask = new SumTask(array);
         long result = pool.invoke(sumTask);
         LOG.info("Init. Checksum  : {}", result);
+        long start = System.currentTimeMillis();
         final MergesortTask sortTask = new MergesortTask(array);
         pool.invoke(sortTask);
+        long end = System.currentTimeMillis();
+        long duration = end - start;
+        LOG.info("Conc. Mergesort : {} ms.", duration);
         
-        LOG.info("Conc. Mergesort : {} sec.", '?');
-        
+      
         sumTask = new SumTask(array);
         result = pool.invoke(sumTask);
+
         LOG.info("Merge Checksum  : {}", result);
         initTask = new RandomInitTask(array, 100);
         pool.invoke(initTask);
         sumTask = new SumTask(array);
         result = pool.invoke(sumTask);
         LOG.info("Init. checksum  : {}", result);
+ 
+        
+ /*
+        start = System.currentTimeMillis();        
         MergesortRecursive.mergeSort(array);
-        LOG.info("MergesortRec.   : {} sec.", '?');
+        end = System.currentTimeMillis();
+        LOG.info("MergesortRec.   : {} sec.", end - start);
+        
         sumTask = new SumTask(array);
         result = pool.invoke(sumTask);
         LOG.info("Sort checksum   : {}", result);
+*/
     }
 }

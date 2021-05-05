@@ -1,3 +1,4 @@
+/*
 package ch.hslu.ad.sw04;
 
 import ch.hslu.ad.sw01.Allocation;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author cyrill
  */
+/*
 public class HashTableTest {
 
     public HashTableTest() {
@@ -61,6 +63,8 @@ public class HashTableTest {
     /* if the Table experiences an Overfloww,
         The stored items should not be affected, 
      */
+
+/*
     @Test
     public void testIntegrityOfStorage() throws Exception {
         HashTable table = new HashTable();
@@ -96,5 +100,5 @@ public class HashTableTest {
         assertThat(table.toString()).isNotNull();
 
     }
+*/
 
-}
