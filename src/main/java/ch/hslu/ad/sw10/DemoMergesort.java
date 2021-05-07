@@ -51,6 +51,8 @@ public final class DemoMergesort {
         result = pool.invoke(sumTask);
 
         LOG.info("Merge Checksum  : {}", result);
+        
+        
         initTask = new RandomInitTask(array, 100);
         pool.invoke(initTask);
         sumTask = new SumTask(array);
@@ -58,7 +60,7 @@ public final class DemoMergesort {
         LOG.info("Init. checksum  : {}", result);
  
         
- /*
+
         start = System.currentTimeMillis();        
         MergesortRecursive.mergeSort(array);
         end = System.currentTimeMillis();
@@ -67,6 +69,6 @@ public final class DemoMergesort {
         sumTask = new SumTask(array);
         result = pool.invoke(sumTask);
         LOG.info("Sort checksum   : {}", result);
-*/
+
     }
 }
