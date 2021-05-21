@@ -17,14 +17,17 @@ public final class Suchautomat {
                 case "":
                     if (str.charAt(i) == 'A') {
                         state = "A";
-                    } 
+                    } else {
+                        state = "";
+                    }
                     break;
                 case "A":
                     if (str.charAt(i) == 'N') {
                         state = "AN";
-                    } else {
-                        state = "";
-                    }
+                    } else if (str.charAt(i) == 'A') {
+                        state = "A";
+
+                    } 
                     break;
                 case "AN":
                     if (str.charAt(i) == 'A') {
@@ -36,8 +39,8 @@ public final class Suchautomat {
                 case "ANA":
                     if (str.charAt(i) == 'N') {
                         state = "ANAN";
-                    } else if (str.charAt(i) == 'S') { // Sonderfall hier
-                        state = "ANANAS";
+                    } else if (str.charAt(i) == 'A') {
+                        state = "A";
                     } else {
                         state = "";
                     }
@@ -52,8 +55,11 @@ public final class Suchautomat {
                 case "ANANA":
                     if (str.charAt(i) == 'S') {
                         state = "ANANAS";
-                    } else {
-                        state = ""; // how else to proceed
+                    } else if ( str.charAt(i) == 'N') {
+                        state = "ANAN";
+                        
+                    } else if (str.charAt(i) == 'A') {
+                        state = "A"; 
                     }
                     break;
             }
