@@ -31,8 +31,8 @@ public class QuickSearchTest {
         for (Data searchObject : samples.keySet()) {
             int expected = samples.get(searchObject);
 
-            int actual = quickSearch(searchObject.text,
-                searchObject.pattern);
+            int actual = quickSearch(searchObject.getText(),
+                searchObject.getPattern());
             Assert.assertEquals(expected, actual);
         }
     }
@@ -40,15 +40,11 @@ public class QuickSearchTest {
     public static int quickSearch(String a, String p) {
         final int m = p.length();
         final int n = a.length();
-        int range = 65536;  // UTF-
+        int range = 65536;  // UTF-8
 
-        final int[] shift = new int[range];
+        int[] shift = new int[range];
 
         Arrays.fill(shift, m + 1);
-
-        for (int i = 0; i < range; i++) {
-            shift[i] = m + 1;
-        }
 
         for (int i = 0; i < m; i++) {
             shift[p.charAt(i)] = m - i;
@@ -87,4 +83,13 @@ class Data {
     }
     String text;
     String pattern;
+
+    public String getText() {
+        return text;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
 }
