@@ -1,6 +1,7 @@
-package ch.hslu.ad.sw13;
+package ch.hslu.ad.sw13.saved;
 
 import SW13.RailwayNet3;
+import ch.hslu.ad.sw13.PrettyPrinter;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 import org.apache.logging.log4j.LogManager;
@@ -12,12 +13,12 @@ import org.apache.logging.log4j.Logger;
  */
 // Produce a table:
 //  the shortest path form a given vertex A to all other vertexes. 
-public class Graph1_saved {
-
-    private static final Logger LOG = LogManager.getFormatterLogger(Graph1_saved.class);
+public class Graph1_saved2 {
+    
+ 
+    private static final Logger LOG = LogManager.getFormatterLogger(Graph1_saved2.class);
 
     String[] alpha = {"a", "b", "c", "d", "e", "f", "g"};
-
     int[][] adj = {
         //a  b  c  d  e  f  g
 
@@ -30,6 +31,7 @@ public class Graph1_saved {
         {0, 6, 0, 0, 0, 3, 0}};// g
 
     int noOfNodes = adj[0].length;
+    boolean[] visited = new boolean[noOfNodes];
     String[][] result = new String[noOfNodes + 1][noOfNodes + 1];
 
     public String[][] getResult() {
@@ -73,52 +75,52 @@ public class Graph1_saved {
     }
 
     public void shortestPath(int a) { // a ist der Index des elements, von dem aus wir suchen.
-        // der kürzeste weg von a zu irgend 
-        // einem anderen Knoten
-        // zuerst ist die erste Spalte überall unendlich. 
-
         int[] label = new int[noOfNodes]; // label is the path from A to A B C D E F G ...
-        boolean[] visited = new boolean[noOfNodes];
-
         int resultColumnCount = 2; // Spalte die gefüllt werden muss
         Arrays.fill(label, Integer.MAX_VALUE); // alle labels ohne A auf unendlich 
         label[a] = 0; // A zu sich selber ist irrelevant
-        //Jetzt alle Nachbarn von a anschauenn. 
-        for (int i = 0; i < noOfNodes; i++) { // alle Nachbarn vom start Knoten.  
-            if (adj[a][i] != 0) { // wenn i ein Nachbar ist
-                if (label[i] > label[a] + adj[a][i]) {
-                    label[i] = label[a] + adj[a][i];
 
+        
+        // I need to make a queue of all the nodes, so I can remove the ones which I already visit. 
+        while (!allVisited(visited)) {
+            //Jetzt alle Nachbarn von a anschauenn. 
+            for (int i = 0; i < noOfNodes; i++) { // alle Nachbarn vom start Knoten.  
+                if (adj[a][i] != 0) { // wenn i ein Nachbar ist
+                    if (label[i] > label[a] + adj[a][i]) {
+                        label[i] = label[a] + adj[a][i];
+                    }
                 }
             }
-        }
-        visited[a] = true;
+            visited[a] = true;
 
-        // hier Tabelle füllen
-        for (int i = 0; i < result.length - 1; i++) { // das 1 noch ändern.
-            // noch ändern: if not visited 
-            if (!visited[i]) { // only make entry for tables we not already visited
- 
-                String tableEntry;
-                if (label[i] == 0) {
+            // hier Tabelle füllen
+            for (int i = 0; i < result.length - 2; i++) {
+                if (!visited[i]) { // only make entry for tables we not already visited
+                    String tableEntry;
+                    if (label[i] == 0) {
 
+                    }
+                    if (label[i] == Integer.MAX_VALUE) {
+                        tableEntry = "inf";
+                    } else {
+                        tableEntry = String.valueOf(label[i]) + " | " + alpha[a];
+                    }
+                    System.out.println("resultColumnCount = " + resultColumnCount);
+                    result[i][resultColumnCount] = tableEntry;
                 }
-                if (label[i] == Integer.MAX_VALUE) {
-                    tableEntry = "inf";
-                } else {
-                    tableEntry = String.valueOf(label[i]) + " | " + alpha[a];
-                }
-                result[i][resultColumnCount] = tableEntry;
             }
+
+            // wenn das Minimum aus mehreren besteht, was dann? . 
+            int minLabel = getMinOfLabel(label, a);
+            int minLabelIndex = indexOf(label, minLabel);
+
+            a = minLabelIndex; // jump to the next Vertex, ( = Minima of all Edges) -> here I'm not sure if we only have to consider one or more?
+
+            if (resultColumnCount == noOfNodes) {
+                return; // not very elegant
+            }
+            resultColumnCount++;
         }
-
-        // wenn das Minimum aus mehreren besteht, was dann? . 
-        int minLabel = getMinOfLabel(label, a); // ich gaube, dann ist das minLabel das nächste Label das besucht wird. Es müssen aber alle besucht werden. 
-        int minLabelIndex = indexOf(label, minLabel);
-    
-
-        a = minLabelIndex;
-        resultColumnCount++;
 
     }
 
@@ -136,7 +138,8 @@ public class Graph1_saved {
         int min = Integer.MAX_VALUE;
         int count = 0;
         for (int i = 0; i < label.length; i++) {
-            if (i != a && adj[a][i] != 0) {  // only search neighbour lables
+            // only return neighbours. From those, it can't return itself as min, and it can't return already visited nodes as min.
+            if (i != a && adj[a][i] != 0 && visited[i] == false) {  // only search neighbour lables 
                 if (label[i] < min) {
                     min = label[i];
                     count += 1;
@@ -201,7 +204,7 @@ public class Graph1_saved {
     }
 
     public static void main(String[] args) {
-        Graph1_saved g = new Graph1_saved();
+        Graph1_saved2 g = new Graph1_saved2();
         g.diagonaleSpiegeln();
         g.tabelleInitialisiern();
         g.shortestPath(0);

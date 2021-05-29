@@ -2,6 +2,13 @@ package ch.hslu.ad.sw13;
 
 import SW13.RailwayNet3;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 import java.util.stream.IntStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +23,8 @@ public class Graph {
 
     private static final Logger LOG = LogManager.getFormatterLogger(Graph.class);
 
-    String[] alpha = {"a", "b", "c", "d", "e", "f", "g"};
+    Map<Node, Set<Node>> map = new HashMap<>();
+    static String[] alpha = {"a", "b", "c", "d", "e", "f", "g"};
     int[][] adj = {
         //a  b  c  d  e  f  g
 
@@ -36,7 +44,19 @@ public class Graph {
         return result;
     }
 
-    void tabelleInitialisiern() {
+    public static void main(String[] args) {
+        System.out.println(alpha[0]);
+        Graph g = new Graph();
+        g.init();
+        g.resultTableInit();
+        g.print();
+        g.printMap();
+
+//        g.shortestPath(0);
+//        g.prettyPrint();
+    }
+
+    public void resultTableInit() {
         for (int i = 0; i < result.length; i++) { // Zeile zuunterst
             if (i == 0) {
                 result[result.length - 1][i] = "S";
@@ -56,8 +76,9 @@ public class Graph {
         }
     }
 
-    void diagonaleSpiegeln() {
+    public void init() {
         for (int i = 0; i < noOfNodes; i++) {
+
             for (int j = 0; j < noOfNodes; j++) {
                 if (adj[i][j] != 0) {
                     if (adj[j][i] == 0) {
@@ -70,36 +91,54 @@ public class Graph {
                 }
             }
         }
+        // Init the Nodes
+        for (int i = 0; i < noOfNodes; i++) {
+            Node node = new Node(Integer.MAX_VALUE, alpha[i]);
+            Set<Node> set = new HashSet<>();
+
+            for (int j = 0; j < noOfNodes; j++) {
+                if (adj[i][j] != 0) {
+                    set.add(new Node(adj[i][j], alpha[j])); // the Labels are the distances from the main Node. Alpha is the Letter. 
+                }
+            }
+            map.put(node, set);
+        }
+    }
+
+    public void shortest(int a) {
+        int[] label = new int[noOfNodes];
+        int resultColumnCount = 2;
+        Queue<Node> queue = new LinkedList<>(); // FIfO Queue
+        //queue.add(map.get(new Node(Integer.MAX_VALUE, "a")));
+        
+
     }
 
     public void shortestPath(int a) { // a ist der Index des elements, von dem aus wir suchen.
-        // der kürzeste weg von a zu irgend 
-        // einem anderen Knoten
-        // zuerst ist die erste Spalte überall unendlich. 
-
         int[] label = new int[noOfNodes]; // label is the path from A to A B C D E F G ...
-
         int resultColumnCount = 2; // Spalte die gefüllt werden muss
         Arrays.fill(label, Integer.MAX_VALUE); // alle labels ohne A auf unendlich 
         label[a] = 0; // A zu sich selber ist irrelevant
+        Queue<Integer> queue = new LinkedList<>(); // FIfO Queue
 
-        while (!allVisited(visited)) {
+        while (!allVisited()) {
             //Jetzt alle Nachbarn von a anschauenn. 
             for (int i = 0; i < noOfNodes; i++) { // alle Nachbarn vom start Knoten.  
                 if (adj[a][i] != 0) { // wenn i ein Nachbar ist
-                    if (label[i] > label[a] + adj[a][i]) {
-                        label[i] = label[a] + adj[a][i];
+//                    if (label[i] > label[a] + adj[a][i]) {
+//                        label[i] = label[a] + adj[a][i];
+//                    }
+                    queue.add(i);
 
-                    }
                 }
             }
+            int element = queue.remove();
+
             visited[a] = true;
 
             // hier Tabelle füllen
             for (int i = 0; i < result.length - 2; i++) {
-                // noch ändern: if not visited 
                 if (!visited[i]) { // only make entry for tables we not already visited
-
                     String tableEntry;
                     if (label[i] == 0) {
 
@@ -129,8 +168,8 @@ public class Graph {
     }
 
     // little helper function to see if we visited all nodes. 
-    public static boolean allVisited(boolean[] array) {
-        for (boolean b : array) {
+    public boolean allVisited() {
+        for (boolean b : visited) {
             if (!b) {
                 return false;
             }
@@ -157,38 +196,6 @@ public class Graph {
         return min;
     }
 
-    public int Dijkstra(final int s, final int z) {
-
-        boolean[] setT = new boolean[noOfNodes];
-        Arrays.fill(setT, false);
-
-        setT[s] = true;
-        int[] minEntf = new int[noOfNodes];
-        minEntf[s] = 0;
-        while (!setT[z]) {
-            int min = Integer.MAX_VALUE;
-            int kNeu = 0;
-            for (int k = 0; k < noOfNodes; k++) {
-                if (setT[k]) {
-                    for (int nk = 0; nk < noOfNodes; nk++) {
-                        if (!setT[nk] && (adj[k][nk] < Integer.MAX_VALUE)) {
-                            int kNeuEntf = minEntf[k] + adj[k][nk];
-                            if (kNeuEntf < min) {
-                                min = kNeuEntf;
-                                kNeu = nk;
-                            }
-                        }
-                    }
-                }
-            }
-            setT[kNeu] = true;  //   kNeu wird in T aufgenommen 
-            minEntf[kNeu] = min;
-        }
-
-        return minEntf[z];
-
-    }
-
     void print() {
         for (int[] x : adj) {
             for (int y : x) {
@@ -203,17 +210,29 @@ public class Graph {
         printer.print(result);
     }
 
-    public static int indexOf(int[] arr, int val) {
-        return IntStream.range(0, arr.length).filter(i -> arr[i] == val).findFirst().orElse(-1);
+    public void printMap() {
+        Iterator<Map.Entry<Node, Set<Node>>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Node, Set<Node>> pair = it.next();
+
+            Node key = pair.getKey();
+            Set<Node> value = pair.getValue();
+            System.out.println(key);
+            int count = 0;
+            for (Node node : value) {
+                if (count == 0) {
+                    System.out.println("      " + node.toString());
+                } else {
+                    System.out.println(" , " + node.toString());
+                }
+            }
+            System.out.println();
+        }
+
     }
 
-    public static void main(String[] args) {
-        Graph g = new Graph();
-        g.diagonaleSpiegeln();
-        g.tabelleInitialisiern();
-        g.shortestPath(0);
-        g.prettyPrint();
-
+    public static int indexOf(int[] arr, int val) {
+        return IntStream.range(0, arr.length).filter(i -> arr[i] == val).findFirst().orElse(-1);
     }
 
 }
