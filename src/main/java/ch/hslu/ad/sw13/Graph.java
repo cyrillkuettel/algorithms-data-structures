@@ -1,6 +1,9 @@
 package ch.hslu.ad.sw13;
 
+import SW13.RailwayNet3;
 import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -9,6 +12,8 @@ import java.util.Arrays;
 // Produce a table:
 //  the shortest path form a given vertex A to all other vertexes. 
 public class Graph {
+
+    private static final Logger LOG = LogManager.getFormatterLogger(Graph.class);
 
     String[] alpha = {"a", "b", "c", "d", "e", "f", "g"};
 
@@ -44,6 +49,9 @@ public class Graph {
             }
             result[i][0] = String.format("L(%s) | p(%s)", alpha[i], alpha[i]);
         }
+        for (int i = 1; i < result[0].length-1; i++) {
+            result[i][1] = "inf";
+        }
     }
 
     void diagonaleSpiegeln() {
@@ -68,20 +76,48 @@ public class Graph {
         // zuerst ist die erste Spalte überall unendlich. 
 
         int[] label = new int[noOfNodes];
+        int resultColumnCount = 2; // Spalte die gefüllt werden muss
+        
         Arrays.fill(label, Integer.MAX_VALUE); // alle labels ohne A auf unendlich 
         label[a] = 0;
         // alle Nachbarn von a anschauenn. 
 
         for (int i = 0; i < noOfNodes; i++) { // alle Nachbarn vom start Knoten.  
-            if (adj[a][i] != 0) {
+            if (adj[a][i] != 0) { // wenn i ein Nachbar ist
                 if (label[i] > label[a] + adj[a][i]) {
                     label[i] = label[a] + adj[a][i];
+                    
                 }
             }
+        }
+        for (int i = 1; i < result.length-1; i++) { // das 1 noch ändern.
+           
+            
+        }
+        
             // als nächstes suchen wir ein minimales Label aus den labels
+        int minLabel = getMinOfLabel(label, a);
+        System.out.println(Arrays.toString(label));
+        System.out.println(minLabel);
 
+    }
+
+    public int getMinOfLabel(final int[] label, final int a) {
+        int min = Integer.MAX_VALUE;
+        int count = 0;
+        for (int i = 0; i < label.length; i++) {
+            if (i != a && adj[a][i] != 0) {  // only search neighbour lables
+                if (label[i] < min) {
+                    min = label[i];
+                    count += 1;
+                }
+            }
         }
 
+        if (count == 0) {
+            LOG.error("getMinOfLabel: Somethings wrong. Never reached a better Min");
+        }
+        return min;
     }
 
     public int Dijkstra(final int s, final int z) {
@@ -125,22 +161,33 @@ public class Graph {
         }
     }
 
-    void printResult() {
-        for (String[] x : result) {
-            for (String y : x) {
-                System.out.print(y + "  ");
-            }
-            System.out.println();
-        }
+//    void printResult() {
+//        int count = 0;
+//        for (String[] x : result) {
+//            count++;
+//            for (String y : x) {
+//                if (count == result.length) {
+//                    System.out.print(y + "      ");
+//                } else {
+//                    System.out.print(y + "  ");
+//                }
+//            }
+//            System.out.println();
+//        }
+//    }
+    void prettyPrint() {
+        final PrettyPrinter printer = new PrettyPrinter(System.out);
+        printer.print(result);
+
     }
 
     public static void main(String[] args) {
         Graph g = new Graph();
         g.diagonaleSpiegeln();
         g.tabelleInitialisiern();
-        g.printResult();
+        g.shortestPath(0);
+        g.prettyPrint();
 
     }
-
 
 }
