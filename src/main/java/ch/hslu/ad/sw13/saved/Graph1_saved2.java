@@ -33,6 +33,7 @@ public class Graph1_saved2 {
     int noOfNodes = adj[0].length;
     boolean[] visited = new boolean[noOfNodes];
     String[][] result = new String[noOfNodes + 1][noOfNodes + 1];
+ 
 
     public String[][] getResult() {
         return result;

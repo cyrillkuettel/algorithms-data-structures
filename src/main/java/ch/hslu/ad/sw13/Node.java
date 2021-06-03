@@ -10,10 +10,19 @@ import java.util.Objects;
 public class Node implements Comparator<Node> {
 
     String name; // A
-    Integer label;
+    int label;
 
-    public Node(Integer label, String name) {
+    /**
+     *
+     * @param name String
+     * @param label Int
+     */
+    public Node(String name, int label) {
         this.label = label;
+        this.name = name;
+    }
+
+    public Node(String name) {
         this.name = name;
     }
 
