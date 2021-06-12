@@ -14,6 +14,11 @@ class Graph_with_Adj {
     /*
     // wenn man Tabelle ausfüllt: Zuerst alles mit Null füllen. Geht einfacher. 
    // alpha anpassen, wenn man adj[][] anpasst.
+   // Vorgäner P(c) manuell bestimmen: Alles was von a weggeht, ist Vorgäner von a
+    // wenn nicht von a weggeht: dort wo es zum ersten mal Auftaucht, vorgänger ist das vorherige S
+   
+   // wichtig: Wenn sich die zahl ändert (zum Beispiel L(b) ) dann ändert sich der Vorgänger auch.
+   
     int[][] adj = {
        //a  b  c  d  e  f  g  h     // if neccessary expand this to the task given at hand
 
@@ -27,7 +32,7 @@ class Graph_with_Adj {
         {0, 0, 0, 0, 0, 0, 0, 0 }}; //h
 
     */
-    // wichtig: Wenn sich die zahl ändert (zum Beispiel L(b) ) dann ändert sich der Vorgänger auch.
+    
     
             int[][] adj = {
         //a  b  c  d  e  f  g       // if neccessary expand this to the task given at hand
