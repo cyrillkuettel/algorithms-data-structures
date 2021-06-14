@@ -13,7 +13,6 @@ class Graph_with_Adj {
    public static final String[] alpha = {"a", "b", "c", "d", "e", "f", "g"};
     /*
     // wenn man Tabelle ausfüllt: Zuerst alles mit Null füllen. Geht einfacher. 
-   // alpha anpassen, wenn man adj[][] anpasst.
    // Vorgäner P(c) manuell bestimmen: Alles was von a weggeht, ist Vorgäner von a
     // wenn nicht von a weggeht: dort wo es zum ersten mal Auftaucht, vorgänger ist das vorherige S
    
