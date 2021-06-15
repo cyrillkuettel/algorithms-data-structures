@@ -1,4 +1,4 @@
-package ch.hslu.ad.sw09;
+    package ch.hslu.ad.sw09;
 
 import ch.hslu.ad.sw08.Sortieren;
 
@@ -21,26 +21,29 @@ public class QuickSort implements Sortieren {
 
         do {
             while (a[up] < t) {
-                up++;
+                up++; // Suche grösseres Element von Links an 
             }
-            while ((a[down] > t) && (down > up)) {
-                down--;
+            while ((a[down] > t) && (down > up)) { // hier braucht es kein Gleichheitszeichen
+                down--; // Suche kleineres Element von rechts an 
             }
             if (down > up) {
                 swap(a, up, down);
                 up++;
                 down--;
-
+                  // Elemente werden von rechts nach links vertauscht und umgekehrt
             } else {
                 allChecked = true;
             }
         } while (!allChecked);
         swap(a, up, right);
+        /*
+        Der Witz ist: die Auftrennung wird optimiert. Dadurch gibt es weniger Rekursionsaufrufe
+        */
         if (left < (up - 1)) {
-            quickSort(a, left, (up - 1));
+            quickSort(a, left, (up - 1)); // linke Hälfte
         }
         if ((up + 1) < right) {
-            quickSort(a, (up + 1), right);
+            quickSort(a, (up + 1), right); // rechte Hälfte, ohne Trennelement
         }
     }
 
