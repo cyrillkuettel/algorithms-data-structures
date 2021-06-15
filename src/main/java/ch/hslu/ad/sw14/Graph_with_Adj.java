@@ -7,6 +7,9 @@ package ch.hslu.ad.sw14;
 import ch.hslu.ad.sw13.PrettyPrinter;
 import java.lang.*;
 
+
+
+// display Diijkstra in Table
 class Graph_with_Adj {
 
     String[][] result = new String[NUM_VERTICES + 1][NUM_VERTICES + 1];
