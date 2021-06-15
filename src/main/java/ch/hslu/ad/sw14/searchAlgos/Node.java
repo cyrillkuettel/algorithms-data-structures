@@ -1,8 +1,7 @@
 package ch.hslu.ad.sw14.searchAlgos;
 
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -11,7 +10,7 @@ import java.util.Set;
  *
  * @author cyrill
  */
-public class Node implements Comparator<Node> {
+public class Node implements Comparable<Node> {
 
     Color color;
     String name; // A
@@ -25,14 +24,14 @@ public class Node implements Comparator<Node> {
      */
     public Node(String name, int label) {
         this.adj = new HashSet<>();
-        this.color = Color.white;
+        this.color = Color.WHITE;
         this.label = label;
         this.name = name;
     }
 
     public Node(String name) {
         this.adj = new HashSet<>();
-        this.color = Color.white;
+        this.color = Color.WHITE;
         this.name = name;
     }
 
@@ -44,7 +43,7 @@ public class Node implements Comparator<Node> {
         return this.color;
     }
 
-    Set<Node> getAllAdjaNodes() {
+    public Set<Node> getAllAdjaNodes() {
         return this.adj;
     }
 
@@ -53,19 +52,12 @@ public class Node implements Comparator<Node> {
     }
 
     public void addAdjNodes(Node... node) { // to put multiple in at once
-        this.adj.addAll(Arrays.asList(node));
+        
+      for (Node element : node) {
+          adj.add(element);
+      }
     }
 
-    @Override
-    public int compare(Node node1, Node node2) {
-        if (node1.label < node2.label) {
-            return -1;
-        }
-        if (node1.label > node2.label) {
-            return 1;
-        }
-        return 0;
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -76,7 +68,7 @@ public class Node implements Comparator<Node> {
             return false;
         }
         final Node other = (Node) obj;
-        return (other.label == this.label);
+        return (other.name == this.name);
 
     }
 
@@ -90,7 +82,17 @@ public class Node implements Comparator<Node> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(label);
+        return Objects.hash(name);
     }
+
+    /**
+     * compares Two nodes based on their names 
+    */
+    @Override 
+    public int compareTo(Node other) {
+        return this.name.compareTo(other.name);
+
+    }
+    
 
 }

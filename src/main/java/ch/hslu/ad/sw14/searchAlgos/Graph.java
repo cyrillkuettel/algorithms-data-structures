@@ -28,5 +28,10 @@ public class Graph {
         {0, 0, 0, 0, 0, 0, 0, 0},//  g
         {0, 0, 0, 0, 0, 0, 0, 0 }};//h
 
+    Iterable<Node> getAllAdjaNodes(Node node) {
+        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }
