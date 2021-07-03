@@ -2,3 +2,5 @@
   
 
  [src/main/java/ch/hslu/ad](src/main/java/ch/hslu/ad/)
+![](binary_tree_preview.png?raw=true)
+
