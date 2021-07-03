@@ -35,6 +35,7 @@ public class treePrintDemo {
         tree.add(21);
         tree.add(19);
         tree.add(25);
+        tree.add(8);
 
         return tree;
     }
@@ -48,6 +49,7 @@ public class treePrintDemo {
         tree.add(6);
         tree.add(1);
         tree.add(4);
+        tree.add(1);
 
         return tree;
     }

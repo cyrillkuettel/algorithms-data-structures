@@ -9,16 +9,6 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-/**
- * s
- *
- * @author cyrill
- *
- *
- *
- */
-
-
 public class Tips_Java_Generell {
 
     public Tips_Java_Generell() {
@@ -29,9 +19,10 @@ public class Tips_Java_Generell {
     }
 
     void anstattNullKannManAuchEineLeereDatenstruktur() {
+        // generally try to avoid check for null before accesssing data structure.
 
         // not :  if (object != null) 
-        // -> just return a empty Object or empty Generic Collection. 
+        // -> better to just return a empty Object or empty Generic Collection.
         // ... = Collections.emptyList();
         // ... = Collections.emptySet();
         // ... = Collections.empty();
@@ -49,9 +40,10 @@ public class Tips_Java_Generell {
 
 }
 
-// Charakterisierung: Typus: immutable class
+// Charakterisierung:Immutable Class kann viele Vorteile haben.
 /*
     alle attribute final
+    alle methoden.
     klasse selber final.
     keine Setter methoden.
  */
