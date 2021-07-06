@@ -24,7 +24,8 @@ public final class DemoFindFile {
      * @param args not used.
      */
     public static void main(String[] args) {
-        final String search = "NetworkSimulator.zip";
+
+        final String search = "File.txt";
         final File rootDir = new File(System.getProperty("user.home"));
 //        LOG.info("Start searching '{}' recursive in '{}'", search, rootDir);
 //        long start = System.currentTimeMillis();
@@ -47,6 +48,6 @@ public final class DemoFindFile {
         root.invoke();
         root.join().ifPresent(System.out::println);
 
-        LOG.info("Found in {} nano seconds.", elapsedTimeNano);
+       // LOG.info("Found in {} nano seconds.", elapsedTimeNano);
     }
 }
