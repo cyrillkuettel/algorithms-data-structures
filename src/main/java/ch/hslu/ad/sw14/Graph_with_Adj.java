@@ -8,8 +8,10 @@ import ch.hslu.ad.sw13.PrettyPrinter;
 import java.lang.*;
 
 
-
-// display Diijkstra in Table
+/**
+ * this class aims to provide the Table Dijkstra which is a common MEP question in  DMATH.
+ *
+ */
 class Graph_with_Adj {
 
     String[][] result = new String[NUM_VERTICES + 1][NUM_VERTICES + 1];
