@@ -7,7 +7,7 @@ import java.util.*;
 // representation
 
 public final class BFS_without_Node {
-    private int V; // number of fertices
+    private int V; // number of vertices
 
     private final LinkedList<Integer>[] adj;
     private final boolean[] visited;
