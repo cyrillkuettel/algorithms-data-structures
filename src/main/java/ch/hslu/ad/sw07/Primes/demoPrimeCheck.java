@@ -61,7 +61,8 @@ public final class demoPrimeCheck {
             executor.shutdown();
         }
 
-        computedResults.parallelStream().forEachOrdered(System.out::println); // print the final result ( if you want) ;
+       // computedResults.parallelStream().forEachOrdered(System.out::println); // print the final result ( if you
+        // want) ;
 
     }
 

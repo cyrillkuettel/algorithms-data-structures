@@ -21,7 +21,7 @@ public final class speedTest {
 
     // am Besten: eine Primzahl oder eine Ungrade zahl wählen. Die jvm versucht sonst zu optimieren. 
     private int TAKES = 10; // number of takes, then takes average from all
-    private int ITERATIONS = 1000000;
+    private int ITERATIONS = 100;
 
     public speedTest() {
         testAnyCounter(new AtomicCounter());
