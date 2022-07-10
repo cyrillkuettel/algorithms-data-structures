@@ -1,4 +1,4 @@
-# Lösungen für Modul Algorithmen und Datenstrukturen.
+# Lösungen fürs Modul Algorithmen und Datenstrukturen.
   
 
  [direct link to main](src/main/java/ch/hslu/ad/)
