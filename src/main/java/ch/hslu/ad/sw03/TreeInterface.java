@@ -8,13 +8,13 @@ public interface TreeInterface {
 
     boolean isEmpty();
 
-    public void add(node node, int value);
+    void add(node node, int value);
 
-    public void add(int value);
+    void add(int value);
 
-    public node searchNode(node node, int value);
+    node searchNode(node node, int value);
 
-    public node search(int value);
+    node search(int value);
 
     void printInOrder(node node);
 
