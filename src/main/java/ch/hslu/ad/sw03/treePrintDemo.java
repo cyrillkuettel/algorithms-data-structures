@@ -9,12 +9,9 @@ import java.util.function.*;
 public class treePrintDemo {
 
     public treePrintDemo() {
-
-        Tree tree = createTree();
-//        tree.drawTree();
-        node searchNode = new node(4); // should be in the tree
-        tree.existsInTree(tree.root, searchNode);
+        Tree tree = createTreeForTestingRemove();
         tree.drawTree();
+
     }
 
     public static void main(String[] args) {
@@ -50,6 +47,19 @@ public class treePrintDemo {
         tree.add(1);
         tree.add(4);
         tree.add(1);
+        tree.add(9);
+        tree.add(21);
+        tree.add(19);
+        tree.add(25);
+        tree.add(8);
+        tree.add(1);
+        tree.add(4);
+        tree.add(1);
+        tree.add(9);
+        tree.add(21);
+        tree.add(19);
+        tree.add(25);
+        tree.add(8);
 
         return tree;
     }
